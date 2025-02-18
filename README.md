@@ -93,7 +93,7 @@ ng version
 La aplicación está construida usando un frontend en Angular, para ejecutar el servidor de desarrollo frontend debes ejecutar el siguiente comando:
 
 ```
-nx serve frontend
+ng serve 
 ```
 
 Donde frontend representa la carpeta del proyecto.
