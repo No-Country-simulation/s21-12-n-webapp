@@ -66,15 +66,26 @@ MachinePolicy       Undefined
  LocalMachine       Restricted
 ```
 
-### Instalar proyecto
+### Instalar Angular
 
 
-- Ejecuta el siguiente comando para instalar el proyecto:
+- Ejecuta el siguiente comando para instalar Angular:
 
 ```
-npm install
+npm install -g @angular/cli
 ```
 
+- Verifica que nx se haya instalado:
+
+```
+ng version
+```
+
+- Deberías ver la dependencia instalada:
+
+```
++-- Angular CLI: 18.2.1  
+```
 
 
 ## Levantar el frontend de la aplicación
