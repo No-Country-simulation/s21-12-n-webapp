@@ -75,7 +75,7 @@ MachinePolicy       Undefined
 npm install -g @angular/cli
 ```
 
-- Verifica que nx se haya instalado:
+- Verifica que ng (angular) se haya instalado:
 
 ```
 ng version
