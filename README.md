@@ -74,6 +74,7 @@ MachinePolicy       Undefined
 ```
 npm install 
 
+```
 ## Levantar el frontend de la aplicación
 
 La aplicación está construida usando un frontend en Angular, para ejecutar el servidor de desarrollo frontend debes ejecutar el siguiente comando:
