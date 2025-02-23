@@ -73,7 +73,6 @@ MachinePolicy       Undefined
 
 ```
 npm install 
-
 ```
 ## Levantar el frontend de la aplicación
 
