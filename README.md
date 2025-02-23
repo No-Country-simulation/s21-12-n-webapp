@@ -66,7 +66,7 @@ MachinePolicy       Undefined
  LocalMachine       Restricted
 ```
 
-### Instalar Angular
+### Instalar Proyecto
 
 
 - Ejecuta el siguiente comando para instalar el proyecto:
