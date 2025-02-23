@@ -66,7 +66,7 @@ MachinePolicy       Undefined
  LocalMachine       Restricted
 ```
 
-### Instalar Proyecto
+### Comandos para instalar el frontend
 
 
 - Ejecuta el siguiente comando para instalar el proyecto:
