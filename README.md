@@ -69,24 +69,10 @@ MachinePolicy       Undefined
 ### Instalar Angular
 
 
-- Ejecuta el siguiente comando para instalar Angular:
+- Ejecuta el siguiente comando para instalar el proyecto:
 
 ```
-npm install -g @angular/cli
-```
-
-- Verifica que ng (angular) se haya instalado:
-
-```
-ng version
-```
-
-- Deberías ver la dependencia instalada:
-
-```
-+-- Angular CLI: 18.2.1  
-```
-
+npm install 
 
 ## Levantar el frontend de la aplicación
 
