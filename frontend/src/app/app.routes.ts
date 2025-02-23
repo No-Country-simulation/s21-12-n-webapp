@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { noAuthGuard } from './guard/no-auth.guard';
+import { noauthGuard } from './guard/noauth.guard';
 import { authGuard } from './guard/auth.guard';
 
 

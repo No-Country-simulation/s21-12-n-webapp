@@ -69,25 +69,12 @@ MachinePolicy       Undefined
 ### Instalar Angular
 
 
-- Ejecuta el siguiente comando para instalar Angular:
+- Ejecuta el siguiente comando para instalar el proyecto:
 
 ```
-npm install -g @angular/cli
-```
-
-- Verifica que nx se haya instalado:
+npm install 
 
 ```
-ng version
-```
-
-- Deberías ver la dependencia instalada:
-
-```
-+-- Angular CLI: 18.2.1  
-```
-
-
 ## Levantar el frontend de la aplicación
 
 La aplicación está construida usando un frontend en Angular, para ejecutar el servidor de desarrollo frontend debes ejecutar el siguiente comando:
