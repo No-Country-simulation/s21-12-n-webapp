@@ -8,3 +8,7 @@ input[type="number"] {
     -moz-appearance: textfield;
     appearance: textfield;
 }
+
+.swal2-popup .my-confirm-button-class {
+    color: #000 !important; /* Color del texto negro */
+}
