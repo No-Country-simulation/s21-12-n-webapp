@@ -16,6 +16,8 @@ export class RegisterComponent {
   private readonly fb = inject(FormBuilder);
   private readonly router = inject(Router); // Asegúrate de inyectar el Router
   selectedRole: string = 'cliente'; // Inicializa con 'cliente'
+
+
   registerForm: FormGroup = this.fb.group({
     name: ['', [Validators.required, Validators.minLength(4)]],
     email: ['', [Validators.required, Validators.email]],
@@ -24,6 +26,10 @@ export class RegisterComponent {
     phone: ['', [Validators.required, Validators.minLength(11), Validators.pattern(/^\d{11}$/)]],
     CUIT: [''], // Solo para barbería
   }, { validators: this.passwordsMatchValidator() });
+
+
+
+
   private passwordsMatchValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const password = control.get('password')?.value;
@@ -31,6 +37,9 @@ export class RegisterComponent {
       return password === confirmPassword ? null : { mismatch: true };
     };
   }
+
+
+
   selectRole(role: string) {
     this.selectedRole = role;
     this.updateCUITValidators();
@@ -58,11 +67,7 @@ export class RegisterComponent {
         background: '#000',
         color: '#fff',
         confirmButtonColor: '#FFD700', // Cambia el color del botón a amarillo (oro)
-        didClose: () => {
-          this.router.navigate(['/dashboard']).then(() => {
-            location.reload();
-          });
-        },
+         didClose: () => {location.reload()},
       });
     } else {
       this.registerForm.markAllAsTouched();
