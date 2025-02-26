@@ -24,27 +24,28 @@ public class LogActividadController {
         this.logActividadService = logActividadService;
     }
 
-    @Operation(summary = "Registrar actividad", description = "Guarda un registro de actividad en el sistema",
-            security = @SecurityRequirement(name = "Bearer Token"),
-            responses = {
-                    @ApiResponse(responseCode = "200", description = "Actividad registrada exitosamente"),
-                    @ApiResponse(responseCode = "400", description = "Datos inválidos")
-            })
+    @Operation(summary = "Registrar actividad", description = "Crea un registro de actividad", security = @SecurityRequirement(name = "bearer-key"))
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Actividad registrada exitosamente"),
+            @ApiResponse(responseCode = "400", description = "Datos inválidos")
+    })
     @PostMapping
     public ResponseEntity<LogActividadResponse> logActivity(@RequestBody LogActividadRequest request) {
         LogActividadResponse response = logActividadService.logActivity(request);
         return ResponseEntity.ok(response);
     }
 
-    @Operation(summary = "Obtener logs por usuario", description = "Recupera la lista de registros de actividad de un usuario específico",
-            security = @SecurityRequirement(name = "Bearer Token"),
-            responses = {
-                    @ApiResponse(responseCode = "200", description = "Logs obtenidos exitosamente"),
-                    @ApiResponse(responseCode = "404", description = "Usuario o logs no encontrados")
-            })
+    @Operation(summary = "Obtener logs por usuario", description = "Recupera los logs de actividad de un usuario", security = @SecurityRequirement(name = "bearer-key"))
     @GetMapping("/usuario/{usuarioId}")
     public ResponseEntity<List<LogActividadResponse>> getLogsByUsuario(@PathVariable Long usuarioId) {
-        List<LogActividadResponse> responses = logActividadService.getLogsByUsuario(usuarioId);
-        return ResponseEntity.ok(responses);
+        List<LogActividadResponse> list = logActividadService.getLogsByUsuario(usuarioId);
+        return ResponseEntity.ok(list);
+    }
+
+    @Operation(summary = "Eliminar log", description = "Elimina un registro de actividad por su ID", security = @SecurityRequirement(name = "bearer-key"))
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteLog(@PathVariable Long id) {
+        logActividadService.deleteLog(id);
+        return ResponseEntity.noContent().build();
     }
 }

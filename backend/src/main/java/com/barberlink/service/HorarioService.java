@@ -7,6 +7,9 @@ import com.barberlink.model.Horario;
 import com.barberlink.repository.HorarioRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Service
 public class HorarioService {
 
@@ -18,17 +21,24 @@ public class HorarioService {
         this.horarioMapper = horarioMapper;
     }
 
+    // Agregar un horario
     public HorarioResponse addHorario(HorarioRequest request) {
         Horario horario = horarioMapper.toHorario(request);
-        // Asignar valores de timestamp si es necesario
         Horario saved = horarioRepository.save(horario);
         return horarioMapper.toHorarioResponse(saved);
     }
 
-    public HorarioResponse updateHorario(Long horarioId, HorarioRequest request) {
-        Horario horario = horarioRepository.findById(horarioId)
+    // Obtener todos los horarios
+    public List<HorarioResponse> getAllHorarios() {
+        return horarioRepository.findAll().stream()
+                .map(horarioMapper::toHorarioResponse)
+                .toList();
+    }
+
+    // Actualizar un horario
+    public HorarioResponse updateHorario(Long id, HorarioRequest request) {
+        Horario horario = horarioRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Horario no encontrado"));
-        // Actualizar campos
         horario.setFecha(request.fecha());
         horario.setHoraInicio(request.horaInicio());
         horario.setHoraFin(request.horaFin());
@@ -37,11 +47,11 @@ public class HorarioService {
         return horarioMapper.toHorarioResponse(updated);
     }
 
-    public void deleteHorario(Long horarioId) {
-        if(horarioRepository.existsById(horarioId)){
-            horarioRepository.deleteById(horarioId);
-        } else {
+    // Eliminar un horario
+    public void deleteHorario(Long id) {
+        if (!horarioRepository.existsById(id)) {
             throw new RuntimeException("Horario no encontrado");
         }
+        horarioRepository.deleteById(id);
     }
 }

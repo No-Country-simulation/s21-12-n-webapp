@@ -1,4 +1,10 @@
 package com.barberlink.mapper.response;
 
-public class AdministradorResponse {
-}
+import java.time.LocalDateTime;
+
+public record AdministradorResponse(
+        Long id,
+        String email,
+        LocalDateTime createdAt,
+        LocalDateTime updatedAt
+) { }

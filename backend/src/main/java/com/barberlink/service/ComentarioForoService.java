@@ -8,6 +8,7 @@ import com.barberlink.repository.ComentarioForoRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class ComentarioForoService {
@@ -21,6 +22,7 @@ public class ComentarioForoService {
         this.comentarioForoMapper = comentarioForoMapper;
     }
 
+    // Agregar comentario
     public ComentarioForoResponse addComentario(ComentarioForoRequest request) {
         ComentarioForo comentario = comentarioForoMapper.toComentarioForo(request);
         comentario.setFechaComentario(LocalDateTime.now());
@@ -28,6 +30,14 @@ public class ComentarioForoService {
         return comentarioForoMapper.toComentarioForoResponse(saved);
     }
 
+    // Obtener todos los comentarios
+    public List<ComentarioForoResponse> getAllComentarios() {
+        return comentarioForoRepository.findAll().stream()
+                .map(comentarioForoMapper::toComentarioForoResponse)
+                .toList();
+    }
+
+    // Responder a un comentario
     public ComentarioForoResponse respondComentario(Long comentarioId, String respuesta) {
         ComentarioForo comentario = comentarioForoRepository.findById(comentarioId)
                 .orElseThrow(() -> new RuntimeException("Comentario no encontrado"));
@@ -35,5 +45,13 @@ public class ComentarioForoService {
         comentario.setUpdatedAt(LocalDateTime.now());
         ComentarioForo updated = comentarioForoRepository.save(comentario);
         return comentarioForoMapper.toComentarioForoResponse(updated);
+    }
+
+    // Eliminar comentario
+    public void deleteComentario(Long id) {
+        if (!comentarioForoRepository.existsById(id)) {
+            throw new RuntimeException("Comentario no encontrado");
+        }
+        comentarioForoRepository.deleteById(id);
     }
 }

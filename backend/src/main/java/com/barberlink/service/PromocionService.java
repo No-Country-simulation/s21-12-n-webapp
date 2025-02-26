@@ -8,6 +8,7 @@ import com.barberlink.repository.PromocionRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class PromocionService {
@@ -21,6 +22,7 @@ public class PromocionService {
         this.promocionMapper = promocionMapper;
     }
 
+    // Crear una nueva promoción
     public PromocionResponse addPromocion(PromocionRequest request) {
         Promocion promocion = promocionMapper.toPromocion(request);
         promocion.setCreatedAt(LocalDateTime.now());
@@ -29,10 +31,24 @@ public class PromocionService {
         return promocionMapper.toPromocionResponse(saved);
     }
 
-    public PromocionResponse updatePromocion(Long promocionId, PromocionRequest request) {
-        Promocion promocion = promocionRepository.findById(promocionId)
+    // Obtener todas las promociones
+    public List<PromocionResponse> getAllPromociones() {
+        return promocionRepository.findAll().stream()
+                .map(promocionMapper::toPromocionResponse)
+                .toList();
+    }
+
+    // Obtener una promoción por ID
+    public PromocionResponse getPromocionById(Long id) {
+        Promocion promocion = promocionRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Promoción no encontrada"));
-        // Actualizar campos
+        return promocionMapper.toPromocionResponse(promocion);
+    }
+
+    // Actualizar una promoción existente
+    public PromocionResponse updatePromocion(Long id, PromocionRequest request) {
+        Promocion promocion = promocionRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Promoción no encontrada"));
         promocion.setTitulo(request.titulo());
         promocion.setDescripcion(request.descripcion());
         promocion.setFechaInicio(request.fechaInicio());
@@ -43,11 +59,11 @@ public class PromocionService {
         return promocionMapper.toPromocionResponse(updated);
     }
 
-    public void deletePromocion(Long promocionId) {
-        if(promocionRepository.existsById(promocionId)){
-            promocionRepository.deleteById(promocionId);
-        } else {
+    // Eliminar una promoción por ID
+    public void deletePromocion(Long id) {
+        if (!promocionRepository.existsById(id)) {
             throw new RuntimeException("Promoción no encontrada");
         }
+        promocionRepository.deleteById(id);
     }
 }

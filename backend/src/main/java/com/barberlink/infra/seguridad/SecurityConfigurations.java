@@ -32,6 +32,7 @@ public class SecurityConfigurations {
                 .authorizeHttpRequests(auth -> {
                     // Endpoints públicos: login, registro de usuarios y consulta de roles
                     auth.requestMatchers(HttpMethod.POST, "/api/login").permitAll();
+                    auth.requestMatchers(HttpMethod.POST, "/api/administradores/register").permitAll();
                     auth.requestMatchers(HttpMethod.POST, "/api/clientes/register").permitAll();
                     auth.requestMatchers(HttpMethod.POST, "/api/barberias/register").permitAll();
                     auth.requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll();

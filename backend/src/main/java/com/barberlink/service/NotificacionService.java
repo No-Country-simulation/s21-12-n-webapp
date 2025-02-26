@@ -22,6 +22,7 @@ public class NotificacionService {
         this.notificacionMapper = notificacionMapper;
     }
 
+    // Crear notificación
     public NotificacionResponse createNotificacion(NotificacionRequest request) {
         Notificacion notificacion = notificacionMapper.toNotificacion(request);
         notificacion.setCreatedAt(LocalDateTime.now());
@@ -29,15 +30,25 @@ public class NotificacionService {
         return notificacionMapper.toNotificacionResponse(saved);
     }
 
+    // Obtener notificaciones por usuario
     public List<NotificacionResponse> getNotificacionesByUsuario(Long usuarioId) {
         List<Notificacion> notificaciones = notificacionRepository.findByUsuarioId(usuarioId);
         return notificacionMapper.toNotificacionResponseList(notificaciones);
     }
 
-    public void markAsRead(Long notificacionId) {
-        Notificacion notificacion = notificacionRepository.findById(notificacionId)
+    // Marcar notificación como leída
+    public void markAsRead(Long id) {
+        Notificacion notificacion = notificacionRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Notificación no encontrada"));
         notificacion.setEstado(true);
         notificacionRepository.save(notificacion);
+    }
+
+    // Eliminar notificación
+    public void deleteNotificacion(Long id) {
+        if (!notificacionRepository.existsById(id)) {
+            throw new RuntimeException("Notificación no encontrada");
+        }
+        notificacionRepository.deleteById(id);
     }
 }

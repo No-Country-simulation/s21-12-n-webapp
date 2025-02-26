@@ -2,11 +2,6 @@
 -- Script para crear la base de datos BarberLink y sus tablas
 -- ============================================================
 
--- Crear la base de datos (opcional)
-CREATE DATABASE IF NOT EXISTS barberlink_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE barberlink_db;
-
--- ------------------------------------------------------------
 -- Tabla: usuario (tabla base para la herencia)
 -- ------------------------------------------------------------
 CREATE TABLE usuario
@@ -17,8 +12,8 @@ CREATE TABLE usuario
     telefono   VARCHAR(50),
     rol        ENUM ('CLIENTE', 'BARBERIA', 'ADMINISTRADOR') NOT NULL,
     estado     TINYINT(1) DEFAULT 1,
-    createdAt  DATETIME   DEFAULT CURRENT_TIMESTAMP,
-    updatedAt  DATETIME   DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    created_at DATETIME   DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME   DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
 
@@ -27,8 +22,8 @@ CREATE TABLE usuario
 -- ------------------------------------------------------------
 CREATE TABLE cliente
 (
-    id             BIGINT PRIMARY KEY,
-    nombreCompleto VARCHAR(255) NOT NULL,
+    id              BIGINT PRIMARY KEY,
+    nombre_completo VARCHAR(255) NOT NULL,
     CONSTRAINT fk_cliente_usuario FOREIGN KEY (id) REFERENCES usuario (id) ON DELETE CASCADE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
@@ -38,12 +33,12 @@ CREATE TABLE cliente
 -- ------------------------------------------------------------
 CREATE TABLE barberia
 (
-    id              BIGINT PRIMARY KEY,
-    nombreBarberia  VARCHAR(255) NOT NULL,
-    cuilResponsable VARCHAR(50),
-    direccion       VARCHAR(255),
-    descripcion     TEXT,
-    fotoPerfil      VARCHAR(255),
+    id               BIGINT PRIMARY KEY,
+    nombre_barberia  VARCHAR(255) NOT NULL,
+    cuil_responsable VARCHAR(50),
+    direccion        VARCHAR(255),
+    descripcion      TEXT,
+    foto_perfil      VARCHAR(255),
     CONSTRAINT fk_barberia_usuario FOREIGN KEY (id) REFERENCES usuario (id) ON DELETE CASCADE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
@@ -69,9 +64,9 @@ CREATE TABLE catalogo
     nombre      VARCHAR(255)                  NOT NULL,
     descripcion TEXT,
     precio      DECIMAL(10, 2),
-    imagenUrl   VARCHAR(255),
-    createdAt   DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updatedAt   DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    imagen_url  VARCHAR(255),
+    created_at  DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at  DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     CONSTRAINT fk_catalogo_barberia FOREIGN KEY (barberia_id) REFERENCES barberia (id) ON DELETE CASCADE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
@@ -84,13 +79,13 @@ CREATE TABLE turno
     id          BIGINT AUTO_INCREMENT PRIMARY KEY,
     barberia_id BIGINT                                                      NOT NULL,
     cliente_id  BIGINT                                                      NOT NULL,
-    fechaTurno  DATE                                                        NOT NULL,
-    horaInicio  TIME                                                        NOT NULL,
-    horaFin     TIME,
+    fecha_turno DATE                                                        NOT NULL,
+    hora_inicio TIME                                                        NOT NULL,
+    hora_fin    TIME,
     estado      ENUM ('DISPONIBLE', 'RESERVADO', 'CANCELADO', 'CONFIRMADO') NOT NULL,
-    metodoPago  ENUM ('EFECTIVO', 'TARJETA', 'TRANSFERENCIA'),
-    createdAt   DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updatedAt   DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    metodo_pago ENUM ('EFECTIVO', 'TARJETA', 'TRANSFERENCIA'),
+    created_at  DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at  DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     CONSTRAINT fk_turno_barberia FOREIGN KEY (barberia_id) REFERENCES barberia (id) ON DELETE CASCADE,
     CONSTRAINT fk_turno_cliente FOREIGN KEY (cliente_id) REFERENCES cliente (id) ON DELETE CASCADE
 ) ENGINE = InnoDB
@@ -104,8 +99,8 @@ CREATE TABLE horario
     id          BIGINT AUTO_INCREMENT PRIMARY KEY,
     barberia_id BIGINT                         NOT NULL,
     fecha       DATE                           NOT NULL,
-    horaInicio  TIME                           NOT NULL,
-    horaFin     TIME                           NOT NULL,
+    hora_inicio TIME                           NOT NULL,
+    hora_fin    TIME                           NOT NULL,
     estado      ENUM ('DISPONIBLE', 'OCUPADO') NOT NULL,
     CONSTRAINT fk_horario_barberia FOREIGN KEY (barberia_id) REFERENCES barberia (id) ON DELETE CASCADE
 ) ENGINE = InnoDB
@@ -116,14 +111,14 @@ CREATE TABLE horario
 -- ------------------------------------------------------------
 CREATE TABLE comentario_foro
 (
-    id              BIGINT AUTO_INCREMENT PRIMARY KEY,
-    barberia_id     BIGINT NOT NULL,
-    cliente_id      BIGINT NOT NULL,
-    calificacion    INT    NOT NULL,
-    comentarioTexto TEXT,
-    respuesta       TEXT,
-    fechaComentario DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updatedAt       DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    id               BIGINT AUTO_INCREMENT PRIMARY KEY,
+    barberia_id      BIGINT NOT NULL,
+    cliente_id       BIGINT NOT NULL,
+    calificacion     INT    NOT NULL,
+    comentario_texto TEXT,
+    respuesta        TEXT,
+    fecha_comentario DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at       DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     CONSTRAINT fk_comentario_barberia FOREIGN KEY (barberia_id) REFERENCES barberia (id) ON DELETE CASCADE,
     CONSTRAINT fk_comentario_cliente FOREIGN KEY (cliente_id) REFERENCES cliente (id) ON DELETE CASCADE
 ) ENGINE = InnoDB
@@ -134,15 +129,15 @@ CREATE TABLE comentario_foro
 -- ------------------------------------------------------------
 CREATE TABLE promocion
 (
-    id          BIGINT AUTO_INCREMENT PRIMARY KEY,
-    barberia_id BIGINT       NOT NULL,
-    titulo      VARCHAR(255) NOT NULL,
-    descripcion TEXT,
-    fechaInicio DATETIME     NOT NULL,
-    fechaFin    DATETIME     NOT NULL,
-    condiciones TEXT,
-    createdAt   DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updatedAt   DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    id           BIGINT AUTO_INCREMENT PRIMARY KEY,
+    barberia_id  BIGINT       NOT NULL,
+    titulo       VARCHAR(255) NOT NULL,
+    descripcion  TEXT,
+    fecha_inicio DATETIME     NOT NULL,
+    fecha_fin    DATETIME     NOT NULL,
+    condiciones  TEXT,
+    created_at   DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at   DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     CONSTRAINT fk_promocion_barberia FOREIGN KEY (barberia_id) REFERENCES barberia (id) ON DELETE CASCADE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
@@ -157,7 +152,7 @@ CREATE TABLE notificacion
     mensaje    TEXT,
     tipo       ENUM ('TURNO', 'CALIFICACION', 'PROMOCION', 'SISTEMA') NOT NULL,
     estado     TINYINT(1) DEFAULT 0,
-    createdAt  DATETIME   DEFAULT CURRENT_TIMESTAMP,
+    created_at DATETIME   DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_notificacion_usuario FOREIGN KEY (usuario_id) REFERENCES usuario (id) ON DELETE CASCADE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
@@ -170,8 +165,8 @@ CREATE TABLE password_recovery
     id         BIGINT AUTO_INCREMENT PRIMARY KEY,
     usuario_id BIGINT       NOT NULL,
     token      VARCHAR(100) NOT NULL,
-    createdAt  DATETIME   DEFAULT CURRENT_TIMESTAMP,
-    expiresAt  DATETIME     NOT NULL,
+    created_at DATETIME   DEFAULT CURRENT_TIMESTAMP,
+    expires_at DATETIME     NOT NULL,
     utilizado  TINYINT(1) DEFAULT 0,
     CONSTRAINT fk_password_recovery_usuario FOREIGN KEY (usuario_id) REFERENCES usuario (id) ON DELETE CASCADE
 ) ENGINE = InnoDB

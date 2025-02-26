@@ -84,6 +84,6 @@ public class TokenService {
     }
 
     private Instant generarFechaExpiracion(int horas) {
-        return LocalDateTime.now().plusHours(horas).toInstant(ZoneOffset.UTC);
+        return java.time.ZonedDateTime.now(ZoneOffset.UTC).plusHours(horas).toInstant();
     }
 }

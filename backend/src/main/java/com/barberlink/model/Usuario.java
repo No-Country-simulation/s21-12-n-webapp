@@ -25,12 +25,14 @@ public class Usuario implements UserDetails {
     private String telefono;
 
     @Enumerated(EnumType.STRING)
-    private Rol rol; // CLIENTE, BARBERIA, ADMINISTRADOR
+    private Rol rol;
 
     private Boolean estado;
 
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
     public Usuario() {

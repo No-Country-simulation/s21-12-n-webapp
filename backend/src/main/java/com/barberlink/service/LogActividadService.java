@@ -22,18 +22,27 @@ public class LogActividadService {
         this.logActividadMapper = logActividadMapper;
     }
 
+    // Registrar un log de actividad
     public LogActividadResponse logActivity(LogActividadRequest request) {
         LogActividad log = logActividadMapper.toLogActividad(request);
-        // Si no se envía la fecha desde el request, se puede asignar el valor actual.
-        if(log.getFecha() == null){
+        if (log.getFecha() == null) {
             log.setFecha(LocalDateTime.now());
         }
         LogActividad saved = logActividadRepository.save(log);
         return logActividadMapper.toLogActividadResponse(saved);
     }
 
+    // Obtener logs por usuario
     public List<LogActividadResponse> getLogsByUsuario(Long usuarioId) {
         List<LogActividad> logs = logActividadRepository.findByUsuarioId(usuarioId);
         return logActividadMapper.toLogActividadResponseList(logs);
+    }
+
+    // Eliminar un log
+    public void deleteLog(Long id) {
+        if (!logActividadRepository.existsById(id)) {
+            throw new RuntimeException("Log no encontrado");
+        }
+        logActividadRepository.deleteById(id);
     }
 }
