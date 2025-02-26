@@ -114,7 +114,7 @@
 
                 <div *ngIf="selectedRole === 'barberia'">
                     <div class="mt-4">
-                        <input id="LoggingName" placeholder="Nombre del usuario" formControlName="name"
+                        <input id="LoggingName" placeholder="Nombre del barbero o barberia" formControlName="name"
                             class="block w-full px-4 py-2 border rounded-lg dark:bg-black dark:text-neutral-50 dark:border-neutral-50 focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring"
                             type="text" />
                         <div
@@ -193,13 +193,13 @@
 
 
                 <button type="submit" [disabled]="registerForm.invalid" [ngClass]="{'bg-amber-300 hover:bg-amber-400': registerForm.valid, 
-                'bg-amber-200 cursor-not-allowed': registerForm.invalid}" class="w-full py-3 rounded-md cursor-pointer">
+                'bg-orange-300': registerForm.invalid}" class="w-full py-3 rounded-md">
                     Registrarse
-                </button>
+                </button>>
             </form>
             <div class="flex items-center justify-center space-x-2 mt-4">
                 <span class="text-xs text-gray-500 dark:text-gray-400">¿Ya tienes cuenta?</span>
-                <a href="/login" class="text-xs text-amber-500 dark:text-amber-400 hover:underline">Inicia sesion</a>
+                <a href="/login" class="text-xs text-amber-500 dark:text-amber-400 hover:underline"> Inicia sesion</a>
             </div>
         </div>
     </div>

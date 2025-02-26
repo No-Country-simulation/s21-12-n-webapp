@@ -67,7 +67,10 @@ export class RegisterComponent {
         background: '#000',
         color: '#fff',
         confirmButtonColor: '#FFD700', // Cambia el color del botón a amarillo (oro)
-         didClose: () => {location.reload()},
+        didClose: () => {
+          this.router.navigate(['/']).then(() => {
+          });
+        },
       });
     } else {
       this.registerForm.markAllAsTouched();

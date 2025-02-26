@@ -26,7 +26,7 @@ export class LoginComponent {
   
         Swal.fire({
           title: '¡Felicidades!',
-          text: 'Tu cuenta ha sido creada correctamente.',
+          text: 'Haz iniciado sesion correctamente',
           imageUrl: 'check.png',
           imageWidth: 100,
           imageHeight: 100,
@@ -34,7 +34,10 @@ export class LoginComponent {
           background: '#000',
           color: '#fff',
           confirmButtonColor: '#FFD700', // Cambia el color del botón a amarillo (oro)
-          didClose: () => {location.reload()},
+          didClose: () => {
+            this.router.navigate(['/']).then(() => {
+            });
+          },
         });
       } else {
         this.loginForm.markAllAsTouched();
