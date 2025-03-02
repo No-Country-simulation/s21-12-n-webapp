@@ -4,10 +4,9 @@ import Swiper from 'swiper';
 
 @Component({
     selector: 'app-home',
-    standalone: true,
     imports: [],
     templateUrl: './home.component.html',
-    styleUrls: ['./home.component.css'],
+    styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit, AfterViewInit {
     @ViewChild('fractionSlideCarousel') fractionSlideCarousel!: ElementRef;

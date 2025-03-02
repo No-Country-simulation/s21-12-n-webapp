@@ -6,11 +6,10 @@ import { Router } from '@angular/router'; // Importa Router
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-login',
-  imports: [ReactiveFormsModule, CommonModule], // Agrega ReactiveFormsModule y CommonModule a imports
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.css',
-  standalone: true,
+    selector: 'app-login',
+    imports: [ReactiveFormsModule, CommonModule],
+    templateUrl: './login.component.html',
+    styleUrl: './login.component.css'
 })
 export class LoginComponent {
   private readonly fb = inject(FormBuilder);
@@ -28,7 +27,7 @@ export class LoginComponent {
         Swal.fire({
           title: '¡Felicidades!',
           text: 'Haz iniciado sesion correctamente',
-          imageUrl: 'check.png',
+          imageUrl: 'assets/check.png',
           imageWidth: 100,
           imageHeight: 100,
           confirmButtonText: 'Aceptar',

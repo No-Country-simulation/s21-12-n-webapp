@@ -3,32 +3,46 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl, ValidationErrors, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+
+import { GoogleMapsModule } from '@angular/google-maps';
 @Component({
-  selector: 'app-register',
-  imports: [
-    CommonModule,
-    ReactiveFormsModule
-  ],
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css'],
-  standalone: true,
+    selector: 'app-register',
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        GoogleMapsModule
+    ],
+    templateUrl: './register.component.html',
+    styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
   private readonly fb = inject(FormBuilder);
   private readonly router = inject(Router); // Asegúrate de inyectar el Router
   selectedRole: string = 'cliente'; // Inicializa con 'cliente'
 
+  currentPage: number = 1; // Inicializamos en la primera página
 
   registerForm: FormGroup = this.fb.group({
     name: ['', [Validators.required, Validators.minLength(4)]],
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]],
     confirmPassword: ['', [Validators.required]],
-    phone: ['', [Validators.required, Validators.minLength(11), Validators.pattern(/^\d{11}$/)]],
+    phone: ['', [Validators.required, Validators.pattern(/^\+\d{1,15}$/)]], // Permite números como +584266796897
     CUIT: [''], // Solo para barbería
+    address: [''], // Añadimos el campo de dirección
+    teamSize: [''] // Añadimos el campo de tamaño de equipo
   }, { validators: this.passwordsMatchValidator() });
 
 
+  // ... dentro de tu clase RegisterComponent
+
+nextPage() {
+  this.currentPage++;
+}
+
+previousPage() {
+  this.currentPage--;
+}
 
 
   private passwordsMatchValidator(): ValidatorFn {
@@ -61,7 +75,7 @@ export class RegisterComponent {
       Swal.fire({
         title: 'Registro Exitoso!',
         text: 'Te has registrado correctamente.',
-        imageUrl: 'check.png',
+        imageUrl: 'assets/check.png',
         imageWidth: 100,
         imageHeight: 100,
         confirmButtonText: 'Aceptar',
@@ -77,4 +91,21 @@ export class RegisterComponent {
       this.registerForm.markAllAsTouched();
     }
   }
+
+  //GOOGLE MAPS
+
+  center: google.maps.LatLngLiteral = { lat: 37.7749, lng: -122.4194 }; // Default to San Francisco
+  zoom = 12;
+ 
+  markers: google.maps.MarkerOptions[] = [
+    {
+      position: { lat: 37.7749, lng: -122.4194 },
+      title: 'Marker 1'
+    },
+    {
+      position: { lat: 37.7849, lng: -122.4294 },
+      title: 'Marker 2'
+    }
+  ];
+
 }
