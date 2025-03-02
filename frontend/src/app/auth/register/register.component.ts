@@ -10,7 +10,8 @@ import Swal from 'sweetalert2';
     ReactiveFormsModule
   ],
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
+  standalone: true,
 })
 export class RegisterComponent {
   private readonly fb = inject(FormBuilder);

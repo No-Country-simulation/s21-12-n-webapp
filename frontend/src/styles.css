@@ -1,1 +1,13 @@
-@import "tailwindcss";
+/* Importar Swiper primero */
+@import 'swiper/swiper-bundle.css';
+/* Directivas de Tailwind */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* Aquí van tus otras reglas CSS */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+/* Otras reglas CSS... */

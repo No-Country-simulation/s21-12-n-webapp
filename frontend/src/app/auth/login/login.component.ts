@@ -9,7 +9,8 @@ import Swal from 'sweetalert2';
   selector: 'app-login',
   imports: [ReactiveFormsModule, CommonModule], // Agrega ReactiveFormsModule y CommonModule a imports
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
+  standalone: true,
 })
 export class LoginComponent {
   private readonly fb = inject(FormBuilder);
