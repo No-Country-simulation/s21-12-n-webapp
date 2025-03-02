@@ -29,7 +29,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
                     spaceBetween: 20,
                 },
                 1024: {
-                    slidesPerView: 3,
+                    slidesPerView: 2.5,
                     spaceBetween: 20,
                 },
             },
