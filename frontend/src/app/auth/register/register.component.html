@@ -140,7 +140,7 @@
                         <div class="mt-4">
                             <input id="RegisterCUIT" placeholder="CUIT" formControlName="CUIT"
                                 class="block w-full px-4 py-2 border rounded-lg dark:bg-black dark:text-neutral-50 dark:border-neutral-50 focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring"
-                                type="text" />
+                                type="number" />
                             <div
                                 *ngIf="registerForm.get('CUIT')?.invalid && (registerForm.get('CUIT')?.touched || registerForm.get('CUIT')?.dirty)">
                                 <small *ngIf="registerForm.get('CUIT')?.errors?.['required']" class="text-red-500">El
@@ -210,14 +210,13 @@
 
                         <br>
                         <button type="button" (click)="nextPage()"
-                        [disabled]="registerForm.get('name')?.invalid || registerForm.get('email')?.invalid || registerForm.get('password')?.invalid || registerForm.get('confirmPassword')?.invalid || registerForm.get('phone')?.invalid || (selectedRole === 'barberia' && registerForm.get('CUIT')?.invalid)"
-                        [ngClass]="{
+                            [disabled]="registerForm.get('name')?.invalid || registerForm.get('email')?.invalid || registerForm.get('password')?.invalid || registerForm.get('confirmPassword')?.invalid || registerForm.get('phone')?.invalid || (selectedRole === 'barberia' && registerForm.get('CUIT')?.invalid)"
+                            [ngClass]="{
                             'bg-orange-200': registerForm.get('name')?.invalid || registerForm.get('email')?.invalid || registerForm.get('password')?.invalid || registerForm.get('confirmPassword')?.invalid || registerForm.get('phone')?.invalid || (selectedRole === 'barberia' && registerForm.get('CUIT')?.invalid),
                             'bg-amber-300 hover:bg-amber-400': !(registerForm.get('name')?.invalid || registerForm.get('email')?.invalid || registerForm.get('password')?.invalid || registerForm.get('confirmPassword')?.invalid || registerForm.get('phone')?.invalid || (selectedRole === 'barberia' && registerForm.get('CUIT')?.invalid))
-                        }"
-                        class="w-full py-3 rounded-md">
-                        Siguiente
-                    </button>
+                        }" class="w-full py-3 rounded-md">
+                            Siguiente
+                        </button>
                     </div>
 
                     <div *ngIf="currentPage === 2">
@@ -270,12 +269,12 @@
                         </div>
                         <br>
 
-                        <button type="button" (click)="nextPage()"[disabled]="registerForm.get('teamSize')?.invalid"
-                        [ngClass]="{
+                        <button type="button" (click)="nextPage()" [disabled]="registerForm.get('teamSize')?.invalid"
+                            [ngClass]="{
                         'bg-orange-300': registerForm.get('teamSize')?.invalid,
                         'bg-amber-300 hover:bg-amber-400': !registerForm.get('teamSize')?.invalid
                     }" class="w-full py-3 rounded-md">
-                        Siguiente
+                            Siguiente
                         </button>
                         <button type="button" (click)="previousPage()"
                             class="w-full py-3 rounded-md bg-neutral-600 hover:bg-neutral-700">
@@ -291,10 +290,9 @@
                             <h2 class="text-white text-xl mb-4">Horario de atención</h2>
                             <p class="text-gray-400 mb-4">¿En qué horarios pueden atenderse los clientes?</p>
                             <div *ngFor="let day of days; let i = index" class="mb-2">
-                                <div class="flex items-center justify-between p-3 rounded-lg bg-neutral-800">
+                                <div class="flex items-center p-3 rounded-lg bg-neutral-800"> 
                                     <div class="flex items-center">
-                                        <div
-                                            class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+                                        <div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
                                             <input type="checkbox" name="toggle" id="toggle_{{i}}"
                                                 class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"
                                                 [(ngModel)]="day.active" [ngModelOptions]="{standalone: true}">
@@ -303,11 +301,14 @@
                                             </label>
                                         </div>
                                         <span class="text-white">{{ day.name }}</span>
+                                    </div>
+                                    
+                                    <div class="flex-grow flex justify-center">
                                         <span class="text-gray-400" *ngIf="!day.hours">Registrar hora</span>
                                         <span class="text-gray-400" *ngIf="day.hours">{{ day.hours }}</span>
                                     </div>
-                                    <span class="text-gray-400"></span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 cursor-pointer"
+                                    
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 cursor-pointer ml-auto"
                                         fill="none" viewBox="0 0 24 24" stroke="currentColor" (click)="openModal(day)">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M9 5l7 7-7 7" />
@@ -316,8 +317,7 @@
                             </div>
                         </div>
                         <br>
-                        <button type="submit" [disabled]="registerForm.invalid"
-                        [ngClass]="{'bg-amber-300 hover:bg-amber-400': registerForm.valid, 
+                        <button type="submit" [disabled]="registerForm.invalid" [ngClass]="{'bg-amber-300 hover:bg-amber-400': registerForm.valid, 
                 'bg-orange-300': registerForm.invalid}" class="w-full py-3 rounded-md">
                             Registrarse
                         </button>

@@ -58,12 +58,18 @@ export class RegisterComponent {
     
     saveHours() {
         if (this.selectedDay) {
-            const startTimeHour = (document.querySelector('select[name="startTimeHour"]') as HTMLSelectElement).value;
-            const startTimeMinute = (document.querySelector('select[name="startTimeMinute"]') as HTMLSelectElement).value;
-            const endTimeHour = (document.querySelector('select[name="endTimeHour"]') as HTMLSelectElement).value;
-            const endTimeMinute = (document.querySelector('select[name="endTimeMinute"]') as HTMLSelectElement).value;
+            const startTimeHour = parseInt((document.querySelector('select[name="startTimeHour"]') as HTMLSelectElement).value, 10);
+            const startTimeMinute = parseInt((document.querySelector('select[name="startTimeMinute"]') as HTMLSelectElement).value, 10);
+            const endTimeHour = parseInt((document.querySelector('select[name="endTimeHour"]') as HTMLSelectElement).value, 10);
+            const endTimeMinute = parseInt((document.querySelector('select[name="endTimeMinute"]') as HTMLSelectElement).value, 10);
     
-            this.selectedDay.hours = `${startTimeHour}:${startTimeMinute} - ${endTimeHour}:${endTimeMinute}`;
+            // Validación: la hora de cierre debe ser posterior a la de apertura
+            if (endTimeHour < startTimeHour || (endTimeHour === startTimeHour && endTimeMinute <= startTimeMinute)) {
+                alert('La hora de cierre debe ser posterior a la hora de apertura.');
+                return; // Detiene la ejecución si la validación falla
+            }
+    
+            this.selectedDay.hours = `${this.pad(startTimeHour)}:${this.pad(startTimeMinute)} - ${this.pad(endTimeHour)}:${this.pad(endTimeMinute)}`;
     
             // Actualizar el campo 'horario' en el formulario
             const horariosActivos = this.days
@@ -72,12 +78,16 @@ export class RegisterComponent {
                 .join(', ');
     
             this.registerForm.get('horario')?.setValue(horariosActivos);
-            this.registerForm.get('horario')?.updateValueAndValidity();  // Asegura que el campo se valida nuevamente
+            this.registerForm.get('horario')?.updateValueAndValidity();
     
             this.showModal = false;
         }
     }
-   
+    
+    // Función auxiliar para agregar ceros a la izquierda (por ejemplo, 9 -> 09)
+    pad(num: number): string {
+        return num.toString().padStart(2, '0');
+    }
     nextPage() {
         this.currentPage++;
     }
