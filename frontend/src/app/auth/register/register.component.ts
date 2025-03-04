@@ -132,8 +132,6 @@ export class RegisterComponent {
             // Aquí puedes manejar los datos del formulario
             const formData = this.registerForm.value; // Obtén los datos del formulario
             console.log('Formulario enviado con éxito:', formData);
-            // Aquí puedes hacer algo con los datos, como guardarlos en localStorage o procesarlos
-            localStorage.setItem('userData', JSON.stringify(formData)); // Ejemplo de guardado en localStorage
             // Mostrar mensaje de éxito
             Swal.fire({
                 title: 'Registro Exitoso!',
