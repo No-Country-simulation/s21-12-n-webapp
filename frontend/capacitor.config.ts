@@ -2,7 +2,7 @@ import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'com.barbelink.app',
-  appName: 'barbelink',
+  appName: 'Barbelink',
   webDir: 'dist/barbelink/browser'
 };
 

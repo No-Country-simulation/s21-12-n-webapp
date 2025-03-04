@@ -29,7 +29,10 @@
             ],
             "scripts": [
               "node_modules/flowbite/dist/flowbite.min.js"
-            ]
+            ],
+            "allowedCommonJsDependencies": [
+              "sweetalert2" 
+            ] 
           },
           "configurations": {
             "production": {
