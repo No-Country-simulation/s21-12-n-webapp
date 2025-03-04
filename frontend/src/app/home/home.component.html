@@ -24,32 +24,14 @@
 
 <br>
 
-<form class="max-w-md mx-auto">
-  <div class="relative w-full max-w-xs sm:max-w-lg mx-auto">
-    <!-- Icono de búsqueda -->
-    <div class="absolute inset-y-0 start-0 flex items-center ps-2 sm:ps-3 pointer-events-none">
-      <svg class="w-4 h-4 sm:w-5 sm:h-5 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-        viewBox="0 0 20 20">
-        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-          d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-      </svg>
-    </div>
-  
-    <!-- Input de búsqueda -->
-    <input type="search" id="default-search" 
-      class="block w-full p-2 sm:p-4 ps-8 sm:ps-10 text-xs sm:text-sm text-white border
-       border-gray-300 rounded-lg bg-black focus:ring-amber-500 focus:border-amber-500" 
-       placeholder="Buscar ubicación" required />
-  
-    <!-- Botón de búsqueda -->
+<form class="px-4 max-w-md mx-auto">
+  <div class="flex gap-1 input">
     <button type="submit" 
-      class="text-black absolute end-2 bottom-1.5 sm:end-2.5 sm:bottom-2.5 bg-amber-400 hover:bg-amber-700 
-      focus:ring-4 focus:outline-none font-medium rounded-lg text-xs sm:text-sm px-3 py-1 sm:px-4 sm:py-2">
-      Buscar
+      class="">
+      <img src="assets/icons/Search.svg" class="opacity-60"/>
     </button>
+    <input type="text" id="default-search" class="w-full bg-transparent focus:ring-0 border-none text-neutral-00 placeholder-neutral-60" placeholder="Buscar ubicación" required />
   </div>
-  
-  
 </form>
 
 <br>

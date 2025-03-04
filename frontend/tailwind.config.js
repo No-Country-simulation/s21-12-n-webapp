@@ -1,57 +1,40 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-
-    "./src/**/*.{html,ts}", // add this line
-    "./node_modules/flowbite/**/*.js" // add this line
+    "./src/**/*.{html,ts}",
+    "./node_modules/flowbite/**/*.js" 
   ],
   theme: {
     extend: {},
   },
   plugins: [
-    require('flowbite/plugin') // add this line
+    require('flowbite/plugin') 
   ],
   theme: {
     extend: {
       colors: {
-        primary: {"50":"#eff6ff","100":"#dbeafe","200":"#bfdbfe","300":"#93c5fd","400":"#60a5fa","500":"#3b82f6","600":"#2563eb","700":"#1d4ed8","800":"#1e40af","900":"#1e3a8a","950":"#172554"}
+        'primary': '#F2D335',
+        'neutral-00':'#FDFDFD',
+        'neutral-20': '#CDCDCD',
+        'neutral-40': '#828282',
+        'neutral-60': '#6E6E6E',
+        'neutral-80': '#3F3F3F',
+        'neutral-90': '#1F1F1F',
+        'neutral-100': '#0F0F0F',
       }
     },
     fontFamily: {
-      'body': [
-    'Inter',
-    'ui-sans-serif',
-    'system-ui',
-    '-apple-system',
-    'system-ui',
-    'Segoe UI',
-    'Roboto',
-    'Helvetica Neue',
-    'Arial',
-    'Noto Sans',
-    'sans-serif',
-    'Apple Color Emoji',
-    'Segoe UI Emoji',
-    'Segoe UI Symbol',
-    'Noto Color Emoji'
-  ],
-      'sans': [
-    'Inter',
-    'ui-sans-serif',
-    'system-ui',
-    '-apple-system',
-    'system-ui',
-    'Segoe UI',
-    'Roboto',
-    'Helvetica Neue',
-    'Arial',
-    'Noto Sans',
-    'sans-serif',
-    'Apple Color Emoji',
-    'Segoe UI Emoji',
-    'Segoe UI Symbol',
-    'Noto Color Emoji'
-  ]
+      'thunder': 'Thunder',
+      'inter': 'Inter',
+      'body': ['Inter','ui-sans-serif'],
+      'sans': ['Inter','ui-sans-serif']
+    },
+    fontSize: {
+      '14':'14px',
+    },
+    borderRadius: {
+      '8': '8px',
+      '16': '16px'
     }
   }
 }
