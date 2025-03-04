@@ -14,8 +14,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class TokenService {
 
-
-    private String secret ="123";
+    @Value("${jwt.secret}")
+    private String secret;
 
     public String generarAccessToken(Usuario usuario) {
         return generarToken(usuario, 2, "ACCESS");
