@@ -1,5 +1,5 @@
 {
-  "name": "barberlink",
+  "name": "barbelink",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -19,6 +19,9 @@
     "@angular/platform-browser": "^19.2.0",
     "@angular/platform-browser-dynamic": "^19.2.0",
     "@angular/router": "^19.2.0",
+    "@angular/service-worker": "^19.2.0",
+    "@capacitor/android": "^7.0.1",
+    "@capacitor/core": "^7.0.1",
     "flowbite": "^2.3.0",
     "rxjs": "~7.8.0",
     "sweetalert2": "^11.17.2",
@@ -30,6 +33,7 @@
     "@angular-devkit/build-angular": "^19.2.0",
     "@angular/cli": "^19.2.0",
     "@angular/compiler-cli": "^19.2.0",
+    "@capacitor/cli": "^7.0.1",
     "@types/jasmine": "~5.1.0",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
