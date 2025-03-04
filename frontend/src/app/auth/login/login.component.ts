@@ -20,7 +20,7 @@ export class LoginComponent {
   public formBuild = inject(FormBuilder);
 
   loginForm: FormGroup = this.fb.group({
-    email: ['', [Validators.required, Validators.minLength(4)]],
+    email: ['', [Validators.required, Validators.email]],
     contrasena: ['', [Validators.required, Validators.minLength(6)]]
   });
 
