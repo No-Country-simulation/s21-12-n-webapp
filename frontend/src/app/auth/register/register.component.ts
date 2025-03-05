@@ -8,6 +8,7 @@ import { AuthService } from '../../services/auth.service';
 import { Cliente } from '../../models-interfaces/Cliente';
 import { Barberia } from '../../models-interfaces/Barberia';
 import { NotificacionesService } from '../../services/notificaciones.service';
+import { Login } from '../../models-interfaces/Login';
 
 @Component({
     selector: 'app-register',
@@ -25,47 +26,135 @@ export class RegisterComponent {
     private readonly router = inject(Router);
     private notificacionService = inject(NotificacionesService); // Inyectar servicio
     private authService = inject(AuthService);
-    selectedRole: string = 'cliente'; 
-    currentPage: number = 1; 
-    
-    
+    selectedRole: string = 'cliente';
+    currentPage: number = 1;
 
-    registerForm: FormGroup = this.fb.group({
+
+
+    public registerForm: FormGroup = this.fb.group({
         nombreCompleto: ['', [Validators.required, Validators.minLength(4)]],
         email: ['', [Validators.required, Validators.email]],
         contrasena: ['', [Validators.required, Validators.minLength(6)]],
         confirmPassword: ['', [Validators.required]],
         telefono: ['', [Validators.required, Validators.pattern(/^\+\d{1,15}$/), Validators.minLength(12), Validators.maxLength(15)]],
-        CUIT: [''], 
-        address: [''], 
-        teamSize: [''], 
-        horario: [''], 
     }, { validators: this.passwordsMatchValidator() });
 
-   
-    //registrarse(){
-    //    if(this.registerForm.invalid) return;
-//
-    //    const objeto:Cliente = {
-    //         nombre: this.registerForm.value.nombre,
-    //         correo: this.registerForm.value.correo,
-    //         clave: this.registerForm.value.clave
-    //    }
-//
-    //    this.authService.registroCliente(objeto).subscribe({
-    //         next: (data) =>{
-    //              if(data.isSuccess){
-    //                   this.router.navigate([''])
-    //              }else{
-    //                   alert("No se pudo registrar")
-    //              }
-    //         }, error:(error) =>{
-    //              console.log(error.message);
-    //         }
-    //    })
-//
-    //}
+ 
 
+
+    registroCliente() {
+        if (this.registerForm.invalid) return;
+        const objeto: Cliente = {
+            email: this.registerForm.value.email,
+            contrasena: this.registerForm.value.contrasena,
+            telefono: this.registerForm.value.telefono,
+            nombreCompleto: this.registerForm.value.nombreCompleto,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+        };
+        this.authService.registroCliente(objeto).subscribe({
+            next: (data) => {
+                console.log("Registro exitoso:", data);
+                this.loginUsuario(objeto.email, objeto.contrasena); // Llama al método de login
+            },
+            error: (error) => {
+                this.notificacionService.showMessage('El email ya está registrado. Por favor, utiliza otro email.', 'error');
+            }
+        });
+    }
+
+
+
+
+    loginUsuario(email: string, contrasena: string) {
+        const loginObject: Login = {
+            email: email,
+            contrasena: contrasena
+        };
+
+        this.authService.login(loginObject).subscribe({
+            next: (response) => {
+                if (response && response.accessToken) {
+                    localStorage.setItem('token', response.accessToken);
+                    this.notificacionService.showMessage('¡Se ha registrado su cuenta exitosamente!', 'success');
+                    this.router.navigate(['/']);
+                } else {
+                    this.notificacionService.showMessage('Error', 'error');
+                }
+            },
+            error: (error) => {
+                console.error("Error en el login:", error);
+
+                let message = 'Error al intentar iniciar sesión después del registro.';
+
+                if (error.status === 0) {
+                    message = 'Has perdido la conexión a Internet. Por favor, intenta más tarde.';
+                } else if (error.status === 401) {
+                    message = 'Credenciales incorrectas.';
+                }
+
+                this.notificacionService.showMessage(message, 'error');
+            }
+        });
+    }
+
+    public registerBarberiaForm: FormGroup = this.fb.group({
+        nombreBarberia: ['', [Validators.required, Validators.minLength(4)]],
+        email: ['', [Validators.required, Validators.email]],
+        contrasena: ['', [Validators.required, Validators.minLength(6)]],
+        confirmPassword: ['', [Validators.required]],
+        telefono: ['', [Validators.required, Validators.pattern(/^\+\d{1,15}$/), Validators.minLength(12), Validators.maxLength(15)]],
+        cuilResponsable: [''],
+        direccion: [''],
+        teamSize: [''],
+        horario: [''],
+    }, { validators: this.passwordsMatchValidator() });
+    
+    registroBarberia(): void {
+        if (this.registerBarberiaForm.valid) {
+            const formData: Barberia = {
+                nombreBarberia: this.registerBarberiaForm.value.nombreBarberia,
+                email: this.registerBarberiaForm.value.email,
+                contrasena: this.registerBarberiaForm.value.contrasena,
+                telefono: this.registerBarberiaForm.value.telefono,
+                cuilResponsable: this.registerBarberiaForm.value.cuilResponsable,
+                direccion: this.registerBarberiaForm.value.direccion,
+                teamSize: this.registerBarberiaForm.value.teamSize,
+                horario: this.registerBarberiaForm.value.horario,
+            };
+
+            this.authService.registroBarberia(formData).subscribe({
+                next: (response) => {
+                    console.log('Registro de barbería exitoso:', response);
+                    this.loginUsuario(formData.email, formData.contrasena); // Iniciar sesión después del registro
+                },
+                error: (error) => {
+                    console.error('Error en el registro de barbería:', error);
+                    let message = 'Ocurrió un error al registrar la barbería. Inténtalo de nuevo.';
+
+                    if (error.status === 0) {
+                        message = 'Has perdido la conexión a Internet. Por favor, intenta más tarde.';
+                    } else if (error.status === 409) {
+                        message = 'El email ya está registrado. Por favor, utiliza otro email.';
+                    } else if (error.status === 500) {
+                        if (error.error && error.error.detalle && error.error.detalle.includes('Duplicate entry')) {
+                            message = 'El email ya está registrado. Por favor, utiliza otro email.';
+                        }
+                    }
+
+                    this.notificacionService.showMessage(message, 'error');
+                }
+            });
+        } else {
+            this.registerBarberiaForm.markAllAsTouched();
+        }
+    }
+
+
+// Agrega este método en tu clase RegisterComponent
+hasSelectedDays(): boolean {
+    return this.days.some(day => day.active);
+}
     days = [
         { name: 'Lunes', active: false, hours: '' },
         { name: 'Martes', active: false, hours: '' },
@@ -88,35 +177,36 @@ export class RegisterComponent {
     closeModal() {
         this.showModal = false;
     }
-    
+
     saveHours() {
         if (this.selectedDay) {
             const startTimeHour = parseInt((document.querySelector('select[name="startTimeHour"]') as HTMLSelectElement).value, 10);
             const startTimeMinute = parseInt((document.querySelector('select[name="startTimeMinute"]') as HTMLSelectElement).value, 10);
             const endTimeHour = parseInt((document.querySelector('select[name="endTimeHour"]') as HTMLSelectElement).value, 10);
             const endTimeMinute = parseInt((document.querySelector('select[name="endTimeMinute"]') as HTMLSelectElement).value, 10);
-    
+
             // Validación: la hora de cierre debe ser posterior a la de apertura
             if (endTimeHour < startTimeHour || (endTimeHour === startTimeHour && endTimeMinute <= startTimeMinute)) {
-                alert('La hora de cierre debe ser posterior a la hora de apertura.');
+             
+                this.notificacionService.showMessage('La hora de cierre debe ser posterior a la hora de apertura', 'error');
                 return; // Detiene la ejecución si la validación falla
             }
-    
+
             this.selectedDay.hours = `${this.pad(startTimeHour)}:${this.pad(startTimeMinute)} - ${this.pad(endTimeHour)}:${this.pad(endTimeMinute)}`;
-    
+
             // Actualizar el campo 'horario' en el formulario
             const horariosActivos = this.days
                 .filter(day => day.active && day.hours)
                 .map(day => `${day.name}: ${day.hours}`)
                 .join(', ');
-    
-            this.registerForm.get('horario')?.setValue(horariosActivos);
-            this.registerForm.get('horario')?.updateValueAndValidity();
-    
+
+            this.registerBarberiaForm.get('horario')?.setValue(horariosActivos);
+            this.registerBarberiaForm.get('horario')?.updateValueAndValidity();
+
             this.showModal = false;
         }
     }
-    
+
     // Función auxiliar para agregar ceros a la izquierda (por ejemplo, 9 -> 09)
     pad(num: number): string {
         return num.toString().padStart(2, '0');
@@ -139,123 +229,32 @@ export class RegisterComponent {
         this.updateBarberiaValidators();
     }
     private updateBarberiaValidators() {
-        const cuitControl = this.registerForm.get('CUIT');
-        const addressControl = this.registerForm.get('address');
-        const teamSizeControl = this.registerForm.get('teamSize');
-        const horarioControl = this.registerForm.get('horario');
+        const cuilResponsableControl = this.registerBarberiaForm.get('cuilResponsable');
+        const direccionControl = this.registerBarberiaForm.get('direccion');
+        const teamSizeControl = this.registerBarberiaForm.get('teamSize');
+        const horarioControl = this.registerBarberiaForm.get('horario');
         if (this.selectedRole === 'barberia') {
-            cuitControl?.setValidators([Validators.required]);
-            addressControl?.setValidators([Validators.required, Validators.minLength(4), Validators.pattern(/^[a-zA-Z0-9,. -]*$/)]);
+            cuilResponsableControl?.setValidators([Validators.required]);
+            direccionControl?.setValidators([Validators.required, Validators.minLength(4), Validators.pattern(/^[a-zA-Z0-9,. -]*$/)]);
             teamSizeControl?.setValidators([Validators.required]);
             horarioControl?.setValidators([Validators.required]);
         } else {
-            cuitControl?.clearValidators();
-            addressControl?.clearValidators();
+            cuilResponsableControl?.clearValidators();
+            direccionControl?.clearValidators();
             teamSizeControl?.clearValidators();
             horarioControl?.clearValidators();
         }
-        
-        cuitControl?.updateValueAndValidity();
-        addressControl?.updateValueAndValidity();
+
+        cuilResponsableControl?.updateValueAndValidity();
+        direccionControl?.updateValueAndValidity();
         teamSizeControl?.updateValueAndValidity();
         horarioControl?.updateValueAndValidity();
     }
 
- registroCliente(): void {
-        if (this.registerForm.valid) {
-            // Aquí puedes manejar los datos del formulario
-            const formData = this.registerForm.value; // Obtén los datos del formulario
-            console.log('Formulario enviado con éxito:', formData);
-            // Mostrar mensaje de éxito
-            Swal.fire({
-                title: 'Registro Exitoso!',
-                text: 'Te has registrado correctamente.',
-                imageUrl: 'assets/check.png',
-                imageWidth: 100,
-                imageHeight: 100,
-                confirmButtonText: 'Aceptar',
-                background: '#000',
-                color: '#fff',
-                confirmButtonColor: '#FFD700',
-                didClose: () => {
-                    this.router.navigate(['/']).then(() => {});
-                },
-            });
-        } else {
-            this.registerForm.markAllAsTouched(); // Marca todos los campos como tocados para mostrar errores
-        }
-    }
 
-    registroCliente2() {
-        if (this.registerForm.invalid) {
-          this.registerForm.markAllAsTouched();
-          return;
-        }
-      
-        const objeto: Cliente = {
-          email: this.registerForm.value.email,
-          contrasena: this.registerForm.value.password,
-          telefono: this.registerForm.value.telefono,
-          nombreCompleto: this.registerForm.value.name,
-          createdAt: new Date(), 
-          updatedAt: new Date()
-        };
-      
-        this.authService.registroCliente(objeto).subscribe({
-          next: (data) => {
-            if (data && data.accessToken) {
-              localStorage.setItem("token", data.accessToken);
-              this.notificacionService.showMessage('¡Te has registrado correctamente!', 'success');
-              this.router.navigate(['/']);
-            } else {
-              this.notificacionService.showMessage('Hubo un problema con el registro. Intenta nuevamente.', 'error');
-            }
-          },
-          error: (error) => {
-            console.error("Error al registrar:", error);
-            
-            // Verifica si el error contiene detalles más específicos
-            let message = 'Ocurrió un error al registrar tu cuenta';
-      
-            if (error.error) {
-              if (error.error === 'El correo electrónico ya está registrado.') {
-                message = 'El correo electrónico ya está registrado.';
-              } else {
-                message = error.error; // Muestra el mensaje de error del backend
-              }
-            }
-      
-            this.notificacionService.showMessage(message, 'error');
-          }
-        });
-      }
-      
-      
-    registroBarberia(): void {
-        if (this.registerForm.valid) {
-            // Aquí puedes manejar los datos del formulario
-            const formData = this.registerForm.value; // Obtén los datos del formulario
-            console.log('Formulario enviado con éxito:', formData);
-            // Mostrar mensaje de éxito
-            Swal.fire({
-                title: 'Registro Exitoso!',
-                text: 'Te has registrado correctamente.',
-                imageUrl: 'assets/check.png',
-                imageWidth: 100,
-                imageHeight: 100,
-                confirmButtonText: 'Aceptar',
-                background: '#000',
-                color: '#fff',
-                confirmButtonColor: '#FFD700',
-                didClose: () => {
-                    this.router.navigate(['/']).then(() => {});
-                },
-            });
-        } else {
-            this.registerForm.markAllAsTouched(); // Marca todos los campos como tocados para mostrar errores
-        }
-    }
-   
+
+
+
     //GOOGLE MAPS
     center: google.maps.LatLngLiteral = { lat: 37.7749, lng: -122.4194 };
     zoom = 12;

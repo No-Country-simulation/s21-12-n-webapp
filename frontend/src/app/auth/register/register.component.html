@@ -42,6 +42,7 @@
                     Barberia
                 </button>
             </div>
+  
             <form [formGroup]="registerForm" (ngSubmit)="registroCliente()">
 
                 <div *ngIf="selectedRole === 'cliente'">
@@ -58,7 +59,7 @@
                         </div>
                     </div>
                     <div class="mt-4">
-                        <input id="RegisterEmailAddress" placeholder="Correo" formControlName="email"
+                        <input id="RegisterEmaildireccion" placeholder="Correo" formControlName="email"
                             class="block w-full px-4 py-2 border rounded-lg dark:bg-black dark:text-neutral-50 dark:border-neutral-50 focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring"
                             type="email" />
                         <div
@@ -113,7 +114,7 @@
                             <small class="text-red-500">Las contraseñas no coinciden.</small>
                         </div>
                     </div>
-
+              
                     <br>
                     <button type="submit" [disabled]="registerForm.invalid" [ngClass]="
                     {'bg-amber-300 hover:bg-amber-400': registerForm.valid, 
@@ -121,44 +122,46 @@
                         Registrarse
                     </button>>
                 </div>
+              
+              </form>
+              
 
-            </form>
-
-            <form [formGroup]="registerForm" (ngSubmit)="registroBarberia()">
+            <form [formGroup]="registerBarberiaForm" (ngSubmit)="registroBarberia()">
                 <div *ngIf="selectedRole === 'barberia'">
                     <div *ngIf="currentPage === 1">
                         <div class="mt-4">
-                            <input id="RegisterName" placeholder="Nombre del barbero o barberia" formControlName="nombreCompleto"
+                            <input id="RegisterName" placeholder="Nombre del barbero o barberia" formControlName="nombreBarberia"
                                 class="block w-full px-4 py-2 border rounded-lg dark:bg-black dark:text-neutral-50 dark:border-neutral-50 focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring"
                                 type="text" />
                             <div
-                                *ngIf="registerForm.get('nombreCompleto')?.invalid && (registerForm.get('nombreCompleto')?.touched || registerForm.get('nombreCompleto')?.dirty)">
-                                <small *ngIf="registerForm.get('nombreCompleto')?.errors?.['required']" class="text-red-500">El
+                                *ngIf="registerBarberiaForm.get('nombreBarberia')?.invalid && (registerBarberiaForm.get('nombreBarberia')?.touched || 
+                                registerBarberiaForm.get('nombreBarberia')?.dirty)">
+                                <small *ngIf="registerBarberiaForm.get('nombreBarberia')?.errors?.['required']" class="text-red-500">El
                                     nombre
                                     es obligatorio.</small>
-                                <small *ngIf="registerForm.get('nombreCompleto')?.errors?.['minlength']" class="text-red-500">El
+                                <small *ngIf="registerBarberiaForm.get('nombreBarberia')?.errors?.['minlength']" class="text-red-500">El
                                     nombre debe tener al menos 4 caracteres.</small>
                             </div>
                         </div>
                         <div class="mt-4">
-                            <input id="RegisterCUIT" placeholder="CUIT" formControlName="CUIT"
+                            <input id="RegistercuilResponsable" placeholder="CUIT" formControlName="cuilResponsable"
                                 class="block w-full px-4 py-2 border rounded-lg dark:bg-black dark:text-neutral-50 dark:border-neutral-50 focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring"
                                 type="number" />
                             <div
-                                *ngIf="registerForm.get('CUIT')?.invalid && (registerForm.get('CUIT')?.touched || registerForm.get('CUIT')?.dirty)">
-                                <small *ngIf="registerForm.get('CUIT')?.errors?.['required']" class="text-red-500">El
+                                *ngIf="registerBarberiaForm.get('cuilResponsable')?.invalid && (registerBarberiaForm.get('cuilResponsable')?.touched || registerBarberiaForm.get('cuilResponsable')?.dirty)">
+                                <small *ngIf="registerBarberiaForm.get('cuilResponsable')?.errors?.['required']" class="text-red-500">El
                                     CUIT es obligatorio.</small>
                             </div>
                         </div>
                         <div class="mt-4">
-                            <input id="RegisterEmailAddress" placeholder="Correo" formControlName="email"
+                            <input id="RegisterEmaildireccion" placeholder="Correo" formControlName="email"
                                 class="block w-full px-4 py-2 border rounded-lg dark:bg-black dark:text-neutral-50 dark:border-neutral-50 focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring"
                                 type="email" />
                             <div
-                                *ngIf="registerForm.get('email')?.invalid && (registerForm.get('email')?.touched || registerForm.get('email')?.dirty)">
-                                <small *ngIf="registerForm.get('email')?.errors?.['required']" class="text-red-500">El
+                                *ngIf="registerBarberiaForm.get('email')?.invalid && (registerBarberiaForm.get('email')?.touched || registerBarberiaForm.get('email')?.dirty)">
+                                <small *ngIf="registerBarberiaForm.get('email')?.errors?.['required']" class="text-red-500">El
                                     correo es obligatorio.</small>
-                                <small *ngIf="registerForm.get('email')?.errors?.['email']" class="text-red-500">El
+                                <small *ngIf="registerBarberiaForm.get('email')?.errors?.['email']" class="text-red-500">El
                                     correo
                                     debe ser un formato válido.</small>
                             </div>
@@ -168,15 +171,15 @@
                                 class="block w-full px-4 py-2 border rounded-lg dark:bg-black dark:text-neutral-50 dark:border-neutral-50 focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring"
                                 type="tel" />
                             <div
-                                *ngIf="registerForm.get('telefono')?.invalid && (registerForm.get('telefono')?.touched || registerForm.get('telefono')?.dirty)">
-                                <small *ngIf="registerForm.get('telefono')?.errors?.['minlength']" class="text-red-500">
+                                *ngIf="registerBarberiaForm.get('telefono')?.invalid && (registerBarberiaForm.get('telefono')?.touched || registerBarberiaForm.get('telefono')?.dirty)">
+                                <small *ngIf="registerBarberiaForm.get('telefono')?.errors?.['minlength']" class="text-red-500">
                                     El numero de telefono le faltan digitos.</small>
-                                <small *ngIf="registerForm.get('telefono')?.errors?.['maxlength']" class="text-red-500">
+                                <small *ngIf="registerBarberiaForm.get('telefono')?.errors?.['maxlength']" class="text-red-500">
                                     El numero de telefono debe de tener un formato valido.</small>
-                                <small *ngIf="registerForm.get('telefono')?.errors?.['required']" class="text-red-500">El
+                                <small *ngIf="registerBarberiaForm.get('telefono')?.errors?.['required']" class="text-red-500">El
                                     número de teléfono es obligatorio.</small>
                                 <br>
-                                <small *ngIf="registerForm.get('telefono')?.errors?.['pattern']" class="text-red-500">El
+                                <small *ngIf="registerBarberiaForm.get('telefono')?.errors?.['pattern']" class="text-red-500">El
                                     número
                                     de teléfono debe ser un número válido (ejemplo: +54123456789).</small>
                             </div>
@@ -186,11 +189,11 @@
                                 class="block w-full px-4 py-2 border rounded-lg dark:bg-black dark:text-neutral-50 dark:border-neutral-50 focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring"
                                 type="password" />
                             <div
-                                *ngIf="registerForm.get('contrasena')?.invalid && (registerForm.get('contrasena')?.touched || registerForm.get('contrasena')?.dirty)">
-                                <small *ngIf="registerForm.get('contrasena')?.errors?.['required']"
+                                *ngIf="registerBarberiaForm.get('contrasena')?.invalid && (registerBarberiaForm.get('contrasena')?.touched || registerBarberiaForm.get('contrasena')?.dirty)">
+                                <small *ngIf="registerBarberiaForm.get('contrasena')?.errors?.['required']"
                                     class="text-red-500">La
                                     contraseña es obligatoria.</small>
-                                <small *ngIf="registerForm.get('contrasena')?.errors?.['minlength']"
+                                <small *ngIf="registerBarberiaForm.get('contrasena')?.errors?.['minlength']"
                                     class="text-red-500">La
                                     contraseña debe tener al menos 6 caracteres.</small>
                             </div>
@@ -201,22 +204,22 @@
                                 class="block w-full px-4 py-2 border rounded-lg dark:bg-black dark:text-neutral-50 dark:border-neutral-50 focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring"
                                 type="password" />
                             <div
-                                *ngIf="registerForm.get('confirmPassword')?.invalid && (registerForm.get('confirmPassword')?.touched || registerForm.get('confirmPassword')?.dirty)">
-                                <small *ngIf="registerForm.get('confirmPassword')?.errors?.['required']"
+                                *ngIf="registerBarberiaForm.get('confirmPassword')?.invalid && (registerBarberiaForm.get('confirmPassword')?.touched || registerBarberiaForm.get('confirmPassword')?.dirty)">
+                                <small *ngIf="registerBarberiaForm.get('confirmPassword')?.errors?.['required']"
                                     class="text-red-500">La confirmación de contraseña es obligatoria.</small>
                             </div>
                             <div
-                                *ngIf="registerForm.errors?.['mismatch'] && (registerForm.get('confirmPassword')?.touched || registerForm.get('confirmPassword')?.dirty)">
+                                *ngIf="registerBarberiaForm.errors?.['mismatch'] && (registerBarberiaForm.get('confirmPassword')?.touched || registerBarberiaForm.get('confirmPassword')?.dirty)">
                                 <small class="text-red-500">Las contraseñas no coinciden.</small>
                             </div>
                         </div>
 
                         <br>
                         <button type="button" (click)="nextPage()"
-                            [disabled]="registerForm.get('name')?.invalid || registerForm.get('email')?.invalid || registerForm.get('password')?.invalid || registerForm.get('confirmPassword')?.invalid || registerForm.get('telefono')?.invalid || (selectedRole === 'barberia' && registerForm.get('CUIT')?.invalid)"
+                            [disabled]="registerBarberiaForm.get('name')?.invalid || registerBarberiaForm.get('email')?.invalid || registerBarberiaForm.get('password')?.invalid || registerBarberiaForm.get('confirmPassword')?.invalid || registerBarberiaForm.get('telefono')?.invalid || (selectedRole === 'barberia' && registerBarberiaForm.get('cuilResponsable')?.invalid)"
                             [ngClass]="{
-                            'bg-orange-200': registerForm.get('name')?.invalid || registerForm.get('email')?.invalid || registerForm.get('password')?.invalid || registerForm.get('confirmPassword')?.invalid || registerForm.get('telefono')?.invalid || (selectedRole === 'barberia' && registerForm.get('CUIT')?.invalid),
-                            'bg-amber-300 hover:bg-amber-400': !(registerForm.get('name')?.invalid || registerForm.get('email')?.invalid || registerForm.get('password')?.invalid || registerForm.get('confirmPassword')?.invalid || registerForm.get('telefono')?.invalid || (selectedRole === 'barberia' && registerForm.get('CUIT')?.invalid))
+                            'bg-orange-200': registerBarberiaForm.get('name')?.invalid || registerBarberiaForm.get('email')?.invalid || registerBarberiaForm.get('password')?.invalid || registerBarberiaForm.get('confirmPassword')?.invalid || registerBarberiaForm.get('telefono')?.invalid || (selectedRole === 'barberia' && registerBarberiaForm.get('cuilResponsable')?.invalid),
+                            'bg-amber-300 hover:bg-amber-400': !(registerBarberiaForm.get('name')?.invalid || registerBarberiaForm.get('email')?.invalid || registerBarberiaForm.get('password')?.invalid || registerBarberiaForm.get('confirmPassword')?.invalid || registerBarberiaForm.get('telefono')?.invalid || (selectedRole === 'barberia' && registerBarberiaForm.get('cuilResponsable')?.invalid))
                         }" class="w-full py-3 rounded-md">
                             Siguiente
                         </button>
@@ -224,25 +227,25 @@
 
                     <div *ngIf="currentPage === 2">
                         <div class="mt-4" *ngIf="selectedRole === 'barberia'">
-                            <input id="RegisterAddress" placeholder="Dirección" formControlName="address"
+                            <input id="Registerdireccion" placeholder="Dirección" formControlName="direccion"
                                 class="block w-full px-4 py-2 border rounded-lg dark:bg-black dark:text-neutral-50 dark:border-neutral-50 focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring"
                                 type="text" />
                             <div
-                                *ngIf="registerForm.get('address')?.invalid && (registerForm.get('address')?.touched || registerForm.get('address')?.dirty)">
-                                <small *ngIf="registerForm.get('address')?.errors?.['required']" class="text-red-500">La
+                                *ngIf="registerBarberiaForm.get('direccion')?.invalid && (registerBarberiaForm.get('direccion')?.touched || registerBarberiaForm.get('direccion')?.dirty)">
+                                <small *ngIf="registerBarberiaForm.get('direccion')?.errors?.['required']" class="text-red-500">La
                                     dirección es obligatoria.</small>
-                                <small *ngIf="registerForm.get('address')?.errors?.['minlength']"
+                                <small *ngIf="registerBarberiaForm.get('direccion')?.errors?.['minlength']"
                                     class="text-red-500">La dirección debe tener al menos 4 caracteres.</small>
-                                <small *ngIf="registerForm.get('address')?.errors?.['pattern']" class="text-red-500">La
+                                <small *ngIf="registerBarberiaForm.get('direccion')?.errors?.['pattern']" class="text-red-500">La
                                     dirección solo puede contener letras, números, comas, puntos y guiones.</small>
                             </div>
                         </div>
                         <br>
 
-                        <button type="button" (click)="nextPage()" [disabled]="registerForm.get('address')?.invalid"
+                        <button type="button" (click)="nextPage()" [disabled]="registerBarberiaForm.get('direccion')?.invalid"
                             [ngClass]="{
-                            'bg-orange-300': registerForm.get('address')?.invalid,
-                            'bg-amber-300 hover:bg-amber-400': !registerForm.get('address')?.invalid
+                            'bg-orange-300': registerBarberiaForm.get('direccion')?.invalid,
+                            'bg-amber-300 hover:bg-amber-400': !registerBarberiaForm.get('direccion')?.invalid
                         }" class="w-full py-3 rounded-md">
                             Siguiente
                         </button>
@@ -263,19 +266,19 @@
                                 <option value="mas-6">Más de 6 empleados</option>
                             </select>
                             <div
-                                *ngIf="registerForm.get('teamSize')?.invalid && (registerForm.get('teamSize')?.touched || registerForm.get('teamSize')?.dirty)">
+                                *ngIf="registerBarberiaForm.get('teamSize')?.invalid && (registerBarberiaForm.get('teamSize')?.touched || registerBarberiaForm.get('teamSize')?.dirty)">
                                 <div
-                                    *ngIf="registerForm.get('teamSize')?.invalid && (registerForm.get('teamSize')?.touched || registerForm.get('teamSize')?.dirty)">
+                                    *ngIf="registerBarberiaForm.get('teamSize')?.invalid && (registerBarberiaForm.get('teamSize')?.touched || registerBarberiaForm.get('teamSize')?.dirty)">
                                     <small class="text-red-500">El tamaño del equipo es obligatorio.</small>
                                 </div>
                             </div>
                         </div>
                         <br>
 
-                        <button type="button" (click)="nextPage()" [disabled]="registerForm.get('teamSize')?.invalid"
+                        <button type="button" (click)="nextPage()" [disabled]="registerBarberiaForm.get('teamSize')?.invalid"
                             [ngClass]="{
-                        'bg-orange-300': registerForm.get('teamSize')?.invalid,
-                        'bg-amber-300 hover:bg-amber-400': !registerForm.get('teamSize')?.invalid
+                        'bg-orange-300': registerBarberiaForm.get('teamSize')?.invalid,
+                        'bg-amber-300 hover:bg-amber-400': !registerBarberiaForm.get('teamSize')?.invalid
                     }" class="w-full py-3 rounded-md">
                             Siguiente
                         </button>
@@ -320,11 +323,15 @@
                             </div>
                         </div>
                         <br>
-                        <button type="submit" [disabled]="registerForm.invalid" [ngClass]="{'bg-amber-300 hover:bg-amber-400': registerForm.valid, 
-                'bg-orange-300': registerForm.invalid}" class="w-full py-3 rounded-md">
-                            Registrarse
-                        </button>
-
+                        <button type="submit" 
+                        [disabled]="registerBarberiaForm.invalid || !hasSelectedDays()" 
+                        [ngClass]="{
+                            'bg-amber-300 hover:bg-amber-400': registerBarberiaForm.valid && hasSelectedDays(),
+                            'bg-orange-300': (registerBarberiaForm.invalid || !hasSelectedDays())
+                        }" 
+                        class="w-full py-3 rounded-md">
+                    Registrarse
+                </button>
                         <button type="button" (click)="previousPage()"
                             class="w-full py-3 rounded-md bg-neutral-600 hover:bg-neutral-700">
                             Anterior
