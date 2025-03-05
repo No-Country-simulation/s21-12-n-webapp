@@ -23,16 +23,16 @@
                 </p>
             </div>
 
-            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <form [formGroup]="loginForm" (ngSubmit)="iniciarSesion()">
                 <div class="mt-4">
-                    <input id="LoggingName" placeholder="Usuario" formControlName="usuario" class="block w-full px-4 py-2  border rounded-lg dark:bg-black dark:text-neutral-50 dark:border-neutral-50
-                focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring" type="text" />
+                    <input id="LoggingName" placeholder="Email" formControlName="email" class="block w-full px-4 py-2  border rounded-lg dark:bg-black dark:text-neutral-50 dark:border-neutral-50
+                focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring" type="email"/>
                     <div
-                        *ngIf="loginForm.get('usuario')?.invalid && (loginForm.get('usuario')?.touched || loginForm.get('usuario')?.dirty)">
-                        <small *ngIf="loginForm.get('usuario')?.errors?.['required']" class="text-red-500">El usuario es
-                            obligatorio.</small>
-                        <small *ngIf="loginForm.get('usuario')?.errors?.['minlength']" class="text-red-500">El usuario
-                            debe de tener al menos 4 caracteres.</small>
+                        *ngIf="loginForm.get('email')?.invalid && (loginForm.get('email')?.touched || loginForm.get('email')?.dirty)">
+                        <small *ngIf="loginForm.get('email')?.errors?.['required']" class="text-red-500">El
+                            correo es obligatorio.</small>
+                        <small *ngIf="loginForm.get('email')?.errors?.['email']" class="text-red-500">El correo
+                            debe ser un formato válido.</small>
                     </div>
                 </div>
 

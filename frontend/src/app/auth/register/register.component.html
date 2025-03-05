@@ -42,18 +42,18 @@
                     Barberia
                 </button>
             </div>
-            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <form [formGroup]="registerForm" (ngSubmit)="registroCliente()">
 
                 <div *ngIf="selectedRole === 'cliente'">
                     <div class="mt-4">
-                        <input id="RegisterName" placeholder="Nombre del usuario" formControlName="name"
+                        <input id="RegisterName" placeholder="Nombre del usuario" formControlName="nombreCompleto"
                             class="block w-full px-4 py-2 border rounded-lg dark:bg-black dark:text-neutral-50 dark:border-neutral-50 focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring"
                             type="text" />
                         <div
-                            *ngIf="registerForm.get('name')?.invalid && (registerForm.get('name')?.touched || registerForm.get('name')?.dirty)">
-                            <small *ngIf="registerForm.get('name')?.errors?.['required']" class="text-red-500">El nombre
+                            *ngIf="registerForm.get('nombreCompleto')?.invalid && (registerForm.get('nombreCompleto')?.touched || registerForm.get('nombreCompleto')?.dirty)">
+                            <small *ngIf="registerForm.get('nombreCompleto')?.errors?.['required']" class="text-red-500">El nombre
                                 es obligatorio.</small>
-                            <small *ngIf="registerForm.get('name')?.errors?.['minlength']" class="text-red-500">El
+                            <small *ngIf="registerForm.get('nombreCompleto')?.errors?.['minlength']" class="text-red-500">El
                                 nombre debe tener al menos 4 caracteres.</small>
                         </div>
                     </div>
@@ -70,31 +70,31 @@
                         </div>
                     </div>
                     <div class="mt-4">
-                        <input id="RegisterTel" placeholder="Número de teléfono" formControlName="phone"
+                        <input id="RegisterTel" placeholder="Número de teléfono" formControlName="telefono"
                             class="block w-full px-4 py-2 border rounded-lg dark:bg-black dark:text-neutral-50 dark:border-neutral-50 focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring"
                             type="tel" />
                         <div
-                            *ngIf="registerForm.get('phone')?.invalid && (registerForm.get('phone')?.touched || registerForm.get('phone')?.dirty)">
-                            <small *ngIf="registerForm.get('phone')?.errors?.['minlength']" class="text-red-500">
+                            *ngIf="registerForm.get('telefono')?.invalid && (registerForm.get('telefono')?.touched || registerForm.get('telefono')?.dirty)">
+                            <small *ngIf="registerForm.get('telefono')?.errors?.['minlength']" class="text-red-500">
                                 El numero de telefono le faltan digitos.</small>
-                            <small *ngIf="registerForm.get('phone')?.errors?.['maxlength']" class="text-red-500">
+                            <small *ngIf="registerForm.get('telefono')?.errors?.['maxlength']" class="text-red-500">
                                 El numero de telefono debe de tener un formato valido.</small>
-                            <small *ngIf="registerForm.get('phone')?.errors?.['required']" class="text-red-500">El
+                            <small *ngIf="registerForm.get('telefono')?.errors?.['required']" class="text-red-500">El
                                 número de teléfono es obligatorio.</small>
                             <br>
-                            <small *ngIf="registerForm.get('phone')?.errors?.['pattern']" class="text-red-500">El número
+                            <small *ngIf="registerForm.get('telefono')?.errors?.['pattern']" class="text-red-500">El número
                                 de teléfono debe ser un número válido (ejemplo: +54123456789).</small>
                         </div>
                     </div>
                     <div class="mt-4">
-                        <input id="RegisterPassword" placeholder="Contraseña" formControlName="password"
+                        <input id="RegisterPassword" placeholder="Contraseña" formControlName="contrasena"
                             class="block w-full px-4 py-2 border rounded-lg dark:bg-black dark:text-neutral-50 dark:border-neutral-50 focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring"
                             type="password" />
                         <div
-                            *ngIf="registerForm.get('password')?.invalid && (registerForm.get('password')?.touched || registerForm.get('password')?.dirty)">
-                            <small *ngIf="registerForm.get('password')?.errors?.['required']" class="text-red-500">La
+                            *ngIf="registerForm.get('contrasena')?.invalid && (registerForm.get('contrasena')?.touched || registerForm.get('contrasena')?.dirty)">
+                            <small *ngIf="registerForm.get('contrasena')?.errors?.['required']" class="text-red-500">La
                                 contraseña es obligatoria.</small>
-                            <small *ngIf="registerForm.get('password')?.errors?.['minlength']" class="text-red-500">La
+                            <small *ngIf="registerForm.get('contrasena')?.errors?.['minlength']" class="text-red-500">La
                                 contraseña debe tener al menos 6 caracteres.</small>
                         </div>
                     </div>
@@ -122,18 +122,21 @@
                     </button>>
                 </div>
 
+            </form>
+
+            <form [formGroup]="registerForm" (ngSubmit)="registroBarberia()">
                 <div *ngIf="selectedRole === 'barberia'">
                     <div *ngIf="currentPage === 1">
                         <div class="mt-4">
-                            <input id="RegisterName" placeholder="Nombre del barbero o barberia" formControlName="name"
+                            <input id="RegisterName" placeholder="Nombre del barbero o barberia" formControlName="nombreCompleto"
                                 class="block w-full px-4 py-2 border rounded-lg dark:bg-black dark:text-neutral-50 dark:border-neutral-50 focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring"
                                 type="text" />
                             <div
-                                *ngIf="registerForm.get('name')?.invalid && (registerForm.get('name')?.touched || registerForm.get('name')?.dirty)">
-                                <small *ngIf="registerForm.get('name')?.errors?.['required']" class="text-red-500">El
+                                *ngIf="registerForm.get('nombreCompleto')?.invalid && (registerForm.get('nombreCompleto')?.touched || registerForm.get('nombreCompleto')?.dirty)">
+                                <small *ngIf="registerForm.get('nombreCompleto')?.errors?.['required']" class="text-red-500">El
                                     nombre
                                     es obligatorio.</small>
-                                <small *ngIf="registerForm.get('name')?.errors?.['minlength']" class="text-red-500">El
+                                <small *ngIf="registerForm.get('nombreCompleto')?.errors?.['minlength']" class="text-red-500">El
                                     nombre debe tener al menos 4 caracteres.</small>
                             </div>
                         </div>
@@ -161,33 +164,33 @@
                             </div>
                         </div>
                         <div class="mt-4">
-                            <input id="RegisterTel" placeholder="Número de teléfono" formControlName="phone"
+                            <input id="RegisterTel" placeholder="Número de teléfono" formControlName="telefono"
                                 class="block w-full px-4 py-2 border rounded-lg dark:bg-black dark:text-neutral-50 dark:border-neutral-50 focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring"
                                 type="tel" />
                             <div
-                                *ngIf="registerForm.get('phone')?.invalid && (registerForm.get('phone')?.touched || registerForm.get('phone')?.dirty)">
-                                <small *ngIf="registerForm.get('phone')?.errors?.['minlength']" class="text-red-500">
+                                *ngIf="registerForm.get('telefono')?.invalid && (registerForm.get('telefono')?.touched || registerForm.get('telefono')?.dirty)">
+                                <small *ngIf="registerForm.get('telefono')?.errors?.['minlength']" class="text-red-500">
                                     El numero de telefono le faltan digitos.</small>
-                                <small *ngIf="registerForm.get('phone')?.errors?.['maxlength']" class="text-red-500">
+                                <small *ngIf="registerForm.get('telefono')?.errors?.['maxlength']" class="text-red-500">
                                     El numero de telefono debe de tener un formato valido.</small>
-                                <small *ngIf="registerForm.get('phone')?.errors?.['required']" class="text-red-500">El
+                                <small *ngIf="registerForm.get('telefono')?.errors?.['required']" class="text-red-500">El
                                     número de teléfono es obligatorio.</small>
                                 <br>
-                                <small *ngIf="registerForm.get('phone')?.errors?.['pattern']" class="text-red-500">El
+                                <small *ngIf="registerForm.get('telefono')?.errors?.['pattern']" class="text-red-500">El
                                     número
                                     de teléfono debe ser un número válido (ejemplo: +54123456789).</small>
                             </div>
                         </div>
                         <div class="mt-4">
-                            <input id="RegisterPassword" placeholder="Contraseña" formControlName="password"
+                            <input id="RegisterPassword" placeholder="Contraseña" formControlName="contrasena"
                                 class="block w-full px-4 py-2 border rounded-lg dark:bg-black dark:text-neutral-50 dark:border-neutral-50 focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring"
                                 type="password" />
                             <div
-                                *ngIf="registerForm.get('password')?.invalid && (registerForm.get('password')?.touched || registerForm.get('password')?.dirty)">
-                                <small *ngIf="registerForm.get('password')?.errors?.['required']"
+                                *ngIf="registerForm.get('contrasena')?.invalid && (registerForm.get('contrasena')?.touched || registerForm.get('contrasena')?.dirty)">
+                                <small *ngIf="registerForm.get('contrasena')?.errors?.['required']"
                                     class="text-red-500">La
                                     contraseña es obligatoria.</small>
-                                <small *ngIf="registerForm.get('password')?.errors?.['minlength']"
+                                <small *ngIf="registerForm.get('contrasena')?.errors?.['minlength']"
                                     class="text-red-500">La
                                     contraseña debe tener al menos 6 caracteres.</small>
                             </div>
@@ -210,10 +213,10 @@
 
                         <br>
                         <button type="button" (click)="nextPage()"
-                            [disabled]="registerForm.get('name')?.invalid || registerForm.get('email')?.invalid || registerForm.get('password')?.invalid || registerForm.get('confirmPassword')?.invalid || registerForm.get('phone')?.invalid || (selectedRole === 'barberia' && registerForm.get('CUIT')?.invalid)"
+                            [disabled]="registerForm.get('name')?.invalid || registerForm.get('email')?.invalid || registerForm.get('password')?.invalid || registerForm.get('confirmPassword')?.invalid || registerForm.get('telefono')?.invalid || (selectedRole === 'barberia' && registerForm.get('CUIT')?.invalid)"
                             [ngClass]="{
-                            'bg-orange-200': registerForm.get('name')?.invalid || registerForm.get('email')?.invalid || registerForm.get('password')?.invalid || registerForm.get('confirmPassword')?.invalid || registerForm.get('phone')?.invalid || (selectedRole === 'barberia' && registerForm.get('CUIT')?.invalid),
-                            'bg-amber-300 hover:bg-amber-400': !(registerForm.get('name')?.invalid || registerForm.get('email')?.invalid || registerForm.get('password')?.invalid || registerForm.get('confirmPassword')?.invalid || registerForm.get('phone')?.invalid || (selectedRole === 'barberia' && registerForm.get('CUIT')?.invalid))
+                            'bg-orange-200': registerForm.get('name')?.invalid || registerForm.get('email')?.invalid || registerForm.get('password')?.invalid || registerForm.get('confirmPassword')?.invalid || registerForm.get('telefono')?.invalid || (selectedRole === 'barberia' && registerForm.get('CUIT')?.invalid),
+                            'bg-amber-300 hover:bg-amber-400': !(registerForm.get('name')?.invalid || registerForm.get('email')?.invalid || registerForm.get('password')?.invalid || registerForm.get('confirmPassword')?.invalid || registerForm.get('telefono')?.invalid || (selectedRole === 'barberia' && registerForm.get('CUIT')?.invalid))
                         }" class="w-full py-3 rounded-md">
                             Siguiente
                         </button>
@@ -410,7 +413,7 @@
                                     </select>
                                 </div>
                             </div>
-
+<!-->-->
                             <div class="flex justify-end">
                                 <button (click)="closeModal()"
                                     class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded mr-2">Cancelar</button>

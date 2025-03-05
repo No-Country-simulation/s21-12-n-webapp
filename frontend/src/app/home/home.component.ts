@@ -1,18 +1,39 @@
-import { Component, OnInit, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, AfterViewInit, inject } from '@angular/core';
 import { initFlowbite } from 'flowbite';
 import Swiper from 'swiper';
+import { AuthService } from '../services/auth.service';
+import { CommonModule } from '@angular/common';
+import { NotificacionesService } from '../services/notificaciones.service';
 
 @Component({
     selector: 'app-home',
-    imports: [],
+    imports: [CommonModule],
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit, AfterViewInit {
+
+
+
+    private notificacionService = inject(NotificacionesService); // Inyectar servicio
+
     @ViewChild('fractionSlideCarousel') fractionSlideCarousel!: ElementRef;
+
+
+    constructor(private authService: AuthService) { }
+
+    isLoggedIn: boolean = false;
+
+    cerrarSesion(): void {
+        this.authService.logout(); // Llama al servicio de logout
+        this.isLoggedIn = false;   // Actualiza la variable para reflejar el cambio en la UI
+        this.notificacionService.showMessage('¡Has cerrado sesión correctamente!', 'success'); // Muestra la notificación
+    }
+
 
     ngOnInit(): void {
         initFlowbite();
+        this.isLoggedIn = this.authService.isAuthenticated();
     }
 
     ngAfterViewInit(): void {
