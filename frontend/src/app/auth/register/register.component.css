@@ -8,3 +8,24 @@ input[type="number"] {
     -moz-appearance: textfield;
     appearance: textfield;
 }
+
+.btn-siguiente {
+    background-color: #f59e0b; /* Color para estado válido */
+    transition: background-color 0.3s;
+}
+.btn-siguiente.invalid {
+    background-color: #d97706; /* Color para estado inválido */
+    cursor: not-allowed; /* Cambiar el cursor para indicar que está deshabilitado */
+}
+
+/* styles.css o register.component.css */
+.toggle-checkbox:checked {
+    @apply: right-0 border-amber-400;
+    right: 0;
+    border-color: #f59e0b; /* Amber 400 */
+  }
+  
+  .toggle-checkbox:checked + .toggle-label {
+    @apply: bg-amber-400;
+    background-color: #f59e0b; /* Amber 400 */
+  }

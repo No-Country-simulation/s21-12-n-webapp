@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { noauthGuard } from './guard/noauth.guard';
 import { authGuard } from './guard/auth.guard';
 
 
@@ -22,6 +21,6 @@ export const routes: Routes = [
             import('./auth/register/register.component').then(
                 (c) => c.RegisterComponent
             ),
-        canActivate: [authGuard],
+     //   canActivate: [authGuard],
     },
 ];

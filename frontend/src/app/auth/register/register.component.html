@@ -1,68 +1,439 @@
-<div class="mx-auto mt-8 rounded-lg p-4">
-
-    <div
-        class="flex w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-lg dark:bg-neutral-950 lg:max-w-4xl">
-        <div class="hidden bg-cover lg:block lg:w-1/2" style="background-image: url('registro.png');"></div>
-
-        <div class="w-full px-6 py-8 md:px-8 lg:w-1/2">
-            <div class="flex justify-center mx-auto">
-                <img class="w-auto h-7 sm:h-8" src="barberlink.png" alt="">
+<div class="h-screen w-screen p-4 flex items-center justify-center">
+    <div class="flex w-full full overflow-hidden bg-neutral-950 rounded-lg shadow-lg dark:bg-neutral-950">
+        <div class="hidden bg-cover lg:block lg:w-1/2"
+            style="background-image: url('assets/images/img-register.webp'); background-position: 70% 30%;"></div>
+        <div class="w-full px-6 py-8 md:px-8 lg:w-1/2 max-h-[600px] overflow-y-auto mx-auto my-auto">
+            <div class="flex justify-center">
+                <div class="flex items-center space-x-2">
+                    <img class="w-auto h-7 sm:h-8" src="assets/barbelink.png" alt="">
+                    <a href="/" class="text-amber-600 dark:text-yellow-400">
+                        BARBELINK
+                    </a>
+                </div>
             </div>
-
-            <p class="mt-3 text-xl text-center text-amber-600 dark:text-yellow-400">
-                BARBERLINK
-            </p>
-
-
 
             <div class="flex items-center justify-between mt-4">
                 <h1 class="mx-auto text-white text-3xl">Empieza ahora</h1>
-
             </div>
-            <div class="flex items-center justify-between mt-4">
+
+            <div *ngIf="selectedRole === 'cliente'" class="flex items-center justify-between mt-4">
                 <p class="mx-auto text-white text-lg text-center">Crea una cuenta para descubrir barberias
                     <br>
                     y reservar tu corte favorito
                 </p>
             </div>
 
-            <div class="mt-4">
-                <input id="LoggingName" placeholder="Nombre del usuario" class="block w-full px-4 py-2  border rounded-lg dark:bg-black dark:text-neutral-50 dark:border-neutral-50
-                focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring" type="text" />
+            <div *ngIf="selectedRole === 'barberia'" class="flex items-center justify-between mt-4">
+                <p class="mx-auto text-white text-lg text-center">Crea un perfil para que
+                    <br>
+                    mas clientes encuentren tu negocio
+                </p>
             </div>
 
-            <div class="mt-4">
-                <input id="LoggingEmailAddress" placeholder="Correo" class="block w-full px-4 py-2  border rounded-lg dark:bg-black dark:text-neutral-50 dark:border-neutral-50
-                focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring" type="email" />
-            </div>
-
-            <div class="mt-4">
-                <input id="LoggingTel" placeholder="Numero de telefono" 
-                       class="block w-full px-4 py-2 border rounded-lg dark:bg-black dark:text-neutral-50 dark:border-neutral-50 focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring" 
-                       type="number" inputmode="numeric" />
-            </div>
-
-            <div class="mt-4">
-                <input id="loggingPassword" placeholder="Contraseña" class="block w-full px-4 py-2 
-                 border rounded-lg dark:bg-black dark:text-neutral-50 dark:border-neutral-50
-                focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring" type="password" />
-            </div>
-
-            <div class="mt-6">
-                <button class="bg-amber-400 hover:bg-amber-500 w-full py-3 rounded-md cursor-pointer ">
-                    Registrase
+            <div class="flex place-content-between gap-1">
+                <button (click)="selectRole('cliente')"
+                    [ngClass]="{'bg-amber-400 hover:bg-amber-500': selectedRole === 'cliente', 'bg-neutral-600 hover:bg-neutral-700': selectedRole !== 'cliente'}"
+                    class="w-full py-3 rounded-md cursor-pointer ">
+                    Cliente
+                </button>
+                <button (click)="selectRole('barberia')"
+                    [ngClass]="{'bg-amber-400 hover:bg-amber-500': selectedRole === 'barberia', 'bg-neutral-600 hover:bg-neutral-700': selectedRole !== 'barberia'}"
+                    class="w-full py-3 rounded-md cursor-pointer ">
+                    Barberia
                 </button>
             </div>
+            <form [formGroup]="registerForm" (ngSubmit)="registroCliente()">
 
-            <div class="flex items-center justify-between mt-4">
-                <span class="w-1/5 border-b dark:border-gray-600 md:w-1/4"></span>
+                <div *ngIf="selectedRole === 'cliente'">
+                    <div class="mt-4">
+                        <input id="RegisterName" placeholder="Nombre del usuario" formControlName="nombreCompleto"
+                            class="block w-full px-4 py-2 border rounded-lg dark:bg-black dark:text-neutral-50 dark:border-neutral-50 focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring"
+                            type="text" />
+                        <div
+                            *ngIf="registerForm.get('nombreCompleto')?.invalid && (registerForm.get('nombreCompleto')?.touched || registerForm.get('nombreCompleto')?.dirty)">
+                            <small *ngIf="registerForm.get('nombreCompleto')?.errors?.['required']" class="text-red-500">El nombre
+                                es obligatorio.</small>
+                            <small *ngIf="registerForm.get('nombreCompleto')?.errors?.['minlength']" class="text-red-500">El
+                                nombre debe tener al menos 4 caracteres.</small>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <input id="RegisterEmailAddress" placeholder="Correo" formControlName="email"
+                            class="block w-full px-4 py-2 border rounded-lg dark:bg-black dark:text-neutral-50 dark:border-neutral-50 focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring"
+                            type="email" />
+                        <div
+                            *ngIf="registerForm.get('email')?.invalid && (registerForm.get('email')?.touched || registerForm.get('email')?.dirty)">
+                            <small *ngIf="registerForm.get('email')?.errors?.['required']" class="text-red-500">El
+                                correo es obligatorio.</small>
+                            <small *ngIf="registerForm.get('email')?.errors?.['email']" class="text-red-500">El correo
+                                debe ser un formato válido.</small>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <input id="RegisterTel" placeholder="Número de teléfono" formControlName="telefono"
+                            class="block w-full px-4 py-2 border rounded-lg dark:bg-black dark:text-neutral-50 dark:border-neutral-50 focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring"
+                            type="tel" />
+                        <div
+                            *ngIf="registerForm.get('telefono')?.invalid && (registerForm.get('telefono')?.touched || registerForm.get('telefono')?.dirty)">
+                            <small *ngIf="registerForm.get('telefono')?.errors?.['minlength']" class="text-red-500">
+                                El numero de telefono le faltan digitos.</small>
+                            <small *ngIf="registerForm.get('telefono')?.errors?.['maxlength']" class="text-red-500">
+                                El numero de telefono debe de tener un formato valido.</small>
+                            <small *ngIf="registerForm.get('telefono')?.errors?.['required']" class="text-red-500">El
+                                número de teléfono es obligatorio.</small>
+                            <br>
+                            <small *ngIf="registerForm.get('telefono')?.errors?.['pattern']" class="text-red-500">El número
+                                de teléfono debe ser un número válido (ejemplo: +54123456789).</small>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <input id="RegisterPassword" placeholder="Contraseña" formControlName="contrasena"
+                            class="block w-full px-4 py-2 border rounded-lg dark:bg-black dark:text-neutral-50 dark:border-neutral-50 focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring"
+                            type="password" />
+                        <div
+                            *ngIf="registerForm.get('contrasena')?.invalid && (registerForm.get('contrasena')?.touched || registerForm.get('contrasena')?.dirty)">
+                            <small *ngIf="registerForm.get('contrasena')?.errors?.['required']" class="text-red-500">La
+                                contraseña es obligatoria.</small>
+                            <small *ngIf="registerForm.get('contrasena')?.errors?.['minlength']" class="text-red-500">La
+                                contraseña debe tener al menos 6 caracteres.</small>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <input id="RegisterConfirmPassword" placeholder="Confirmar contraseña"
+                            formControlName="confirmPassword"
+                            class="block w-full px-4 py-2 border rounded-lg dark:bg-black dark:text-neutral-50 dark:border-neutral-50 focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring"
+                            type="password" />
+                        <div
+                            *ngIf="registerForm.get('confirmPassword')?.invalid && (registerForm.get('confirmPassword')?.touched || registerForm.get('confirmPassword')?.dirty)">
+                            <small *ngIf="registerForm.get('confirmPassword')?.errors?.['required']"
+                                class="text-red-500">La confirmación de contraseña es obligatoria.</small>
+                        </div>
+                        <div
+                            *ngIf="registerForm.errors?.['mismatch'] && (registerForm.get('confirmPassword')?.touched || registerForm.get('confirmPassword')?.dirty)">
+                            <small class="text-red-500">Las contraseñas no coinciden.</small>
+                        </div>
+                    </div>
 
-                <a href="#" class="text-xs text-gray-500 uppercase dark:text-gray-400 hover:underline">¿Ya tienes
-                    cuenta? Inicia session </a>
+                    <br>
+                    <button type="submit" [disabled]="registerForm.invalid" [ngClass]="
+                    {'bg-amber-300 hover:bg-amber-400': registerForm.valid, 
+                'bg-orange-300': registerForm.invalid}" class="w-full py-3 rounded-md">
+                        Registrarse
+                    </button>>
+                </div>
 
-                <span class="w-1/5 border-b dark:border-gray-600 md:w-1/4"></span>
+            </form>
+
+            <form [formGroup]="registerForm" (ngSubmit)="registroBarberia()">
+                <div *ngIf="selectedRole === 'barberia'">
+                    <div *ngIf="currentPage === 1">
+                        <div class="mt-4">
+                            <input id="RegisterName" placeholder="Nombre del barbero o barberia" formControlName="nombreCompleto"
+                                class="block w-full px-4 py-2 border rounded-lg dark:bg-black dark:text-neutral-50 dark:border-neutral-50 focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring"
+                                type="text" />
+                            <div
+                                *ngIf="registerForm.get('nombreCompleto')?.invalid && (registerForm.get('nombreCompleto')?.touched || registerForm.get('nombreCompleto')?.dirty)">
+                                <small *ngIf="registerForm.get('nombreCompleto')?.errors?.['required']" class="text-red-500">El
+                                    nombre
+                                    es obligatorio.</small>
+                                <small *ngIf="registerForm.get('nombreCompleto')?.errors?.['minlength']" class="text-red-500">El
+                                    nombre debe tener al menos 4 caracteres.</small>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <input id="RegisterCUIT" placeholder="CUIT" formControlName="CUIT"
+                                class="block w-full px-4 py-2 border rounded-lg dark:bg-black dark:text-neutral-50 dark:border-neutral-50 focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring"
+                                type="number" />
+                            <div
+                                *ngIf="registerForm.get('CUIT')?.invalid && (registerForm.get('CUIT')?.touched || registerForm.get('CUIT')?.dirty)">
+                                <small *ngIf="registerForm.get('CUIT')?.errors?.['required']" class="text-red-500">El
+                                    CUIT es obligatorio.</small>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <input id="RegisterEmailAddress" placeholder="Correo" formControlName="email"
+                                class="block w-full px-4 py-2 border rounded-lg dark:bg-black dark:text-neutral-50 dark:border-neutral-50 focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring"
+                                type="email" />
+                            <div
+                                *ngIf="registerForm.get('email')?.invalid && (registerForm.get('email')?.touched || registerForm.get('email')?.dirty)">
+                                <small *ngIf="registerForm.get('email')?.errors?.['required']" class="text-red-500">El
+                                    correo es obligatorio.</small>
+                                <small *ngIf="registerForm.get('email')?.errors?.['email']" class="text-red-500">El
+                                    correo
+                                    debe ser un formato válido.</small>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <input id="RegisterTel" placeholder="Número de teléfono" formControlName="telefono"
+                                class="block w-full px-4 py-2 border rounded-lg dark:bg-black dark:text-neutral-50 dark:border-neutral-50 focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring"
+                                type="tel" />
+                            <div
+                                *ngIf="registerForm.get('telefono')?.invalid && (registerForm.get('telefono')?.touched || registerForm.get('telefono')?.dirty)">
+                                <small *ngIf="registerForm.get('telefono')?.errors?.['minlength']" class="text-red-500">
+                                    El numero de telefono le faltan digitos.</small>
+                                <small *ngIf="registerForm.get('telefono')?.errors?.['maxlength']" class="text-red-500">
+                                    El numero de telefono debe de tener un formato valido.</small>
+                                <small *ngIf="registerForm.get('telefono')?.errors?.['required']" class="text-red-500">El
+                                    número de teléfono es obligatorio.</small>
+                                <br>
+                                <small *ngIf="registerForm.get('telefono')?.errors?.['pattern']" class="text-red-500">El
+                                    número
+                                    de teléfono debe ser un número válido (ejemplo: +54123456789).</small>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <input id="RegisterPassword" placeholder="Contraseña" formControlName="contrasena"
+                                class="block w-full px-4 py-2 border rounded-lg dark:bg-black dark:text-neutral-50 dark:border-neutral-50 focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring"
+                                type="password" />
+                            <div
+                                *ngIf="registerForm.get('contrasena')?.invalid && (registerForm.get('contrasena')?.touched || registerForm.get('contrasena')?.dirty)">
+                                <small *ngIf="registerForm.get('contrasena')?.errors?.['required']"
+                                    class="text-red-500">La
+                                    contraseña es obligatoria.</small>
+                                <small *ngIf="registerForm.get('contrasena')?.errors?.['minlength']"
+                                    class="text-red-500">La
+                                    contraseña debe tener al menos 6 caracteres.</small>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <input id="RegisterConfirmPassword" placeholder="Confirmar contraseña"
+                                formControlName="confirmPassword"
+                                class="block w-full px-4 py-2 border rounded-lg dark:bg-black dark:text-neutral-50 dark:border-neutral-50 focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring"
+                                type="password" />
+                            <div
+                                *ngIf="registerForm.get('confirmPassword')?.invalid && (registerForm.get('confirmPassword')?.touched || registerForm.get('confirmPassword')?.dirty)">
+                                <small *ngIf="registerForm.get('confirmPassword')?.errors?.['required']"
+                                    class="text-red-500">La confirmación de contraseña es obligatoria.</small>
+                            </div>
+                            <div
+                                *ngIf="registerForm.errors?.['mismatch'] && (registerForm.get('confirmPassword')?.touched || registerForm.get('confirmPassword')?.dirty)">
+                                <small class="text-red-500">Las contraseñas no coinciden.</small>
+                            </div>
+                        </div>
+
+                        <br>
+                        <button type="button" (click)="nextPage()"
+                            [disabled]="registerForm.get('name')?.invalid || registerForm.get('email')?.invalid || registerForm.get('password')?.invalid || registerForm.get('confirmPassword')?.invalid || registerForm.get('telefono')?.invalid || (selectedRole === 'barberia' && registerForm.get('CUIT')?.invalid)"
+                            [ngClass]="{
+                            'bg-orange-200': registerForm.get('name')?.invalid || registerForm.get('email')?.invalid || registerForm.get('password')?.invalid || registerForm.get('confirmPassword')?.invalid || registerForm.get('telefono')?.invalid || (selectedRole === 'barberia' && registerForm.get('CUIT')?.invalid),
+                            'bg-amber-300 hover:bg-amber-400': !(registerForm.get('name')?.invalid || registerForm.get('email')?.invalid || registerForm.get('password')?.invalid || registerForm.get('confirmPassword')?.invalid || registerForm.get('telefono')?.invalid || (selectedRole === 'barberia' && registerForm.get('CUIT')?.invalid))
+                        }" class="w-full py-3 rounded-md">
+                            Siguiente
+                        </button>
+                    </div>
+
+                    <div *ngIf="currentPage === 2">
+                        <div class="mt-4" *ngIf="selectedRole === 'barberia'">
+                            <input id="RegisterAddress" placeholder="Dirección" formControlName="address"
+                                class="block w-full px-4 py-2 border rounded-lg dark:bg-black dark:text-neutral-50 dark:border-neutral-50 focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring"
+                                type="text" />
+                            <div
+                                *ngIf="registerForm.get('address')?.invalid && (registerForm.get('address')?.touched || registerForm.get('address')?.dirty)">
+                                <small *ngIf="registerForm.get('address')?.errors?.['required']" class="text-red-500">La
+                                    dirección es obligatoria.</small>
+                                <small *ngIf="registerForm.get('address')?.errors?.['minlength']"
+                                    class="text-red-500">La dirección debe tener al menos 4 caracteres.</small>
+                                <small *ngIf="registerForm.get('address')?.errors?.['pattern']" class="text-red-500">La
+                                    dirección solo puede contener letras, números, comas, puntos y guiones.</small>
+                            </div>
+                        </div>
+                        <br>
+
+                        <button type="button" (click)="nextPage()" [disabled]="registerForm.get('address')?.invalid"
+                            [ngClass]="{
+                            'bg-orange-300': registerForm.get('address')?.invalid,
+                            'bg-amber-300 hover:bg-amber-400': !registerForm.get('address')?.invalid
+                        }" class="w-full py-3 rounded-md">
+                            Siguiente
+                        </button>
+                        <button type="button" (click)="previousPage()"
+                            class="w-full py-3 rounded-md bg-neutral-600 hover:bg-neutral-700">
+                            Anterior
+                        </button>
+                    </div>
+
+                    <div *ngIf="currentPage === 3">
+                        <div class="mt-4">
+                            <select formControlName="teamSize"
+                                class="block w-full px-4 py-2 border rounded-lg dark:bg-black dark:text-neutral-50 dark:border-neutral-50 focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring">
+                                <option value="" disabled selected>Selecciona el tamaño de tu equipo</option>
+                                <option value="solo">Solo yo</option>
+                                <option value="2-3">2-3 empleados</option>
+                                <option value="4-6">4-6 empleados</option>
+                                <option value="mas-6">Más de 6 empleados</option>
+                            </select>
+                            <div
+                                *ngIf="registerForm.get('teamSize')?.invalid && (registerForm.get('teamSize')?.touched || registerForm.get('teamSize')?.dirty)">
+                                <div
+                                    *ngIf="registerForm.get('teamSize')?.invalid && (registerForm.get('teamSize')?.touched || registerForm.get('teamSize')?.dirty)">
+                                    <small class="text-red-500">El tamaño del equipo es obligatorio.</small>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+
+                        <button type="button" (click)="nextPage()" [disabled]="registerForm.get('teamSize')?.invalid"
+                            [ngClass]="{
+                        'bg-orange-300': registerForm.get('teamSize')?.invalid,
+                        'bg-amber-300 hover:bg-amber-400': !registerForm.get('teamSize')?.invalid
+                    }" class="w-full py-3 rounded-md">
+                            Siguiente
+                        </button>
+                        <button type="button" (click)="previousPage()"
+                            class="w-full py-3 rounded-md bg-neutral-600 hover:bg-neutral-700">
+                            Anterior
+                        </button>
+                    </div>
+
+
+
+
+                    <div *ngIf="currentPage === 4">
+                        <div class="mt-4">
+                            <h2 class="text-white text-xl mb-4">Horario de atención</h2>
+                            <p class="text-gray-400 mb-4">¿En qué horarios pueden atenderse los clientes?</p>
+                            <div *ngFor="let day of days; let i = index" class="mb-2">
+                                <div class="flex items-center p-3 rounded-lg bg-neutral-800"> 
+                                    <div class="flex items-center">
+                                        <div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+                                            <input type="checkbox" name="toggle" id="toggle_{{i}}"
+                                                class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"
+                                                [(ngModel)]="day.active" [ngModelOptions]="{standalone: true}">
+                                            <label for="toggle_{{i}}"
+                                                class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer">
+                                            </label>
+                                        </div>
+                                        <span class="text-white">{{ day.name }}</span>
+                                    </div>
+                                    
+                                    <div class="flex-grow flex justify-center">
+                                        <span class="text-gray-400" *ngIf="!day.hours">Registrar hora</span>
+                                        <span class="text-gray-400" *ngIf="day.hours">{{ day.hours }}</span>
+                                    </div>
+                                    
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 cursor-pointer ml-auto"
+                                        fill="none" viewBox="0 0 24 24" stroke="currentColor" (click)="openModal(day)">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 5l7 7-7 7" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <button type="submit" [disabled]="registerForm.invalid" [ngClass]="{'bg-amber-300 hover:bg-amber-400': registerForm.valid, 
+                'bg-orange-300': registerForm.invalid}" class="w-full py-3 rounded-md">
+                            Registrarse
+                        </button>
+
+                        <button type="button" (click)="previousPage()"
+                            class="w-full py-3 rounded-md bg-neutral-600 hover:bg-neutral-700">
+                            Anterior
+                        </button>
+                    </div>
+
+
+
+                    <!--Modal de horas-->
+                    <div *ngIf="showModal"
+                        class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+                        <div class="bg-neutral-900 p-6 rounded-lg w-96">
+
+                            <h2 class="text-white text-lg mb-4">{{ selectedDay.name }}</h2>
+
+                            <div class="mb-4">
+                                <label class="block text-gray-400 mb-2">Apertura:</label>
+                                <div class="flex items-center">
+                                    <select name="startTimeHour" class="bg-neutral-800 text-white p-2 rounded mr-2">
+                                        <option value="00">00</option>
+                                        <option value="01">01</option>
+                                        <option value="02">02</option>
+                                        <option value="03">03</option>
+                                        <option value="04">04</option>
+                                        <option value="05">05</option>
+                                        <option value="06">06</option>
+                                        <option value="07">07</option>
+                                        <option value="08">08</option>
+                                        <option value="09">09</option>
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                        <option value="12">12</option>
+                                        <option value="13">13</option>
+                                        <option value="14">14</option>
+                                        <option value="15">15</option>
+                                        <option value="16">16</option>
+                                        <option value="17">17</option>
+                                        <option value="18">18</option>
+                                        <option value="19">19</option>
+                                        <option value="20">20</option>
+                                        <option value="21">21</option>
+                                        <option value="22">22</option>
+                                        <option value="23">23</option>
+                                    </select>
+                                    <span class="text-white">:</span>
+                                    <select name="startTimeMinute" class="bg-neutral-800 text-white p-2 rounded ml-2">
+                                        <option value="00">00</option>
+                                        <option value="30">30</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="block text-gray-400 mb-2">Cierre:</label>
+                                <div class="flex items-center">
+                                    <select name="endTimeHour" class="bg-neutral-800 text-white p-2 rounded mr-2">
+                                        <option value="00">00</option>
+                                        <option value="01">01</option>
+                                        <option value="02">02</option>
+                                        <option value="03">03</option>
+                                        <option value="04">04</option>
+                                        <option value="05">05</option>
+                                        <option value="06">06</option>
+                                        <option value="07">07</option>
+                                        <option value="08">08</option>
+                                        <option value="09">09</option>
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                        <option value="12">12</option>
+                                        <option value="13">13</option>
+                                        <option value="14">14</option>
+                                        <option value="15">15</option>
+                                        <option value="16">16</option>
+                                        <option value="17">17</option>
+                                        <option value="18">18</option>
+                                        <option value="19">19</option>
+                                        <option value="20">20</option>
+                                        <option value="21">21</option>
+                                        <option value="22">22</option>
+                                        <option value="23">23</option>
+                                    </select>
+                                    <span class="text-white">:</span>
+                                    <select name="endTimeMinute" class="bg-neutral-800 text-white p-2 rounded ml-2">
+                                        <option value="00">00</option>
+                                        <option value="30">30</option>
+                                    </select>
+                                </div>
+                            </div>
+<!-->-->
+                            <div class="flex justify-end">
+                                <button (click)="closeModal()"
+                                    class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded mr-2">Cancelar</button>
+                                <button (click)="saveHours()"
+                                    class="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded">Guardar</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </form>
+            <div class="flex items-center justify-center space-x-2 mt-4">
+                <span class="text-xs text-gray-500 dark:text-gray-400">¿Ya tienes cuenta?&nbsp;</span>
+                <a href="/login" class="text-xs text-amber-500 dark:text-amber-400 hover:underline"> Inicia sesion</a>
             </div>
         </div>
     </div>
+
+
 
 </div>

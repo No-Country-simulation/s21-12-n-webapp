@@ -1,0 +1,15 @@
+/* CSS Code */
+.swiper-wrapper {
+    width: 100%;
+    height: max-content !important;
+    padding-bottom: 64px !important;
+    -webkit-transition-timing-function: linear !important;
+    transition-timing-function: linear !important;
+    position: relative;
+    }
+    .swiper-pagination-current {
+    color: #111827 !important;
+    }
+    .swiper-pagination-total {
+    color: #9CA3AF;
+    }
