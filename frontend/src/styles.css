@@ -35,6 +35,7 @@
         box-sizing: border-box;
         margin: 0;
         padding: 0;
+        @apply text-neutral-00
     }
 
     html {
@@ -49,7 +50,15 @@
     }
 
     .button {
-        @apply h-[50px] bg-primary w-full
+        @apply h-[50px] bg-primary w-full max-w-[400px] rounded-8 flex justify-center items-center text-neutral-100 font-semibold text-sm
+    }
+
+    .button-toggle-profile {
+        @apply  max-w-40 w-full h-[50px] rounded-8 hover:bg-neutral-90 transition-colors duration-300  ease-in-out
+    }
+
+    .button-activate {
+        @apply bg-primary text-neutral-100 hover:bg-primary
     }
 
     .text-link {

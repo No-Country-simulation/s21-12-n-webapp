@@ -1,0 +1,27 @@
+<div *ngIf="barberProfile" class="w-full h-full max-w-7xl mx-auto">
+  <header class="w-full relative">
+    <button (click)="goBack()" class="bg-primary p-2 rounded-16 top-4 left-4 absolute z-[1]">
+      <img src="assets/icons/Arrow-left-black.svg" alt="Botón retroceder">
+    </button>
+    <div class="relative w-full h-full">
+      <div class="absolute inset-0 w-full h-full bg-neutral-100/30"></div>
+      <img src={{barberProfile.imgProfile}} class="w-full lg:max-h-96 lg:rounded-b-8 object-cover"/>
+    </div>
+    <section class="p-4">
+      <h1 class="font-thunder font-semibold text-4xl">{{barberProfile.nameBarber}}</h1>
+      <h3 class="flex gap-1"><img src="assets/icons/MapPin-18-white.svg"/>{{barberProfile.address}}</h3>
+    </section>
+  </header>
+  <main class="p-4">
+    <section class="w-full flex justify-center gap-1">
+      <button class="button-toggle-profile" [class.button-activate]="selectedContent === 'catalog'" (click)="selectContent('catalog')">Catálogo</button>
+      <button class="button-toggle-profile" [class.button-activate]="selectedContent === 'comments'" (click)="selectContent('comments')">Comentarios</button>
+    </section>
+    <section class="p-4">
+      <app-catalog *ngIf="selectedContent === 'catalog'"></app-catalog>
+      <app-comments *ngIf="selectedContent === 'comments'"></app-comments>
+    </section>
+  </main>
+</div>
+
+<app-error *ngIf="!barberProfile && errorMessage" [detalles]="errorMessage"></app-error>

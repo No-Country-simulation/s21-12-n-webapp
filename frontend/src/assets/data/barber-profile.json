@@ -1,0 +1,14 @@
+[
+  {
+    "id":1,
+    "imgProfile": "assets/images/barber-profile.webp",
+    "address": "Av Juan Alarcón - 302",
+    "nameBarber": "Peluquería de Pelos"
+  },
+  {
+    "id":2,
+    "imgProfile": "assets/images/barber-profile2.webp",
+    "address": "Jr. Río Tello - 302",
+    "nameBarber": "Barbería el estilo"
+  }
+]

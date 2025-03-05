@@ -23,4 +23,29 @@ export const routes: Routes = [
             ),
         canActivate: [authGuard],
     },
+    // {
+    //     path: 'profile',
+    //     children: [
+    //         {
+    //             path: 'barber/:id',
+    //             loadComponent: () => import('./profiles/barber-profile/barber-profile.component')
+    //                 .then(c => c.BarberProfileComponent)
+    //         },
+    //         { 
+    //             path: 'client/:id', 
+    //             loadComponent: () => import('./profiles/client-profile/client-profile.component')
+    //                 .then(c => c.ClientProfileComponent)
+    //         }
+    //     ]
+    // }
+    {
+        path: 'profile/barber/:id',
+        loadComponent: () => import('./profiles/barber-profile/barber-profile.component')
+            .then(c => c.BarberProfileComponent)
+    },
+    { 
+        path: 'profile/client/:id', 
+        loadComponent: () => import('./profiles/client-profile/client-profile.component')
+            .then(c => c.ClientProfileComponent)
+    }
 ];
