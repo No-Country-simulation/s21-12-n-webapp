@@ -5,6 +5,7 @@ import { Router } from '@angular/router'; // Importa Router
 import Swal from 'sweetalert2';
 import { Login } from '../../models-interfaces/Login';
 import { AuthService } from '../../services/auth.service';
+import { NotificacionesService } from '../../services/notificaciones.service';
 @Component({
   selector: 'app-login',
   imports: [ReactiveFormsModule, CommonModule],
@@ -17,6 +18,7 @@ export class LoginComponent {
 
   private AuthService = inject(AuthService);
 
+  private notificacionService = inject(NotificacionesService); // Inyectar servicio
   public formBuild = inject(FormBuilder);
 
   loginForm: FormGroup = this.fb.group({
@@ -26,51 +28,45 @@ export class LoginComponent {
 
 
   iniciarSesion() {
-    if (this.loginForm.invalid) return;
-
+    if (this.loginForm.invalid) {
+      this.loginForm.markAllAsTouched();
+      return;
+    }
+  
     const objeto: Login = {
       email: this.loginForm.value.email,
       contrasena: this.loginForm.value.contrasena
-    }
-
+    };
+  
     this.AuthService.login(objeto).subscribe({
       next: (data) => {
-        if (data.isSuccess) {
-          localStorage.setItem("token", data.accessToken)
-          this.router.navigate(['inicio'])
+        if (data && data.accessToken) {
+          localStorage.setItem("token", data.accessToken);
+          this.notificacionService.showMessage('¡Has iniciado sesión correctamente!', 'success');
+          this.router.navigate(['/']);
         } else {
-          alert("Credenciales son incorrectas")
+          this.notificacionService.showMessage('Credenciales incorrectas', 'error');
         }
       },
       error: (error) => {
-        console.log(error.message);
-      }
-    })
-  }
-
-
+        console.error("Error al iniciar sesión:", error);
   
-  onSubmit(): void {
-    if (this.loginForm.valid) {
-      console.log('Formulario enviado con éxito:', this.loginForm.value);
-
-      Swal.fire({
-        title: '¡Felicidades!',
-        text: 'Haz iniciado sesion correctamente',
-        imageUrl: 'assets/check.png',
-        imageWidth: 100,
-        imageHeight: 100,
-        confirmButtonText: 'Aceptar',
-        background: '#000',
-        color: '#fff',
-        confirmButtonColor: '#FFD700', // Cambia el color del botón a amarillo (oro)
-        didClose: () => {
-          this.router.navigate(['/']).then(() => {
-          });
-        },
-      });
-    } else {
-      this.loginForm.markAllAsTouched();
-    }
+        let message = 'Usuario o contraseña incorrecta.';
+  
+        // Verificación de error por falta de conexión a la red
+        if (error.status === 0) {  // Esto indica un error de red
+          message = 'Has perdido la conexión a Internet. Por favor, intenta más tarde.';
+        } 
+        // Verificación de error de credenciales incorrectas
+        else if (error.status === 401) {  // Esto generalmente es un código de error para "Unauthorized"
+          message = 'Usuario o contraseña incorrecta.';
+        }
+  
+        // Muestra el mensaje de error adecuado
+        this.notificacionService.showMessage(message, 'error');
+      }
+    });
   }
+  
+
 }

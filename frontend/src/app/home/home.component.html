@@ -3,22 +3,29 @@
     <div class="flex items-center space-x-2">
       <img class="w-auto h-7 sm:h-8" src="assets/barbelink.png">
       <p class="text-amber-600 dark:text-yellow-400">
-       BARBELINK
+        BARBELINK
       </p>
     </div>
 
     <div class="flex items-center gap-4">
-      <div class="space-x-2">
+      <div class="space-x-2" *ngIf="!isLoggedIn">
         <a class="inline-block rounded-md bg-amber-400 px-5 py-2.5 text-sm font-medium text-black transition hover:bg-amber-600"
           href="login">
-          Iniciar sesion
+          Iniciar sesión
         </a>
         <a class="inline-block rounded-md bg-amber-400 px-5 py-2.5 text-sm font-medium text-black transition hover:bg-amber-600"
           href="register">
           Registro
         </a>
       </div>
+      <div class="space-x-2">
+        <button *ngIf="isLoggedIn" (click)="cerrarSesion()"
+          class="inline-block rounded-md bg-red-500 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-red-700">
+          Cerrar sesión
+        </button>
+      </div>
     </div>
+
   </div>
 </header>
 
@@ -26,11 +33,12 @@
 
 <form class="px-4 max-w-md mx-auto">
   <div class="flex gap-1 input">
-    <button type="submit" 
-      class="">
-      <img src="assets/icons/Search.svg" class="opacity-60"/>
+    <button type="submit" class="">
+      <img src="assets/icons/Search.svg" class="opacity-60" />
     </button>
-    <input type="text" id="default-search" class="w-full bg-transparent focus:ring-0 border-none text-neutral-00 placeholder-neutral-60" placeholder="Buscar ubicación" required />
+    <input type="text" id="default-search"
+      class="w-full bg-transparent focus:ring-0 border-none text-neutral-00 placeholder-neutral-60"
+      placeholder="Buscar ubicación" required />
   </div>
 </form>
 
@@ -53,7 +61,8 @@
                   <span class="text-yellow-400">★★★★★</span>
                   <span class="text-gray-400 ml-1">(120 Calificaciones)</span>
                 </div>
-                <button class="bg-amber-400  hover:bg-amber-600 text-black py-2 px-4 rounded-lg mt-4 w-full">Agendar cita</button>
+                <button class="bg-amber-400  hover:bg-amber-600 text-black py-2 px-4 rounded-lg mt-4 w-full">Agendar
+                  cita</button>
               </div>
             </div>
           </div>
@@ -68,7 +77,8 @@
                   <span class="text-yellow-400">★★★★★</span>
                   <span class="text-gray-400 ml-1">(120 Calificaciones)</span>
                 </div>
-                <button class="bg-amber-400  hover:bg-amber-600 text-black py-2 px-4 rounded-lg mt-4 w-full">Agendar cita</button>
+                <button class="bg-amber-400  hover:bg-amber-600 text-black py-2 px-4 rounded-lg mt-4 w-full">Agendar
+                  cita</button>
               </div>
             </div>
           </div>
@@ -83,7 +93,8 @@
                   <span class="text-yellow-400">★★★★★</span>
                   <span class="text-gray-400 ml-1">(120 Calificaciones)</span>
                 </div>
-                <button class="bg-amber-400  hover:bg-amber-600 text-black py-2 px-4 rounded-lg mt-4 w-full">Agendar cita</button>
+                <button class="bg-amber-400  hover:bg-amber-600 text-black py-2 px-4 rounded-lg mt-4 w-full">Agendar
+                  cita</button>
               </div>
             </div>
           </div>
@@ -98,7 +109,8 @@
                   <span class="text-yellow-400">★★★★★</span>
                   <span class="text-gray-400 ml-1">(120 Calificaciones)</span>
                 </div>
-                <button class="bg-amber-400  hover:bg-amber-600 text-black py-2 px-4 rounded-lg mt-4 w-full">Agendar cita</button>
+                <button class="bg-amber-400  hover:bg-amber-600 text-black py-2 px-4 rounded-lg mt-4 w-full">Agendar
+                  cita</button>
               </div>
             </div>
           </div>
@@ -113,7 +125,8 @@
                   <span class="text-yellow-400">★★★★★</span>
                   <span class="text-gray-400 ml-1">(120 Calificaciones)</span>
                 </div>
-                <button class="bg-amber-400  hover:bg-amber-600 text-black py-2 px-4 rounded-lg mt-4 w-full">Agendar cita</button>
+                <button class="bg-amber-400  hover:bg-amber-600 text-black py-2 px-4 rounded-lg mt-4 w-full">Agendar
+                  cita</button>
               </div>
             </div>
           </div>
@@ -128,7 +141,8 @@
                   <span class="text-yellow-400">★★★★★</span>
                   <span class="text-gray-400 ml-1">(120 Calificaciones)</span>
                 </div>
-                <button class="bg-amber-400  hover:bg-amber-600 text-black py-2 px-4 rounded-lg mt-4 w-full">Agendar cita</button>
+                <button class="bg-amber-400  hover:bg-amber-600 text-black py-2 px-4 rounded-lg mt-4 w-full">Agendar
+                  cita</button>
               </div>
             </div>
           </div>
