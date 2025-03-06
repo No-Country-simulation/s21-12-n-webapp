@@ -5,10 +5,11 @@ import { AuthService } from '../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { NotificacionesService } from '../services/notificaciones.service';
 import { Router } from '@angular/router';
+import { HeaderComponent } from '../shared/header/header.component';
 
 @Component({
     selector: 'app-home',
-    imports: [CommonModule],
+    imports: [CommonModule, HeaderComponent],
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.css']
 })
@@ -16,35 +17,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
 
 
-    private notificacionService = inject(NotificacionesService); // Inyectar servicio
-
     @ViewChild('fractionSlideCarousel') fractionSlideCarousel!: ElementRef;
-
-
-    constructor(private authService: AuthService, private router: Router) {}
-
-    isLoggedIn: boolean = false;
-
-    cerrarSesion(): void {
-        this.authService.logout(); // Llama al servicio de logout
-        this.isLoggedIn = false;   // Actualiza la variable para reflejar el cambio en la UI
-        this.notificacionService.showMessage('¡Has cerrado sesión correctamente!', 'success'); // Muestra la notificación
-    }
-
-
+    
     ngOnInit(): void {
         initFlowbite();
-        this.isLoggedIn = this.authService.isAuthenticated();
     }
-
-    goToProfile() {
-        const userId = this.authService.getUserId();
-        if (userId) {
-            this.router.navigate([`/profile/barber/${userId}`]);
-
-
-        }
-      }
 
     ngAfterViewInit(): void {
         this.initSwiper();

@@ -5,11 +5,13 @@ import { CommonModule, Location } from '@angular/common';
 import { ErrorComponent } from "../../shared/error/error.component";
 import { CatalogComponent } from './catalog/catalog.component';
 import { CommentsComponent } from './comments/comments.component';
+import { NotificacionesService } from '../../services/notificaciones.service';
+import { HeaderComponent } from '../../shared/header/header.component';
 
 @Component({
-  standalone:true,
+  
   selector: 'app-barber-profile',
-  imports: [CommonModule, RouterModule, ErrorComponent, CatalogComponent, CommentsComponent],
+  imports: [CommonModule, RouterModule, ErrorComponent, CatalogComponent, CommentsComponent, HeaderComponent],
   templateUrl: './barber-profile.component.html',
   styleUrl: './barber-profile.component.css'
 })
@@ -28,7 +30,8 @@ export class BarberProfileComponent implements OnInit{
     private route: ActivatedRoute,
     private barberProfileService: BarberProfileService,
     private location: Location,
-    private router: Router
+    private router: Router,
+    private notificacionService: NotificacionesService
   ){}
 
   ngOnInit(): void{
@@ -53,18 +56,25 @@ export class BarberProfileComponent implements OnInit{
     })
   }
   
-  getProfileJson(){
+  getProfileJson() {
     this.barberProfileService.getBarbers(this.id).subscribe({
-      next: (data) => {
-        this.barberProfile = data
-        this.errorMessage = ''
-      },
-      error: (err) => {
-        this.barberProfile = null;
-        this.errorMessage = 'No encontramos la barbería'
-      }
-    })
-  }
+        next: (data) => {
+            this.barberProfile = data;
+            this.errorMessage = '';
+        },
+        error: (err) => {
+            this.barberProfile = null;
+            this.errorMessage = 'No tienes permiso para ver esta barbería';
+            
+            // Mostrar alerta con NotificacionService
+            this.notificacionService.showMessage(this.errorMessage, 'error');
+
+            // Redirigir al usuario al inicio o a otra página segura
+            this.router.navigate(['/']);
+        }
+    });
+}
+
 
   goBack(): void {
     if (window.history.length > 1) {

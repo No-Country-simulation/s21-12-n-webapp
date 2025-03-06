@@ -108,6 +108,7 @@ export class RegisterComponent {
         direccion: [''],
         teamSize: [''],
         horario: [''],
+        imagen: [''],
     }, { validators: this.passwordsMatchValidator() });
     
     registroBarberia(): void {
@@ -121,6 +122,7 @@ export class RegisterComponent {
                 direccion: this.registerBarberiaForm.value.direccion,
                 teamSize: this.registerBarberiaForm.value.teamSize,
                 horario: this.registerBarberiaForm.value.horario,
+                imagen: this.registerBarberiaForm.value.imagen,
             };
 
             this.authService.registroBarberia(formData).subscribe({

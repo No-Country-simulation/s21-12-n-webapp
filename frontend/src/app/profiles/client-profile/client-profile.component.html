@@ -1,1 +1,17 @@
-<p>client-profile works!</p>
+<div *ngIf="clienteProfile" class="w-full h-full max-w-7xl mx-auto">
+    <header class="w-full relative">
+      <button (click)="goBack()" class="bg-primary p-2 rounded-16 top-4 left-4 absolute z-[1]">
+        <img src="assets/icons/Arrow-left-black.svg" alt="Botón retroceder">
+      </button>
+      <section class="p-4">
+        <h1 class="font-thunder font-semibold text-4xl">{{ clienteProfile.nombre }}</h1>
+        <h3 class="flex gap-1">
+          <img src="assets/icons/MapPin-18-white.svg" />
+          {{ clienteProfile.direccion }}
+        </h3>
+      </section>
+    </header>
+  </div>
+  
+  <app-error *ngIf="!clienteProfile && errorMessage" [detalles]="errorMessage"></app-error>
+  
