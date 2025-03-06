@@ -7,14 +7,15 @@ import { appsettings } from '../settings/appsettings';
   providedIn: 'root'
 })
 export class ClientProfileService {
+ 
   private http = inject(HttpClient);
   private baseUrl: string = appsettings.apiUrl;
 
-  getCliente(id: string): Observable<any> {
+  getClient(id: string): Observable<any> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-    const userId = localStorage.getItem('userId');
+    const userId = localStorage.getItem('userId'); // Obtener el ID del usuario autenticado
 
     if (userId !== id) {
         return new Observable((observer) => {
@@ -24,11 +25,30 @@ export class ClientProfileService {
 
     return this.http.get(`${this.baseUrl}clientes/${id}`, { headers }).pipe(
         catchError((err: Error) => {
-            console.error('Error al obtener cliente:', err);
+            console.error('Error al obtener el cliente:', err);
             return new Observable((observer) => {
                 observer.error(err);
             });
         })
     );
+}
+
+
+
+  getClientProfile(id: string): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    return this.http.get(`${this.baseUrl}clientes/${id}`, { headers }).pipe(
+      catchError((err: Error) => {
+        console.error('Error al obtener el cliente:', err);
+        throw err;
+      })
+    );
+  }
+
+
+  updateClientProfile(data: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}profile`, data);
   }
 }

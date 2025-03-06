@@ -11,7 +11,8 @@ import { HeaderComponent } from '../../shared/header/header.component';
 @Component({
   
   selector: 'app-barber-profile',
-  imports: [CommonModule, RouterModule, ErrorComponent, CatalogComponent, CommentsComponent, HeaderComponent],
+  imports: [CommonModule, RouterModule, ErrorComponent, CatalogComponent, 
+    CommentsComponent, HeaderComponent],
   templateUrl: './barber-profile.component.html',
   styleUrl: './barber-profile.component.css'
 })
