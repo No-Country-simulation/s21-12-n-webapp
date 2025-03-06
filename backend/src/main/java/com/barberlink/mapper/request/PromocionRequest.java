@@ -3,7 +3,7 @@ package com.barberlink.mapper.request;
 import java.time.LocalDateTime;
 
 public record PromocionRequest(
-        Long barberiaId,
+        Long barberia_id,
         String titulo,
         String descripcion,
         LocalDateTime fechaInicio,

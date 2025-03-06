@@ -1,6 +1,7 @@
 package com.barberlink.mapper.response;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public record BarberiaResponse(
         Long id,
@@ -12,5 +13,6 @@ public record BarberiaResponse(
         String descripcion,
         String fotoPerfil,
         LocalDateTime createdAt,
-        LocalDateTime updatedAt
+        LocalDateTime updatedAt,
+        List<HorarioResponse> horarios
 ) { }

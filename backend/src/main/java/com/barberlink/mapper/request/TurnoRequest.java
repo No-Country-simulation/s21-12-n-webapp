@@ -4,12 +4,14 @@ import com.barberlink.model.EstadoTurno;
 import com.barberlink.model.MetodoPago;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public record TurnoRequest(
-        Long barberiaId,
-        Long clienteId,
-        LocalDateTime fechaTurno,
-        LocalDateTime horaInicio,
-        LocalDateTime horaFin,
-        EstadoTurno estado,
-        MetodoPago metodoPago
+        @JsonProperty("barberia_id") Long barberiaId,
+        @JsonProperty("cliente_id") Long clienteId,
+        @JsonProperty("fechaTurno") LocalDateTime fechaTurno,
+        @JsonProperty("horaInicio") LocalDateTime horaInicio,
+        @JsonProperty("horaFin") LocalDateTime horaFin,
+        @JsonProperty("estado") EstadoTurno estado,
+        @JsonProperty("metodoPago") MetodoPago metodoPago
 ) { }

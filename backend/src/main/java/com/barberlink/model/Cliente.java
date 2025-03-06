@@ -10,8 +10,9 @@ public class Cliente extends Usuario {
 
     private String nombreCompleto;
 
-    // Puedes agregar otros atributos específicos (dirección, etc.) si lo requieres.
-
+    public Cliente(Long id) {
+        super.setId(id);
+    }
 
     public Cliente() {
     }
