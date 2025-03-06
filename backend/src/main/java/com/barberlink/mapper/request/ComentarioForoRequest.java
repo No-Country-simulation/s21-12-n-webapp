@@ -1,8 +1,8 @@
 package com.barberlink.mapper.request;
 
 public record ComentarioForoRequest(
-        Long barberiaId,
-        Long clienteId,
+        Long barberia_id,
+        Long cliente_id,
         int calificacion,
         String comentarioTexto
 ) { }

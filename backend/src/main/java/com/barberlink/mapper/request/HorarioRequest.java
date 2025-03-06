@@ -1,7 +1,7 @@
 package com.barberlink.mapper.request;
 
-import com.barberlink.model.EstadoHorario;
 import java.time.LocalDateTime;
+import com.barberlink.model.EstadoHorario;
 
 public record HorarioRequest(
         Long barberiaId,
