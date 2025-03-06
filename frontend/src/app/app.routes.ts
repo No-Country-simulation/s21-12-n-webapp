@@ -39,8 +39,6 @@ export const routes: Routes = [
         ]
 
     },
-
-
     {
         path: 'error',
         loadComponent: () =>

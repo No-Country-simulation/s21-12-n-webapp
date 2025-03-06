@@ -2,8 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl, ValidationErrors, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import Swal from 'sweetalert2';
-import { GoogleMapsModule } from '@angular/google-maps';
 import { AuthService } from '../../services/auth.service';
 import { Cliente } from '../../models-interfaces/Cliente';
 import { Barberia } from '../../models-interfaces/Barberia';
@@ -16,7 +14,6 @@ import { Login } from '../../models-interfaces/Login';
         CommonModule,
         ReactiveFormsModule,
         FormsModule,
-        GoogleMapsModule
     ],
     templateUrl: './register.component.html',
     styleUrls: ['./register.component.css']
@@ -254,20 +251,4 @@ hasSelectedDays(): boolean {
     }
 
 
-
-
-
-    //GOOGLE MAPS
-    center: google.maps.LatLngLiteral = { lat: 37.7749, lng: -122.4194 };
-    zoom = 12;
-    markers: google.maps.MarkerOptions[] = [
-        {
-            position: { lat: 37.7749, lng: -122.4194 },
-            title: 'Marker 1'
-        },
-        {
-            position: { lat: 37.7849, lng: -122.4294 },
-            title: 'Marker 2'
-        }
-    ];
 }

@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { BarberProfileService } from '../../services/barber-profile.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule, Location } from '@angular/common';
-import { ErrorComponent } from "../../shared/error/error.component";
 import { CatalogComponent } from '../barber-profile/catalog/catalog.component';
 import { CommentsComponent } from '../barber-profile/comments/comments.component'; 
 import { NotificacionesService } from '../../services/notificaciones.service';
@@ -11,7 +9,7 @@ import { ClientProfileService } from '../../services/client-profile.service';
 
 @Component({
   selector: 'app-cliente-profile',
-  imports: [CommonModule, RouterModule, ErrorComponent, CatalogComponent, 
+  imports: [CommonModule, RouterModule, CatalogComponent, 
     CommentsComponent, HeaderComponent],
   templateUrl: './client-profile.component.html',
   styleUrls: ['./client-profile.component.css']
