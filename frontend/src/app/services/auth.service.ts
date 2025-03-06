@@ -7,6 +7,9 @@ import { ResponseAcceso } from '../models-interfaces/ResponseAcceso';
 import { Login } from '../models-interfaces/Login';
 import { Router } from '@angular/router';
 import { Barberia } from '../models-interfaces/Barberia';
+import { jwtDecode } from 'jwt-decode';
+
+
 
 @Injectable({
     providedIn: 'root'
@@ -36,5 +39,22 @@ export class AuthService {
     logout(): void {
         localStorage.removeItem('token');
         this.router.navigate(['/']);
+    }
+
+    getToken(): string | null {
+        return localStorage.getItem('token');
+    }
+    
+    getUserId(): string | null {
+        const token = this.getToken();
+        if (!token) return null;
+    
+        try {
+            const decoded: any = jwtDecode(token);
+            return decoded.id; // Asegúrate de que el token tenga esta propiedad
+        } catch (error) {
+            console.error('Error decoding token', error);
+            return null;
+        }
     }
 }

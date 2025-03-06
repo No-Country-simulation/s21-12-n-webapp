@@ -19,6 +19,13 @@
         </a>
       </div>
       <div class="space-x-2">
+        
+        <button *ngIf="isLoggedIn"
+          class="inline-block rounded-md bg-amber-400 px-5 py-2.5 text-sm font-medium text-black transition hover:bg-amber-600"
+          (click)="goToProfile()">
+          Mi perfil
+        </button>
+
         <button *ngIf="isLoggedIn" (click)="cerrarSesion()"
           class="inline-block rounded-md bg-red-500 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-red-700">
           Cerrar sesión

@@ -4,6 +4,7 @@ import Swiper from 'swiper';
 import { AuthService } from '../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { NotificacionesService } from '../services/notificaciones.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-home',
@@ -20,7 +21,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     @ViewChild('fractionSlideCarousel') fractionSlideCarousel!: ElementRef;
 
 
-    constructor(private authService: AuthService) { }
+    constructor(private authService: AuthService, private router: Router) {}
 
     isLoggedIn: boolean = false;
 
@@ -35,6 +36,15 @@ export class HomeComponent implements OnInit, AfterViewInit {
         initFlowbite();
         this.isLoggedIn = this.authService.isAuthenticated();
     }
+
+    goToProfile() {
+        const userId = this.authService.getUserId();
+        if (userId) {
+            this.router.navigate([`/profile/barber/${userId}`]);
+
+
+        }
+      }
 
     ngAfterViewInit(): void {
         this.initSwiper();
