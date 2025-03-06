@@ -37,7 +37,7 @@ export class BarberProfileComponent implements OnInit{
   ngOnInit(): void{
     this.route.paramMap.subscribe(params => {
       this.id = params.get('id')!;
-      console.log('ID obtenido', this.id)
+     // console.log('ID obtenido', this.id)
       this.getProfileJson()
       // this.getProfile
     })

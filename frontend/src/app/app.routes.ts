@@ -37,5 +37,18 @@ export const routes: Routes = [
                     .then(c => c.ClientProfileComponent)
             }
         ]
+
+    },
+
+
+    {
+        path: 'error',
+        loadComponent: () =>
+            import('./shared/error/error.component').then((c) => c.ErrorComponent),
+    },
+
+    {
+        path: '**',
+        redirectTo: 'error'  // Redirige a la página de error para rutas no encontradas
     }
 ];

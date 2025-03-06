@@ -38,7 +38,7 @@ export class ClientProfileComponent implements OnInit {
     ngOnInit(): void{
       this.route.paramMap.subscribe(params => {
         this.id = params.get('id')!;
-        console.log('ID obtenido', this.id)
+       // console.log('ID obtenido', this.id)
         this.getProfileJson()
         // this.getProfile
       })
@@ -52,7 +52,7 @@ export class ClientProfileComponent implements OnInit {
         },
         error: (err) => {
           this.clientProfile = null;
-          this.errorMessage = 'No encontramos la barbería'
+          this.errorMessage = 'No encontramos el cliente'
         }
       })
     }
@@ -65,7 +65,7 @@ export class ClientProfileComponent implements OnInit {
           },
           error: (err) => {
               this.clientProfile = null;
-              this.errorMessage = 'No tienes permiso para ver esta barbería';
+              this.errorMessage = 'No tienes permiso para ver esta cuenta';
               
               // Mostrar alerta con NotificacionService
               this.notificacionService.showMessage(this.errorMessage, 'error');
