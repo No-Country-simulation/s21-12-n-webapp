@@ -188,7 +188,7 @@ hasSelectedDays(): boolean {
             // Validación: la hora de cierre debe ser posterior a la de apertura
             if (endTimeHour < startTimeHour || (endTimeHour === startTimeHour && endTimeMinute <= startTimeMinute)) {
              
-                this.notificacionService.showMessage('La hora de cierre debe ser posterior a la hora de apertura', 'error');
+                this.notificacionService.showMessage('La hora de cierre debe ser superior a la hora de apertura', 'error');
                 return; // Detiene la ejecución si la validación falla
             }
 

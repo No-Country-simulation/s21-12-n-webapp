@@ -23,10 +23,13 @@
                 </p>
             </div>
 
+ 
+        
+
             <form [formGroup]="loginForm" (ngSubmit)="iniciarSesion()">
                 <div class="mt-4">
-                    <input id="LoggingName" placeholder="Email" formControlName="email" class="block w-full px-4 py-2  border rounded-lg dark:bg-black dark:text-neutral-50 dark:border-neutral-50
-                focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring" type="email"/>
+                    <input id="LoggingName" placeholder="Email" formControlName="email" class="block w-full px-4 py-2 border rounded-lg bg-black text-white dark:bg-black dark:text-neutral-50 dark:border-neutral-50
+                    focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring" type="email"/>
                     <div
                         *ngIf="loginForm.get('email')?.invalid && (loginForm.get('email')?.touched || loginForm.get('email')?.dirty)">
                         <small *ngIf="loginForm.get('email')?.errors?.['required']" class="text-red-500">El
@@ -37,9 +40,8 @@
                 </div>
 
                 <div class="mt-4">
-                    <input id="loggingPassword" placeholder="Contraseña" formControlName="contrasena" class="block w-full px-4 py-2 
-                 border rounded-lg dark:bg-black dark:text-neutral-50 dark:border-neutral-50
-                focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring" type="password" />
+                    <input id="loggingPassword" placeholder="Contraseña" formControlName="contrasena" class="block w-full px-4 py-2 border rounded-lg bg-black text-white dark:bg-black dark:text-neutral-50 dark:border-neutral-50
+                    focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring" type="password" />
                     <div
                         *ngIf="loginForm.get('contrasena')?.invalid && (loginForm.get('contrasena')?.touched || loginForm.get('contrasena')?.dirty)">
                         <small *ngIf="loginForm.get('contrasena')?.errors?.['required']" class="text-red-500">La
