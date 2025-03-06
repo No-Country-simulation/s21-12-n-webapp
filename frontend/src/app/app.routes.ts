@@ -21,7 +21,7 @@ export const routes: Routes = [
             import('./auth/register/register.component').then(
                 (c) => c.RegisterComponent
             ),
-        canActivate: [authGuard],
+       canActivate: [authGuard],
     },
     {
         path: 'profile',
@@ -31,21 +31,11 @@ export const routes: Routes = [
                 loadComponent: () => import('./profiles/barber-profile/barber-profile.component')
                     .then(c => c.BarberProfileComponent)
             },
-            {
-                path: 'client/:id',
+            { 
+                path: 'client/:id', 
                 loadComponent: () => import('./profiles/client-profile/client-profile.component')
                     .then(c => c.ClientProfileComponent)
             }
         ]
-    },
-    {
-        path: 'error',
-        loadComponent: () =>
-            import('./shared/error/error.component').then((c) => c.ErrorComponent),
-    },
-
-    {
-        path: '**',
-        redirectTo: 'error'  // Redirige a la página de error para rutas no encontradas
     }
 ];

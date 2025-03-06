@@ -49,6 +49,6 @@ export class BarberProfileService {
 
 
   updateBarberProfile(data: any): Observable<any> {
-    return this.http.put(`${this.baseUrl}profile`, data);
+    return this.http.put(`${this.baseUrl}/profile`, data);
   }
 }
