@@ -141,270 +141,275 @@
                         <div class="mt-4">
                             <input id="RegistercuilResponsable" placeholder="CUIT" formControlName="cuilResponsable"
                                 class="block w-full px-4 py-2 border rounded-lg bg-black dark:bg-black dark:text-neutral-50 dark:border-neutral-50 focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring"
-                                type="number" />
-                            <div
-                                *ngIf="registerBarberiaForm.get('cuilResponsable')?.invalid && (registerBarberiaForm.get('cuilResponsable')?.touched || registerBarberiaForm.get('cuilResponsable')?.dirty)">
-                                <small *ngIf="registerBarberiaForm.get('cuilResponsable')?.errors?.['required']"
-                                    class="text-red-500">El CUIT es obligatorio.</small>
-                            </div>
+                                type="text" maxlength="11" minlength="11"/>
+                            <div *ngIf=" registerBarberiaForm.get('cuilResponsable')?.invalid &&
+                                (registerBarberiaForm.get('cuilResponsable')?.touched ||
+                                registerBarberiaForm.get('cuilResponsable')?.dirty)">
+                            <small *ngIf="registerBarberiaForm.get('cuilResponsable')?.errors?.['required']"
+                                class="text-red-500">
+                                El CUIT es obligatorio.
+                            </small>
+                            <small *ngIf="registerBarberiaForm.get('cuilResponsable')?.errors?.['invalidCuil']"
+                                class="text-red-500">
+                                El CUIT debe tener exactamente 11 dígitos.
+                            </small>
                         </div>
-                        <div class="mt-4">
-                            <input id="RegisterEmaildireccion" placeholder="Correo" formControlName="email"
-                                class="block w-full px-4 py-2 border rounded-lg bg-black dark:bg-black dark:text-neutral-50 dark:border-neutral-50 focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring"
-                                type="email" />
-                            <div
-                                *ngIf="registerBarberiaForm.get('email')?.invalid && (registerBarberiaForm.get('email')?.touched || registerBarberiaForm.get('email')?.dirty)">
-                                <small *ngIf="registerBarberiaForm.get('email')?.errors?.['required']"
-                                    class="text-red-500">El correo es obligatorio.</small>
-                                <small *ngIf="registerBarberiaForm.get('email')?.errors?.['email']"
-                                    class="text-red-500">El correo debe ser un formato válido.</small>
-                            </div>
+                    </div>
+                    <div class="mt-4">
+                        <input id="RegisterEmaildireccion" placeholder="Correo" formControlName="email"
+                            class="block w-full px-4 py-2 border rounded-lg bg-black dark:bg-black dark:text-neutral-50 dark:border-neutral-50 focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring"
+                            type="email" />
+                        <div
+                            *ngIf="registerBarberiaForm.get('email')?.invalid && (registerBarberiaForm.get('email')?.touched || registerBarberiaForm.get('email')?.dirty)">
+                            <small *ngIf="registerBarberiaForm.get('email')?.errors?.['required']"
+                                class="text-red-500">El correo es obligatorio.</small>
+                            <small *ngIf="registerBarberiaForm.get('email')?.errors?.['email']" class="text-red-500">El
+                                correo debe ser un formato válido.</small>
                         </div>
-                        <div class="mt-4">
-                            <input id="RegisterTel" placeholder="Número de teléfono" formControlName="telefono"
-                                class="block w-full px-4 py-2 border rounded-lg bg-black dark:bg-black dark:text-neutral-50 dark:border-neutral-50 focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring"
-                                type="tel" />
-                            <div
-                                *ngIf="registerBarberiaForm.get('telefono')?.invalid && (registerBarberiaForm.get('telefono')?.touched || registerBarberiaForm.get('telefono')?.dirty)">
-                                <small *ngIf="registerBarberiaForm.get('telefono')?.errors?.['minlength']"
-                                    class="text-red-500">El numero de telefono le faltan digitos.</small>
-                                <small *ngIf="registerBarberiaForm.get('telefono')?.errors?.['maxlength']"
-                                    class="text-red-500">El numero de telefono debe de tener un formato valido.</small>
-                                <small *ngIf="registerBarberiaForm.get('telefono')?.errors?.['required']"
-                                    class="text-red-500">El número de teléfono es obligatorio.</small>
-                                <br>
-                                <small *ngIf="registerBarberiaForm.get('telefono')?.errors?.['pattern']"
-                                    class="text-red-500">El número de teléfono debe ser un número válido (ejemplo:
-                                    +54123456789).</small>
-                            </div>
+                    </div>
+                    <div class="mt-4">
+                        <input id="RegisterTel" placeholder="Número de teléfono" formControlName="telefono"
+                            class="block w-full px-4 py-2 border rounded-lg bg-black dark:bg-black dark:text-neutral-50 dark:border-neutral-50 focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring"
+                            type="tel" />
+                        <div
+                            *ngIf="registerBarberiaForm.get('telefono')?.invalid && (registerBarberiaForm.get('telefono')?.touched || registerBarberiaForm.get('telefono')?.dirty)">
+                            <small *ngIf="registerBarberiaForm.get('telefono')?.errors?.['minlength']"
+                                class="text-red-500">El numero de telefono le faltan digitos.</small>
+                            <small *ngIf="registerBarberiaForm.get('telefono')?.errors?.['maxlength']"
+                                class="text-red-500">El numero de telefono debe de tener un formato valido.</small>
+                            <small *ngIf="registerBarberiaForm.get('telefono')?.errors?.['required']"
+                                class="text-red-500">El número de teléfono es obligatorio.</small>
+                            <br>
+                            <small *ngIf="registerBarberiaForm.get('telefono')?.errors?.['pattern']"
+                                class="text-red-500">El número de teléfono debe ser un número válido (ejemplo:
+                                +54123456789).</small>
                         </div>
-                        <div class="mt-4">
-                            <input id="RegisterPassword" placeholder="Contraseña" formControlName="contrasena"
-                                class="block w-full px-4 py-2 border rounded-lg bg-black dark:bg-black dark:text-neutral-50 dark:border-neutral-50 focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring"
-                                type="password" />
-                            <div
-                                *ngIf="registerBarberiaForm.get('contrasena')?.invalid && (registerBarberiaForm.get('contrasena')?.touched || registerBarberiaForm.get('contrasena')?.dirty)">
-                                <small *ngIf="registerBarberiaForm.get('contrasena')?.errors?.['required']"
-                                    class="text-red-500">La contraseña es obligatoria.</small>
-                                <small *ngIf="registerBarberiaForm.get('contrasena')?.errors?.['minlength']"
-                                    class="text-red-500">La contraseña debe tener al menos 6 caracteres.</small>
-                            </div>
+                    </div>
+                    <div class="mt-4">
+                        <input id="RegisterPassword" placeholder="Contraseña" formControlName="contrasena"
+                            class="block w-full px-4 py-2 border rounded-lg bg-black dark:bg-black dark:text-neutral-50 dark:border-neutral-50 focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring"
+                            type="password" />
+                        <div
+                            *ngIf="registerBarberiaForm.get('contrasena')?.invalid && (registerBarberiaForm.get('contrasena')?.touched || registerBarberiaForm.get('contrasena')?.dirty)">
+                            <small *ngIf="registerBarberiaForm.get('contrasena')?.errors?.['required']"
+                                class="text-red-500">La contraseña es obligatoria.</small>
+                            <small *ngIf="registerBarberiaForm.get('contrasena')?.errors?.['minlength']"
+                                class="text-red-500">La contraseña debe tener al menos 6 caracteres.</small>
                         </div>
-                        <div class="mt-4">
-                            <input id="RegisterConfirmPassword" placeholder="Confirmar contraseña"
-                                formControlName="confirmPassword"
-                                class="block w-full px-4 py-2 border rounded-lg bg-black dark:bg-black dark:text-neutral-50 dark:border-neutral-50 focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring"
-                                type="password" />
-                            <div
-                                *ngIf="registerBarberiaForm.get('confirmPassword')?.invalid && (registerBarberiaForm.get('confirmPassword')?.touched || registerBarberiaForm.get('confirmPassword')?.dirty)">
-                                <small *ngIf="registerBarberiaForm.get('confirmPassword')?.errors?.['required']"
-                                    class="text-red-500">La confirmación de contraseña es obligatoria.</small>
-                            </div>
-                            <div
-                                *ngIf="registerBarberiaForm.errors?.['mismatch'] && (registerBarberiaForm.get('confirmPassword')?.touched || registerBarberiaForm.get('confirmPassword')?.dirty)">
-                                <small class="text-red-500">Las contraseñas no coinciden.</small>
-                            </div>
+                    </div>
+                    <div class="mt-4">
+                        <input id="RegisterConfirmPassword" placeholder="Confirmar contraseña"
+                            formControlName="confirmPassword"
+                            class="block w-full px-4 py-2 border rounded-lg bg-black dark:bg-black dark:text-neutral-50 dark:border-neutral-50 focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring"
+                            type="password" />
+                        <div
+                            *ngIf="registerBarberiaForm.get('confirmPassword')?.invalid && (registerBarberiaForm.get('confirmPassword')?.touched || registerBarberiaForm.get('confirmPassword')?.dirty)">
+                            <small *ngIf="registerBarberiaForm.get('confirmPassword')?.errors?.['required']"
+                                class="text-red-500">La confirmación de contraseña es obligatoria.</small>
                         </div>
-                        <br>
-                        <button type="button" (click)="nextPage()"
-                            [disabled]="registerBarberiaForm.get('name')?.invalid || registerBarberiaForm.get('email')?.invalid || registerBarberiaForm.get('password')?.invalid || registerBarberiaForm.get('confirmPassword')?.invalid || registerBarberiaForm.get('telefono')?.invalid || (selectedRole === 'barberia' && registerBarberiaForm.get('cuilResponsable')?.invalid)"
-                            [ngClass]="{
+                        <div
+                            *ngIf="registerBarberiaForm.errors?.['mismatch'] && (registerBarberiaForm.get('confirmPassword')?.touched || registerBarberiaForm.get('confirmPassword')?.dirty)">
+                            <small class="text-red-500">Las contraseñas no coinciden.</small>
+                        </div>
+                    </div>
+                    <br>
+                    <button type="button" (click)="nextPage()"
+                        [disabled]="registerBarberiaForm.get('name')?.invalid || registerBarberiaForm.get('email')?.invalid || registerBarberiaForm.get('password')?.invalid || registerBarberiaForm.get('confirmPassword')?.invalid || registerBarberiaForm.get('telefono')?.invalid || (selectedRole === 'barberia' && registerBarberiaForm.get('cuilResponsable')?.invalid)"
+                        [ngClass]="{
                                 'bg-orange-300': registerBarberiaForm.get('name')?.invalid || registerBarberiaForm.get('email')?.invalid || registerBarberiaForm.get('password')?.invalid || registerBarberiaForm.get('confirmPassword')?.invalid || registerBarberiaForm.get('telefono')?.invalid || (selectedRole === 'barberia' && registerBarberiaForm.get('cuilResponsable')?.invalid),
                                 'bg-amber-300 hover:bg-amber-400': !(registerBarberiaForm.get('name')?.invalid || registerBarberiaForm.get('email')?.invalid || registerBarberiaForm.get('password')?.invalid || registerBarberiaForm.get('confirmPassword')?.invalid || registerBarberiaForm.get('telefono')?.invalid || (selectedRole === 'barberia' && registerBarberiaForm.get('cuilResponsable')?.invalid))
                             }" class="w-full py-3 rounded-md text-black">
-                            Siguiente
-                        </button>
-                    </div>
-                    <div *ngIf="currentPage === 2">
-                        <div class="mt-4" *ngIf="selectedRole === 'barberia'">
-                            <input id="Registerdireccion" placeholder="Dirección" formControlName="direccion"
-                                class="block w-full px-4 py-2 border rounded-lg bg-black dark:bg-black dark:text-neutral-50 dark:border-neutral-50 focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring"
-                                type="text" />
-                            <div
-                                *ngIf="registerBarberiaForm.get('direccion')?.invalid && (registerBarberiaForm.get('direccion')?.touched || registerBarberiaForm.get('direccion')?.dirty)">
-                                <small *ngIf="registerBarberiaForm.get('direccion')?.errors?.['required']"
-                                    class="text-red-500">La dirección es obligatoria.</small>
-                                <small *ngIf="registerBarberiaForm.get('direccion')?.errors?.['minlength']"
-                                    class="text-red-500">La dirección debe tener al menos 4 caracteres.</small>
-                                <small *ngIf="registerBarberiaForm.get('direccion')?.errors?.['pattern']"
-                                    class="text-red-500">La dirección solo puede contener letras, números, comas, puntos
-                                    y guiones.</small>
-                            </div>
+                        Siguiente
+                    </button>
+                </div>
+                <div *ngIf="currentPage === 2">
+                    <div class="mt-4" *ngIf="selectedRole === 'barberia'">
+                        <input id="Registerdireccion" placeholder="Dirección" formControlName="direccion"
+                            class="block w-full px-4 py-2 border rounded-lg bg-black dark:bg-black dark:text-neutral-50 dark:border-neutral-50 focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring"
+                            type="text" />
+                        <div
+                            *ngIf="registerBarberiaForm.get('direccion')?.invalid && (registerBarberiaForm.get('direccion')?.touched || registerBarberiaForm.get('direccion')?.dirty)">
+                            <small *ngIf="registerBarberiaForm.get('direccion')?.errors?.['required']"
+                                class="text-red-500">La dirección es obligatoria.</small>
+                            <small *ngIf="registerBarberiaForm.get('direccion')?.errors?.['minlength']"
+                                class="text-red-500">La dirección debe tener al menos 4 caracteres.</small>
+                            <small *ngIf="registerBarberiaForm.get('direccion')?.errors?.['pattern']"
+                                class="text-red-500">La dirección solo puede contener letras, números, comas, puntos
+                                y guiones.</small>
                         </div>
-                        <br>
-                        <button type="button" (click)="nextPage()"
-                            [disabled]="registerBarberiaForm.get('direccion')?.invalid" [ngClass]="{
+                    </div>
+                    <br>
+                    <button type="button" (click)="nextPage()"
+                        [disabled]="registerBarberiaForm.get('direccion')?.invalid" [ngClass]="{
                                 'bg-orange-300': registerBarberiaForm.get('direccion')?.invalid,
                                 'bg-amber-300 hover:bg-amber-400': !registerBarberiaForm.get('direccion')?.invalid
                             }" class="w-full py-3 rounded-md text-black">
-                            Siguiente
-                        </button>
-                        <button type="button" (click)="previousPage()"
-                            class="w-full py-3 rounded-md bg-neutral-600 hover:bg-neutral-700  text-black">
-                            Anterior
-                        </button>
-                    </div>
-                    <div *ngIf="currentPage === 3">
-                        <div class="mt-4">
-                            <label for="message" class="block mb-2 text-sm font-medium text-white dark:text-white">Descripción:</label>
-                            <textarea id="message" rows="4" 
-                            formControlName="descripcion" 
-                            class="block p-2.5 w-full text-sm text-white bg-black rounded-lg border
+                        Siguiente
+                    </button>
+                    <button type="button" (click)="previousPage()"
+                        class="w-full py-3 rounded-md bg-neutral-600 hover:bg-neutral-700  text-black">
+                        Anterior
+                    </button>
+                </div>
+                <div *ngIf="currentPage === 3">
+                    <div class="mt-4">
+                        <label for="message"
+                            class="block mb-2 text-sm font-medium text-white dark:text-white">Descripción:</label>
+                        <textarea id="message" rows="4" formControlName="descripcion" class="block p-2.5 w-full text-sm text-white bg-black rounded-lg border
                             border-gray-600 focus:ring-blue-500 focus:border-blue-500"></textarea>
-                        </div>
-                        <br>
-                        <button type="button" (click)="nextPage()"
-                            [disabled]="registerBarberiaForm.get('descripcion')?.invalid" [ngClass]="{
+                    </div>
+                    <br>
+                    <button type="button" (click)="nextPage()"
+                        [disabled]="registerBarberiaForm.get('descripcion')?.invalid" [ngClass]="{
                                 'bg-orange-300': registerBarberiaForm.get('descripcion')?.invalid,
                                 'bg-amber-300 hover:bg-amber-400': !registerBarberiaForm.get('descripcion')?.invalid
                             }" class="w-full py-3 rounded-md  text-black">
-                            Siguiente
-                        </button>
-                        <button type="button" (click)="previousPage()"
-                            class="w-full py-3 rounded-md bg-neutral-600 hover:bg-neutral-700  text-black">
-                            Anterior
-                        </button>
-                    </div>
-                    <div *ngIf="currentPage === 4">
-                        <div class="mt-4">
-                            <h2 class="text-white text-xl mb-4">Horario de atención</h2>
-                            <p class="text-gray-400 mb-4">¿En qué horarios pueden atenderse los clientes?</p>
-                            <div *ngFor="let day of days; let i = index" class="mb-2">
-                                <div class="flex items-center p-3 rounded-lg bg-neutral-800">
-                                    <div class="flex items-center">
-                                        <div
-                                            class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
-                                            <input type="checkbox" name="toggle" id="toggle_{{i}}"
-                                                class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"
-                                                [(ngModel)]="day.active" [ngModelOptions]="{standalone: true}">
-                                            <label for="toggle_{{i}}"
-                                                class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer">
-                                            </label>
-                                        </div>
-                                        <span class="text-white">{{ day.name }}</span>
+                        Siguiente
+                    </button>
+                    <button type="button" (click)="previousPage()"
+                        class="w-full py-3 rounded-md bg-neutral-600 hover:bg-neutral-700  text-black">
+                        Anterior
+                    </button>
+                </div>
+                <div *ngIf="currentPage === 4">
+                    <div class="mt-4">
+                        <h2 class="text-white text-xl mb-4">Horario de atención</h2>
+                        <p class="text-gray-400 mb-4">¿En qué horarios pueden atenderse los clientes?</p>
+                        <div *ngFor="let day of days; let i = index" class="mb-2">
+                            <div class="flex items-center p-3 rounded-lg bg-neutral-800">
+                                <div class="flex items-center">
+                                    <div
+                                        class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+                                        <input type="checkbox" name="toggle" id="toggle_{{i}}"
+                                            class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"
+                                            [(ngModel)]="day.active" [ngModelOptions]="{standalone: true}">
+                                        <label for="toggle_{{i}}"
+                                            class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer">
+                                        </label>
                                     </div>
-                                    <div class="flex-grow flex justify-center">
-                                        <span class="text-gray-400" *ngIf="!day.hours">Registrar hora</span>
-                                        <span class="text-gray-400" *ngIf="day.hours">{{ day.hours }}</span>
-                                    </div>
-                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                        class="h-5 w-5 text-gray-400 cursor-pointer ml-auto" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor" (click)="openModal(day)">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M9 5l7 7-7 7" />
-                                    </svg>
+                                    <span class="text-white">{{ day.name }}</span>
                                 </div>
+                                <div class="flex-grow flex justify-center">
+                                    <span class="text-gray-400" *ngIf="!day.hours">Registrar hora</span>
+                                    <span class="text-gray-400" *ngIf="day.hours">{{ day.hours }}</span>
+                                </div>
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    class="h-5 w-5 text-gray-400 cursor-pointer ml-auto" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor" (click)="openModal(day)">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 5l7 7-7 7" />
+                                </svg>
                             </div>
                         </div>
-                        <br>
-                        <button type="submit" [disabled]="registerBarberiaForm.invalid || !hasSelectedDays()" [ngClass]="{
+                    </div>
+                    <br>
+                    <button type="submit" [disabled]="registerBarberiaForm.invalid || !hasSelectedDays()" [ngClass]="{
                             'bg-amber-300 hover:bg-amber-400': registerBarberiaForm.valid && hasSelectedDays(),
                             'bg-orange-300': (registerBarberiaForm.invalid || !hasSelectedDays())
                         }" class="w-full py-3 rounded-md  text-black">
-                            Registrarse
-                        </button>
-                        <button type="button" (click)="previousPage()"
-                            class="w-full py-3 rounded-md bg-neutral-600 hover:bg-neutral-700  text-black">
-                            Anterior
-                        </button>
-                    </div>
-                    <!--Modal de horas-->
-                    <div *ngIf="showModal"
-                        class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-                        <div class="bg-neutral-900 p-6 rounded-lg w-96">
-                            <h2 class="text-white text-lg mb-4">{{ selectedDay.name }}</h2>
-                            <div class="mb-4">
-                                <label class="block text-gray-400 mb-2">Apertura:</label>
-                                <div class="flex items-center">
-                                    <select name="startTimeHour" class="bg-neutral-800 text-white p-2 rounded mr-2">
-                                        <option value="00">00</option>
-                                        <option value="01">01</option>
-                                        <option value="02">02</option>
-                                        <option value="03">03</option>
-                                        <option value="04">04</option>
-                                        <option value="05">05</option>
-                                        <option value="06">06</option>
-                                        <option value="07">07</option>
-                                        <option value="08">08</option>
-                                        <option value="09">09</option>
-                                        <option value="10">10</option>
-                                        <option value="11">11</option>
-                                        <option value="12">12</option>
-                                        <option value="13">13</option>
-                                        <option value="14">14</option>
-                                        <option value="15">15</option>
-                                        <option value="16">16</option>
-                                        <option value="17">17</option>
-                                        <option value="18">18</option>
-                                        <option value="19">19</option>
-                                        <option value="20">20</option>
-                                        <option value="21">21</option>
-                                        <option value="22">22</option>
-                                        <option value="23">23</option>
-                                    </select>
-                                    <span class="text-white">:</span>
-                                    <select name="startTimeMinute" class="bg-neutral-800 text-white p-2 rounded ml-2">
-                                        <option value="00">00</option>
-                                        <option value="30">30</option>
-                                    </select>
-                                </div>
+                        Registrarse
+                    </button>
+                    <button type="button" (click)="previousPage()"
+                        class="w-full py-3 rounded-md bg-neutral-600 hover:bg-neutral-700  text-black">
+                        Anterior
+                    </button>
+                </div>
+                <!--Modal de horas-->
+                <div *ngIf="showModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+                    <div class="bg-neutral-900 p-6 rounded-lg w-96">
+                        <h2 class="text-white text-lg mb-4">{{ selectedDay.name }}</h2>
+                        <div class="mb-4">
+                            <label class="block text-gray-400 mb-2">Apertura:</label>
+                            <div class="flex items-center">
+                                <select name="startTimeHour" class="bg-neutral-800 text-white p-2 rounded mr-2">
+                                    <option value="00">00</option>
+                                    <option value="01">01</option>
+                                    <option value="02">02</option>
+                                    <option value="03">03</option>
+                                    <option value="04">04</option>
+                                    <option value="05">05</option>
+                                    <option value="06">06</option>
+                                    <option value="07">07</option>
+                                    <option value="08">08</option>
+                                    <option value="09">09</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                    <option value="13">13</option>
+                                    <option value="14">14</option>
+                                    <option value="15">15</option>
+                                    <option value="16">16</option>
+                                    <option value="17">17</option>
+                                    <option value="18">18</option>
+                                    <option value="19">19</option>
+                                    <option value="20">20</option>
+                                    <option value="21">21</option>
+                                    <option value="22">22</option>
+                                    <option value="23">23</option>
+                                </select>
+                                <span class="text-white">:</span>
+                                <select name="startTimeMinute" class="bg-neutral-800 text-white p-2 rounded ml-2">
+                                    <option value="00">00</option>
+                                    <option value="30">30</option>
+                                </select>
                             </div>
-                            <div class="mb-4">
-                                <label class="block text-gray-400 mb-2">Cierre:</label>
-                                <div class="flex items-center">
-                                    <select name="endTimeHour" class="bg-neutral-800 text-white p-2 rounded mr-2">
-                                        <option value="00">00</option>
-                                        <option value="01">01</option>
-                                        <option value="02">02</option>
-                                        <option value="03">03</option>
-                                        <option value="04">04</option>
-                                        <option value="05">05</option>
-                                        <option value="06">06</option>
-                                        <option value="07">07</option>
-                                        <option value="08">08</option>
-                                        <option value="09">09</option>
-                                        <option value="10">10</option>
-                                        <option value="11">11</option>
-                                        <option value="12">12</option>
-                                        <option value="13">13</option>
-                                        <option value="14">14</option>
-                                        <option value="15">15</option>
-                                        <option value="16">16</option>
-                                        <option value="17">17</option>
-                                        <option value="18">18</option>
-                                        <option value="19">19</option>
-                                        <option value="20">20</option>
-                                        <option value="21">21</option>
-                                        <option value="22">22</option>
-                                        <option value="23">23</option>
-                                    </select>
-                                    <span class="text-white">:</span>
-                                    <select name="endTimeMinute" class="bg-neutral-800 text-white p-2 rounded ml-2">
-                                        <option value="00">00</option>
-                                        <option value="30">30</option>
-                                    </select>
-                                </div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-400 mb-2">Cierre:</label>
+                            <div class="flex items-center">
+                                <select name="endTimeHour" class="bg-neutral-800 text-white p-2 rounded mr-2">
+                                    <option value="00">00</option>
+                                    <option value="01">01</option>
+                                    <option value="02">02</option>
+                                    <option value="03">03</option>
+                                    <option value="04">04</option>
+                                    <option value="05">05</option>
+                                    <option value="06">06</option>
+                                    <option value="07">07</option>
+                                    <option value="08">08</option>
+                                    <option value="09">09</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                    <option value="13">13</option>
+                                    <option value="14">14</option>
+                                    <option value="15">15</option>
+                                    <option value="16">16</option>
+                                    <option value="17">17</option>
+                                    <option value="18">18</option>
+                                    <option value="19">19</option>
+                                    <option value="20">20</option>
+                                    <option value="21">21</option>
+                                    <option value="22">22</option>
+                                    <option value="23">23</option>
+                                </select>
+                                <span class="text-white">:</span>
+                                <select name="endTimeMinute" class="bg-neutral-800 text-white p-2 rounded ml-2">
+                                    <option value="00">00</option>
+                                    <option value="30">30</option>
+                                </select>
                             </div>
-                            <div class="flex justify-end">
-                                <button (click)="closeModal()"
-                                    class="bg-gray-700 hover:bg-gray-600 text-black px-4 py-2 rounded mr-2">Cancelar</button>
-                                <button (click)="saveHours()"
-                                    class="bg-amber-500 hover:bg-amber-600 text-black px-4 py-2 rounded ">Guardar</button>
-                            </div>
+                        </div>
+                        <div class="flex justify-end">
+                            <button (click)="closeModal()"
+                                class="bg-gray-700 hover:bg-gray-600 text-black px-4 py-2 rounded mr-2">Cancelar</button>
+                            <button (click)="saveHours()"
+                                class="bg-amber-500 hover:bg-amber-600 text-black px-4 py-2 rounded ">Guardar</button>
                         </div>
                     </div>
                 </div>
-            </form>
+        </div>
+        </form>
 
-            <div class="flex items-center justify-center space-x-2 mt-4">
-                <span class="text-xs text-gray-500 dark:text-gray-400">¿Ya tienes cuenta?&nbsp;</span>
-                <a href="/login" class="text-xs text-amber-500 dark:text-amber-400 hover:underline"> Inicia sesion</a>
+        <div class="flex items-center justify-center space-x-2 mt-4">
+            <span class="text-xs text-gray-500 dark:text-gray-400">¿Ya tienes cuenta?&nbsp;</span>
+            <a href="/login" class="text-xs text-amber-500 dark:text-amber-400 hover:underline"> Inicia sesion</a>
 
-                <br>
-                <br>
-            </div>
+            <br>
+            <br>
         </div>
     </div>
+</div>
 
 
 

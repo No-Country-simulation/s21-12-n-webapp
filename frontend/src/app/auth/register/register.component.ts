@@ -101,12 +101,18 @@ export class RegisterComponent {
         contrasena: ['', [Validators.required, Validators.minLength(6)]],
         confirmPassword: ['', [Validators.required]],
         telefono: ['', [Validators.required, Validators.pattern(/^\+\d{1,15}$/), Validators.minLength(12), Validators.maxLength(15)]],
-        cuilResponsable: [''],
+        cuilResponsable: ['', [Validators.required, this.validateCuil]],
         direccion: [''],
         descripcion: [''],
         horario: [''],
         imagen: [''],
     }, { validators: this.passwordsMatchValidator() });
+
+    validateCuil(control: AbstractControl): ValidationErrors | null {
+        const value = control.value;
+        const isValid = /^\d{11}$/.test(value); // Verifica que tenga exactamente 11 dígitos
+        return isValid ? null : { invalidCuil: true };
+      }
     
     registroBarberia(): void {
         if (this.registerBarberiaForm.valid) {
@@ -225,30 +231,7 @@ hasSelectedDays(): boolean {
     }
     selectRole(role: string) {
         this.selectedRole = role;
-        this.updateBarberiaValidators();
     }
-    private updateBarberiaValidators() {
-        const cuilResponsableControl = this.registerBarberiaForm.get('cuilResponsable');
-        const direccionControl = this.registerBarberiaForm.get('direccion');
-        const descripcionControl = this.registerBarberiaForm.get('descripcion');
-        const horarioControl = this.registerBarberiaForm.get('horario');
-        if (this.selectedRole === 'barberia') {
-            cuilResponsableControl?.setValidators([Validators.required]);
-            direccionControl?.setValidators([Validators.required, Validators.minLength(4), Validators.pattern(/^[a-zA-Z0-9,. -]*$/)]);
-            descripcionControl?.setValidators([Validators.required]);
-            horarioControl?.setValidators([Validators.required]);
-        } else {
-            cuilResponsableControl?.clearValidators();
-            direccionControl?.clearValidators();
-            descripcionControl?.clearValidators();
-            horarioControl?.clearValidators();
-        }
-
-        cuilResponsableControl?.updateValueAndValidity();
-        direccionControl?.updateValueAndValidity();
-        descripcionControl?.updateValueAndValidity();
-        horarioControl?.updateValueAndValidity();
-    }
-
+    
 
 }
