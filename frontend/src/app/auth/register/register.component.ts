@@ -210,19 +210,19 @@ export class RegisterComponent {
 
     saveHours() {
         if (this.selectedDay) {
-            const startTimeHour = parseInt((document.querySelector('select[name="startTimeHour"]') as HTMLSelectElement).value, 10);
-            const startTimeMinute = parseInt((document.querySelector('select[name="startTimeMinute"]') as HTMLSelectElement).value, 10);
-            const endTimeHour = parseInt((document.querySelector('select[name="endTimeHour"]') as HTMLSelectElement).value, 10);
+            const horaInicio = parseInt((document.querySelector('select[name="horaInicio"]') as HTMLSelectElement).value, 10);
+            const minutos = parseInt((document.querySelector('select[name="minutos"]') as HTMLSelectElement).value, 10);
+            const horaFin = parseInt((document.querySelector('select[name="horaFin"]') as HTMLSelectElement).value, 10);
             const endTimeMinute = parseInt((document.querySelector('select[name="endTimeMinute"]') as HTMLSelectElement).value, 10);
 
             // Validación: la hora de cierre debe ser posterior a la de apertura
-            if (endTimeHour < startTimeHour || (endTimeHour === startTimeHour && endTimeMinute <= startTimeMinute)) {
+            if (horaFin < horaInicio || (horaFin === horaInicio && endTimeMinute <= minutos)) {
 
                 this.notificacionService.showMessage('La hora de cierre debe ser superior a la hora de apertura', 'error');
                 return; // Detiene la ejecución si la validación falla
             }
 
-            this.selectedDay.hours = `${this.pad(startTimeHour)}:${this.pad(startTimeMinute)} - ${this.pad(endTimeHour)}:${this.pad(endTimeMinute)}`;
+            this.selectedDay.hours = `${this.pad(horaInicio)}:${this.pad(minutos)} - ${this.pad(horaFin)}:${this.pad(endTimeMinute)}`;
 
             // Actualizar el campo 'horario' en el formulario
             const horariosActivos = this.days
