@@ -36,7 +36,7 @@ export class RegisterComponent {
         telefono: ['', [Validators.required, Validators.pattern(/^\+\d{1,15}$/), Validators.minLength(12), Validators.maxLength(15)]],
     }, { validators: this.passwordsMatchValidator() });
 
- 
+
 
 
     registroCliente() {
@@ -101,19 +101,44 @@ export class RegisterComponent {
         contrasena: ['', [Validators.required, Validators.minLength(6)]],
         confirmPassword: ['', [Validators.required]],
         telefono: ['', [Validators.required, Validators.pattern(/^\+\d{1,15}$/), Validators.minLength(12), Validators.maxLength(15)]],
-        cuilResponsable: ['', [Validators.required, this.validateCuil]],
-        direccion: [''],
+        cuilResponsable: ['', [Validators.required, Validators.pattern(/^\d{11}$/)]],
+
+        direccion: ['', [Validators.required, Validators.minLength(8), Validators.pattern(/^[a-zA-Z0-9\s.,-]+$/), Validators.maxLength(100)]],
         descripcion: [''],
         horario: [''],
         imagen: [''],
     }, { validators: this.passwordsMatchValidator() });
 
-    validateCuil(control: AbstractControl): ValidationErrors | null {
-        const value = control.value;
-        const isValid = /^\d{11}$/.test(value); // Verifica que tenga exactamente 11 dígitos
-        return isValid ? null : { invalidCuil: true };
-      }
+    showLettersError = false;
+
+    onPasteTelefono(event: ClipboardEvent) {
+        const pastedInput: string = (event.clipboardData || (window as any).clipboardData).getData('text');
     
+        // Permite solo números y el símbolo "+" al inicio
+        if (!/^\+\d*$/.test(pastedInput)) {
+            event.preventDefault(); // Evita pegar caracteres inválidos
+            this.showLettersError = true;
+            setTimeout(() => {
+                this.showLettersError = false;
+            }, 3000);
+        } else {
+            this.showLettersError = false;
+        }
+    }
+    
+
+    onPaste(event: ClipboardEvent) {
+        const pastedInput: string = (event.clipboardData || (window as any).clipboardData).getData('text');
+        if (/[a-zA-Z]/.test(pastedInput)) {
+            event.preventDefault(); // Evita que se peguen las letras
+            this.showLettersError = true; // Muestra el mensaje de error
+            setTimeout(() => {
+                this.showLettersError = false; // Oculta el mensaje después de un tiempo
+            }, 3000); // Oculta el mensaje después de 3 segundos (3000 ms)
+        } else {
+            this.showLettersError = false; // Asegura que el mensaje esté oculto si no hay letras
+        }
+    }
     registroBarberia(): void {
         if (this.registerBarberiaForm.valid) {
             const formData: Barberia = {
@@ -156,10 +181,10 @@ export class RegisterComponent {
     }
 
 
-// Agrega este método en tu clase RegisterComponent
-hasSelectedDays(): boolean {
-    return this.days.some(day => day.active);
-}
+    // Agrega este método en tu clase RegisterComponent
+    hasSelectedDays(): boolean {
+        return this.days.some(day => day.active);
+    }
     days = [
         { name: 'Lunes', active: false, hours: '' },
         { name: 'Martes', active: false, hours: '' },
@@ -192,7 +217,7 @@ hasSelectedDays(): boolean {
 
             // Validación: la hora de cierre debe ser posterior a la de apertura
             if (endTimeHour < startTimeHour || (endTimeHour === startTimeHour && endTimeMinute <= startTimeMinute)) {
-             
+
                 this.notificacionService.showMessage('La hora de cierre debe ser superior a la hora de apertura', 'error');
                 return; // Detiene la ejecución si la validación falla
             }
@@ -231,7 +256,34 @@ hasSelectedDays(): boolean {
     }
     selectRole(role: string) {
         this.selectedRole = role;
+        this.updateBarberiaValidators();
     }
-    
+    private updateBarberiaValidators() {
+        const cuilResponsableControl = this.registerBarberiaForm.get('cuilResponsable');
+        const direccionControl = this.registerBarberiaForm.get('direccion');
+        const descripcionControl = this.registerBarberiaForm.get('descripcion');
+        const horarioControl = this.registerBarberiaForm.get('horario');
+        if (this.selectedRole === 'barberia') {
+            cuilResponsableControl?.setValidators([
+                Validators.required,
+                Validators.pattern(/^\d{11}$/)
+            ]);
+
+            direccionControl?.setValidators([Validators.required, Validators.minLength(4), Validators.pattern(/^[a-zA-Z0-9,. -]*$/)]);
+            descripcionControl?.setValidators([Validators.required]);
+            horarioControl?.setValidators([Validators.required]);
+        } else {
+            cuilResponsableControl?.clearValidators();
+            direccionControl?.clearValidators();
+            descripcionControl?.clearValidators();
+            horarioControl?.clearValidators();
+        }
+
+        cuilResponsableControl?.updateValueAndValidity();
+        direccionControl?.updateValueAndValidity();
+        descripcionControl?.updateValueAndValidity();
+        horarioControl?.updateValueAndValidity();
+    }
+
 
 }
