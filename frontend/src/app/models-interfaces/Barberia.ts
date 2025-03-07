@@ -6,6 +6,6 @@ export interface Barberia{
     nombreBarberia: string,
     cuilResponsable: string,
     direccion: string,
-    teamSize: string,
+    descripcion: string,
     horario: string,
   }

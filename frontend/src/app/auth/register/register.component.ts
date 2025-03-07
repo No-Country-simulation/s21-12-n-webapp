@@ -103,7 +103,7 @@ export class RegisterComponent {
         telefono: ['', [Validators.required, Validators.pattern(/^\+\d{1,15}$/), Validators.minLength(12), Validators.maxLength(15)]],
         cuilResponsable: [''],
         direccion: [''],
-        teamSize: [''],
+        descripcion: [''],
         horario: [''],
         imagen: [''],
     }, { validators: this.passwordsMatchValidator() });
@@ -117,7 +117,7 @@ export class RegisterComponent {
                 telefono: this.registerBarberiaForm.value.telefono,
                 cuilResponsable: this.registerBarberiaForm.value.cuilResponsable,
                 direccion: this.registerBarberiaForm.value.direccion,
-                teamSize: this.registerBarberiaForm.value.teamSize,
+                descripcion: this.registerBarberiaForm.value.descripcion,
                 horario: this.registerBarberiaForm.value.horario,
                 imagen: this.registerBarberiaForm.value.imagen,
             };
@@ -230,23 +230,23 @@ hasSelectedDays(): boolean {
     private updateBarberiaValidators() {
         const cuilResponsableControl = this.registerBarberiaForm.get('cuilResponsable');
         const direccionControl = this.registerBarberiaForm.get('direccion');
-        const teamSizeControl = this.registerBarberiaForm.get('teamSize');
+        const descripcionControl = this.registerBarberiaForm.get('descripcion');
         const horarioControl = this.registerBarberiaForm.get('horario');
         if (this.selectedRole === 'barberia') {
             cuilResponsableControl?.setValidators([Validators.required]);
             direccionControl?.setValidators([Validators.required, Validators.minLength(4), Validators.pattern(/^[a-zA-Z0-9,. -]*$/)]);
-            teamSizeControl?.setValidators([Validators.required]);
+            descripcionControl?.setValidators([Validators.required]);
             horarioControl?.setValidators([Validators.required]);
         } else {
             cuilResponsableControl?.clearValidators();
             direccionControl?.clearValidators();
-            teamSizeControl?.clearValidators();
+            descripcionControl?.clearValidators();
             horarioControl?.clearValidators();
         }
 
         cuilResponsableControl?.updateValueAndValidity();
         direccionControl?.updateValueAndValidity();
-        teamSizeControl?.updateValueAndValidity();
+        descripcionControl?.updateValueAndValidity();
         horarioControl?.updateValueAndValidity();
     }
 

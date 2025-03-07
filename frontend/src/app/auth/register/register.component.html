@@ -246,27 +246,17 @@
                     </div>
                     <div *ngIf="currentPage === 3">
                         <div class="mt-4">
-                            <select formControlName="teamSize"
-                                class="block w-full px-4 py-2 border rounded-lg bg-black dark:bg-black dark:text-neutral-50 dark:border-neutral-50 focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring">
-                                <option value="" disabled selected>Selecciona el tamaño de tu equipo</option>
-                                <option value="solo">Solo yo</option>
-                                <option value="2-3">2-3 empleados</option>
-                                <option value="4-6">4-6 empleados</option>
-                                <option value="mas-6">Más de 6 empleados</option>
-                            </select>
-                            <div
-                                *ngIf="registerBarberiaForm.get('teamSize')?.invalid && (registerBarberiaForm.get('teamSize')?.touched || registerBarberiaForm.get('teamSize')?.dirty)">
-                                <div
-                                    *ngIf="registerBarberiaForm.get('teamSize')?.invalid && (registerBarberiaForm.get('teamSize')?.touched || registerBarberiaForm.get('teamSize')?.dirty)">
-                                    <small class="text-red-500">El tamaño del equipo es obligatorio.</small>
-                                </div>
-                            </div>
+                            <label for="message" class="block mb-2 text-sm font-medium text-white dark:text-white">Descripción:</label>
+                            <textarea id="message" rows="4" 
+                            formControlName="descripcion" 
+                            class="block p-2.5 w-full text-sm text-white bg-black rounded-lg border
+                            border-gray-600 focus:ring-blue-500 focus:border-blue-500"></textarea>
                         </div>
                         <br>
                         <button type="button" (click)="nextPage()"
-                            [disabled]="registerBarberiaForm.get('teamSize')?.invalid" [ngClass]="{
-                                'bg-orange-300': registerBarberiaForm.get('teamSize')?.invalid,
-                                'bg-amber-300 hover:bg-amber-400': !registerBarberiaForm.get('teamSize')?.invalid
+                            [disabled]="registerBarberiaForm.get('descripcion')?.invalid" [ngClass]="{
+                                'bg-orange-300': registerBarberiaForm.get('descripcion')?.invalid,
+                                'bg-amber-300 hover:bg-amber-400': !registerBarberiaForm.get('descripcion')?.invalid
                             }" class="w-full py-3 rounded-md  text-black">
                             Siguiente
                         </button>
