@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BarberProfileService } from '../../services/barber-profile.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule, Location } from '@angular/common';
-import { ErrorComponent } from "../../shared/error/error.component";
-import { CatalogComponent } from './catalog/catalog.component';
+import { TurnoComponent } from './turno/turno.component';
 import { CommentsComponent } from './comments/comments.component';
 import { NotificacionesService } from '../../services/notificaciones.service';
 import { HeaderComponent } from '../../shared/header/header.component';
@@ -11,7 +10,7 @@ import { HeaderComponent } from '../../shared/header/header.component';
 @Component({
   
   selector: 'app-barber-profile',
-  imports: [CommonModule, RouterModule,CatalogComponent, CommentsComponent, HeaderComponent],
+  imports: [CommonModule, RouterModule, TurnoComponent, CommentsComponent, HeaderComponent],
   templateUrl: './barber-profile.component.html',
   styleUrl: './barber-profile.component.css'
 })
@@ -20,7 +19,7 @@ export class BarberProfileComponent implements OnInit{
   errorMessage: string = '';
   id!: string;
 
-  selectedContent: string = 'catalog'
+  selectedContent: string = 'turno'
 
   selectContent(content: string){
     this.selectedContent = content

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule, Location } from '@angular/common';
-import { CatalogComponent } from '../barber-profile/catalog/catalog.component';
+import { TurnoComponent } from '../barber-profile/turno/turno.component'; 
 import { CommentsComponent } from '../barber-profile/comments/comments.component'; 
 import { NotificacionesService } from '../../services/notificaciones.service';
 import { HeaderComponent } from '../../shared/header/header.component';
@@ -9,8 +9,7 @@ import { ClientProfileService } from '../../services/client-profile.service';
 
 @Component({
   selector: 'app-cliente-profile',
-  imports: [CommonModule, RouterModule, CatalogComponent, 
-    CommentsComponent, HeaderComponent],
+  imports: [CommonModule, RouterModule, TurnoComponent, HeaderComponent],
   templateUrl: './client-profile.component.html',
   styleUrls: ['./client-profile.component.css']
 })
@@ -19,7 +18,7 @@ export class ClientProfileComponent implements OnInit {
     errorMessage: string = '';
     id!: string;
   
-    selectedContent: string = 'catalog'
+    selectedContent: string = 'turno'
   
     selectContent(content: string){
       this.selectedContent = content
