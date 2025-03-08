@@ -1,4 +1,5 @@
 export interface Barberia{
+  id?: string;
     email: string,
     imagen: string,
     contrasena: string,
