@@ -31,18 +31,6 @@
 
     </section>
   </header>
-  <main class="p-4">
-    <section class="w-full flex justify-center gap-1">
-      <button class="button-toggle-profile" [class.button-activate]="selectedContent === 'catalog'"
-        (click)="selectContent('catalog')">Catálogo</button>
-      <button class="button-toggle-profile" [class.button-activate]="selectedContent === 'comments'"
-        (click)="selectContent('comments')">Comentarios</button>
-    </section>
-    <section class="p-4">
-      <app-catalog *ngIf="selectedContent === 'catalog'"></app-catalog>
-      <app-comments *ngIf="selectedContent === 'comments'"></app-comments>
-    </section>
-  </main>
 </div>
 
 <br><br><br><br>

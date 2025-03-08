@@ -69,7 +69,7 @@
                                 debe ser un formato válido.</small>
                         </div>
                     </div>
-                    <div class="mt-4">
+                    <div class="mt-4 relative">
                         <input id="RegisterTel" placeholder="Número de teléfono" formControlName="telefono"
                             class="block w-full px-4 py-2 border rounded-lg bg-black dark:bg-black dark:text-neutral-50 dark:border-neutral-50 focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring"
                             type="tel" (paste)="onPasteTelefono($event)" />
@@ -86,10 +86,23 @@
                                 número de teléfono debe ser un número válido (ejemplo: +54123456789).</small>
                         </div>
                     </div>
-                    <div class="mt-4">
+                    <div class="mt-4 relative">
                         <input id="RegisterPassword" placeholder="Contraseña" formControlName="contrasena"
                             class="block w-full px-4 py-2 border rounded-lg bg-black dark:bg-black dark:text-neutral-50 dark:border-neutral-50 focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring"
-                            type="password" />
+                            [type]="mostrarPassword ? 'text' : 'password'" />
+                            <button type="button" (click)="togglePassword()" 
+                            class="absolute inset-y-0 right-2 flex items-center px-3 text-gray-500">
+    
+                            <svg *ngIf="!mostrarPassword" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+                                <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
+                              </svg>
+                            
+                              <svg xmlns="http://www.w3.org/2000/svg" *ngIf="mostrarPassword"  width="16" height="16" fill="currentColor" class="bi bi-eye-slash-fill" viewBox="0 0 16 16">
+                                <path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7 7 0 0 0 2.79-.588M5.21 3.088A7 7 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474z"/>
+                                <path d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12z"/>
+                              </svg>
+                        </button>
                         <div
                             *ngIf="registerForm.get('contrasena')?.invalid && (registerForm.get('contrasena')?.touched || registerForm.get('contrasena')?.dirty)">
                             <small *ngIf="registerForm.get('contrasena')?.errors?.['required']" class="text-red-500">La
@@ -98,11 +111,24 @@
                                 contraseña debe tener al menos 6 caracteres.</small>
                         </div>
                     </div>
-                    <div class="mt-4">
+                    <div class="mt-4 relative">
                         <input id="RegisterConfirmPassword" placeholder="Confirmar contraseña"
                             formControlName="confirmPassword"
                             class="block w-full px-4 py-2 border rounded-lg bg-black dark:bg-black dark:text-neutral-50 dark:border-neutral-50 focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring"
-                            type="password" />
+                            [type]="mostrarPassword ? 'text' : 'password'" />
+                            <button type="button" (click)="togglePassword()" 
+                            class="absolute inset-y-0 right-2 flex items-center px-3 text-gray-500">
+    
+                            <svg *ngIf="!mostrarPassword" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+                                <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
+                              </svg>
+                            
+                              <svg xmlns="http://www.w3.org/2000/svg" *ngIf="mostrarPassword"  width="16" height="16" fill="currentColor" class="bi bi-eye-slash-fill" viewBox="0 0 16 16">
+                                <path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7 7 0 0 0 2.79-.588M5.21 3.088A7 7 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474z"/>
+                                <path d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12z"/>
+                              </svg>
+                        </button>
                         <div
                             *ngIf="registerForm.get('confirmPassword')?.invalid && (registerForm.get('confirmPassword')?.touched || registerForm.get('confirmPassword')?.dirty)">
                             <small *ngIf="registerForm.get('confirmPassword')?.errors?.['required']"
@@ -189,30 +215,57 @@
                                     +54123456789).</small>
                             </div>
                         </div>
-                        <div class="mt-4">
+                  
+                        <div class="mt-4 relative">
                             <input id="RegisterPassword" placeholder="Contraseña" formControlName="contrasena"
                                 class="block w-full px-4 py-2 border rounded-lg bg-black dark:bg-black dark:text-neutral-50 dark:border-neutral-50 focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring"
-                                type="password" />
+                                [type]="mostrarPassword ? 'text' : 'password'" />
+                                <button type="button" (click)="togglePassword()" 
+                                class="absolute inset-y-0 right-2 flex items-center px-3 text-gray-500">
+        
+                                <svg *ngIf="!mostrarPassword" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                    <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+                                    <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
+                                  </svg>
+                                
+                                  <svg xmlns="http://www.w3.org/2000/svg" *ngIf="mostrarPassword"  width="16" height="16" fill="currentColor" class="bi bi-eye-slash-fill" viewBox="0 0 16 16">
+                                    <path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7 7 0 0 0 2.79-.588M5.21 3.088A7 7 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474z"/>
+                                    <path d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12z"/>
+                                  </svg>
+                            </button>
                             <div
-                                *ngIf="registerBarberiaForm.get('contrasena')?.invalid && (registerBarberiaForm.get('contrasena')?.touched || registerBarberiaForm.get('contrasena')?.dirty)">
-                                <small *ngIf="registerBarberiaForm.get('contrasena')?.errors?.['required']"
-                                    class="text-red-500">La contraseña es obligatoria.</small>
-                                <small *ngIf="registerBarberiaForm.get('contrasena')?.errors?.['minlength']"
-                                    class="text-red-500">La contraseña debe tener al menos 6 caracteres.</small>
+                                *ngIf="registerForm.get('contrasena')?.invalid && (registerForm.get('contrasena')?.touched || registerForm.get('contrasena')?.dirty)">
+                                <small *ngIf="registerForm.get('contrasena')?.errors?.['required']" class="text-red-500">La
+                                    contraseña es obligatoria.</small>
+                                <small *ngIf="registerForm.get('contrasena')?.errors?.['minlength']" class="text-red-500">La
+                                    contraseña debe tener al menos 6 caracteres.</small>
                             </div>
                         </div>
-                        <div class="mt-4">
+                        <div class="mt-4 relative">
                             <input id="RegisterConfirmPassword" placeholder="Confirmar contraseña"
                                 formControlName="confirmPassword"
                                 class="block w-full px-4 py-2 border rounded-lg bg-black dark:bg-black dark:text-neutral-50 dark:border-neutral-50 focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring"
-                                type="password" />
+                                [type]="mostrarPassword ? 'text' : 'password'" />
+                                <button type="button" (click)="togglePassword()" 
+                                class="absolute inset-y-0 right-2 flex items-center px-3 text-gray-500">
+        
+                                <svg *ngIf="!mostrarPassword" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                    <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+                                    <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
+                                  </svg>
+                                
+                                  <svg xmlns="http://www.w3.org/2000/svg" *ngIf="mostrarPassword"  width="16" height="16" fill="currentColor" class="bi bi-eye-slash-fill" viewBox="0 0 16 16">
+                                    <path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7 7 0 0 0 2.79-.588M5.21 3.088A7 7 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474z"/>
+                                    <path d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12z"/>
+                                  </svg>
+                            </button>
                             <div
-                                *ngIf="registerBarberiaForm.get('confirmPassword')?.invalid && (registerBarberiaForm.get('confirmPassword')?.touched || registerBarberiaForm.get('confirmPassword')?.dirty)">
-                                <small *ngIf="registerBarberiaForm.get('confirmPassword')?.errors?.['required']"
+                                *ngIf="registerForm.get('confirmPassword')?.invalid && (registerForm.get('confirmPassword')?.touched || registerForm.get('confirmPassword')?.dirty)">
+                                <small *ngIf="registerForm.get('confirmPassword')?.errors?.['required']"
                                     class="text-red-500">La confirmación de contraseña es obligatoria.</small>
                             </div>
                             <div
-                                *ngIf="registerBarberiaForm.errors?.['mismatch'] && (registerBarberiaForm.get('confirmPassword')?.touched || registerBarberiaForm.get('confirmPassword')?.dirty)">
+                                *ngIf="registerForm.errors?.['mismatch'] && (registerForm.get('confirmPassword')?.touched || registerForm.get('confirmPassword')?.dirty)">
                                 <small class="text-red-500">Las contraseñas no coinciden.</small>
                             </div>
                         </div>

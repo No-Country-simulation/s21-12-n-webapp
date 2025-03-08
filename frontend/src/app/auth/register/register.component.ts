@@ -62,6 +62,13 @@ export class RegisterComponent {
 
 
 
+    mostrarPassword: boolean = false;
+
+    togglePassword() {
+      this.mostrarPassword = !this.mostrarPassword;
+    }
+    
+
 
     loginUsuario(email: string, contrasena: string) {
         const loginObject: Login = {

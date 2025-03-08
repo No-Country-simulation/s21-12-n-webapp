@@ -26,6 +26,12 @@ export class LoginComponent {
     contrasena: ['', [Validators.required, Validators.minLength(6)]]
   });
 
+  mostrarPassword: boolean = false;
+
+togglePassword() {
+  this.mostrarPassword = !this.mostrarPassword;
+}
+
 
   iniciarSesion() {
     if (this.loginForm.invalid) {
