@@ -27,7 +27,7 @@ export class ClientProfileComponent implements OnInit {
   
     constructor(
       private route: ActivatedRoute,
-      private barberProfileService: ClientProfileService,
+      private clientProfileService: ClientProfileService,
       private location: Location,
       private router: Router,
       private notificacionService: NotificacionesService
@@ -43,7 +43,7 @@ export class ClientProfileComponent implements OnInit {
     }
   
     getProfile(){
-      this.barberProfileService.getClientProfile(this.id).subscribe({
+      this.clientProfileService.getClientProfile(this.id).subscribe({
         next: (data) => {
           this.clientProfile = data
           this.errorMessage = ''
@@ -56,7 +56,7 @@ export class ClientProfileComponent implements OnInit {
     }
     
     getProfileJson() {
-      this.barberProfileService.getClient(this.id).subscribe({
+      this.clientProfileService.getClient(this.id).subscribe({
           next: (data) => {
               this.clientProfile = data;
               this.errorMessage = '';

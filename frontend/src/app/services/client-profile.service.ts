@@ -12,6 +12,7 @@ export class ClientProfileService {
   private baseUrl: string = appsettings.apiUrl;
 
   getClient(id: string): Observable<any> {
+    
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 

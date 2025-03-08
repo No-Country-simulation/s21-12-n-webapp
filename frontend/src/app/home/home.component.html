@@ -2,14 +2,26 @@
 
 <br>
 
-<form class="px-4 max-w-md mx-auto">
+<form class="px-4 max-w-md mx-auto bg-neutral-950" (ngSubmit)="onSearch()">
   <div class="flex gap-1 input">
-    <button type="submit" class="">
+    <button type="submit">
       <img src="assets/icons/Search.svg" class="opacity-60" />
     </button>
     <input type="text" id="default-search"
       class="w-full bg-transparent focus:ring-0 border-none text-neutral-00 placeholder-neutral-60"
-      placeholder="Buscar ubicación" required />
+      placeholder="Buscar barbería" (input)="onSearch()" required />
+  </div>
+
+  <!-- Mensaje de error si el usuario no está autenticado -->
+  <small *ngIf="errorMessage" class="text-red-500">{{ errorMessage }}</small>
+
+  <!-- Mostrar solo si hay resultados en la búsqueda -->
+  <div *ngIf="filteredBarberias.length > 0" class="container mx-auto p-4 mt-4">
+    <div *ngFor="let barberia of filteredBarberias" class="barberia-item">
+      <div *ngFor="let barberia of filteredBarberias" class="barberia-item">
+        <a [routerLink]="['/profile/barber', barberia.id]">{{ barberia.nombreBarberia }}</a>
+      </div>      
+    </div>
   </div>
 </form>
 
@@ -23,7 +35,7 @@
         <div class="swiper-wrapper">
           <div class="swiper-slide">
             <div class="bg-neutral-950  rounded-2xl p-4 h-96 flex flex-col">
-              <img src="assets/registro.png" alt="Peluqueria de pelos" class="rounded-t-2xl h-48 w-full object-cover">
+              <img src="assets/registro.png" alt="Peluqueria de pelos" class="rounded-t-2xl h-40 w-full object-cover">
               <div class="flex-grow p-4">
                 <h2 class="text-white text-xl font-semibold">Peluqueria de pelos</h2>
                 <p class="text-gray-400">Av. Rivadavia 3636, C1204...</p>
@@ -39,7 +51,7 @@
           </div>
           <div class="swiper-slide">
             <div class="bg-neutral-950 rounded-2xl p-4 h-96 flex flex-col">
-              <img src="assets/barbelink.png" alt="Barbería El Estilo" class="rounded-t-2xl h-48 w-full object-cover">
+              <img src="assets/barbelink.png" alt="Barbería El Estilo" class="rounded-t-2xl h-40 w-full object-cover">
               <div class="flex-grow p-4">
                 <h2 class="text-white text-xl font-semibold">Barbería El Estilo</h2>
                 <p class="text-gray-400">Av. Rivadavia 3636, C1204...</p>
@@ -55,7 +67,7 @@
           </div>
           <div class="swiper-slide">
             <div class="bg-neutral-950  rounded-2xl p-4 h-96 flex flex-col">
-              <img src="assets/login.png" alt="El Corte Clásico" class="rounded-t-2xl h-48 w-full object-cover">
+              <img src="assets/login.png" alt="El Corte Clásico" class="rounded-t-2xl h-40 w-full object-cover">
               <div class="flex-grow p-4">
                 <h2 class="text-white text-xl font-semibold">El Corte Clásico</h2>
                 <p class="text-gray-400">Av. Rivadavia 3636, C1204...</p>
@@ -71,7 +83,7 @@
           </div>
           <div class="swiper-slide">
             <div class="bg-neutral-950  rounded-2xl p-4 h-96 flex flex-col">
-              <img src="assets/barbelink.png" alt="Peluqueria de pelos" class="rounded-t-2xl h-48 w-full object-cover">
+              <img src="assets/barbelink.png" alt="Peluqueria de pelos" class="rounded-t-2xl h-40 w-full object-cover">
               <div class="flex-grow p-4">
                 <h2 class="text-white text-xl font-semibold">Peluqueria de pelos</h2>
                 <p class="text-gray-400">Av. Rivadavia 3636, C1204...</p>
@@ -87,7 +99,7 @@
           </div>
           <div class="swiper-slide">
             <div class="bg-neutral-950  rounded-2xl p-4 h-96 flex flex-col">
-              <img src="assets/promo1.png" alt="Barbería El Estilo" class="rounded-t-2xl h-48 w-full object-cover">
+              <img src="assets/promo1.png" alt="Barbería El Estilo" class="rounded-t-2xl h-40 w-full object-cover">
               <div class="flex-grow p-4">
                 <h2 class="text-white text-xl font-semibold">Barbería El Estilo</h2>
                 <p class="text-gray-400">Av. Rivadavia 3636, C1204...</p>
@@ -103,7 +115,7 @@
           </div>
           <div class="swiper-slide">
             <div class="bg-neutral-950 rounded-2xl p-4 h-96 flex flex-col">
-              <img src="assets/registro.png" alt="El Corte Clásico" class="rounded-t-2xl h-48 w-full object-cover">
+              <img src="assets/registro.png" alt="El Corte Clásico" class="rounded-t-2xl h-40 w-full object-cover">
               <div class="flex-grow p-4">
                 <h2 class="text-white text-xl font-semibold">El Corte Clásico</h2>
                 <p class="text-gray-400">Av. Rivadavia 3636, C1204...</p>
@@ -122,7 +134,6 @@
     </div>
   </div>
 </div>
-
 
 <!--
 

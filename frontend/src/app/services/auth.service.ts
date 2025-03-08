@@ -15,6 +15,7 @@ export class AuthService {
     private http = inject(HttpClient);
     private baseUrl: string = appsettings.apiUrl;
     constructor(private router: Router) { }
+
     registroCliente(objeto: Cliente): Observable<Cliente> {
         return this.http.post<Cliente>(`${this.baseUrl}clientes/register`, objeto);
     }
@@ -30,6 +31,19 @@ export class AuthService {
             })
         );
     }
+    
+    // auth.service.ts
+    getBarberias(): Observable<Barberia[]> {
+        const token = this.getToken();
+        const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+        return this.http.get<Barberia[]>(`${this.baseUrl}barberias`, { headers }).pipe(
+            catchError(error => {
+                console.error('Error fetching barberias:', error);
+                return of([]); // Retorna un arreglo vacío en caso de error
+            })
+        );
+    }
+    
     private getUserIdFromToken(token: string): string {
         const decoded: any = jwtDecode(token);
         return decoded.id;

@@ -11,17 +11,10 @@ export class BarberProfileService {
   private http = inject(HttpClient);
   private baseUrl: string = appsettings.apiUrl;
 
+  
   getBarbers(id: string): Observable<any> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-
-    const userId = localStorage.getItem('userId'); // Obtener el ID del usuario autenticado
-
-    if (userId !== id) {
-        return new Observable((observer) => {
-            observer.error(new Error('No tienes permiso para ver esta barbería'));
-        });
-    }
 
     return this.http.get(`${this.baseUrl}barberias/${id}`, { headers }).pipe(
         catchError((err: Error) => {
@@ -31,6 +24,28 @@ export class BarberProfileService {
             });
         })
     );
+}
+
+putBarbers(id: string): Observable<any> {
+  const token = localStorage.getItem('token');
+  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+  const userId = localStorage.getItem('userId'); // Obtener el ID del usuario autenticado
+
+  if (userId !== id) {
+      return new Observable((observer) => {
+          observer.error(new Error('No tienes permiso para ver esta barbería'));
+      });
+  }
+
+  return this.http.get(`${this.baseUrl}barberias/${id}`, { headers }).pipe(
+      catchError((err: Error) => {
+          console.error('Error al obtener barbería:', err);
+          return new Observable((observer) => {
+              observer.error(err);
+          });
+      })
+  );
 }
 
 

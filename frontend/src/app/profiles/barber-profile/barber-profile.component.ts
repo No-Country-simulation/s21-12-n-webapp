@@ -64,7 +64,7 @@ export class BarberProfileComponent implements OnInit{
         },
         error: (err) => {
             this.barberProfile = null;
-            this.errorMessage = 'No tienes permiso para ver esta barbería';
+            this.errorMessage = 'Esta barberia no existe';
             
             // Mostrar alerta con NotificacionService
             this.notificacionService.showMessage(this.errorMessage, 'error');

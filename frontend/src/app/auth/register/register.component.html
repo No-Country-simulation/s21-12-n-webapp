@@ -218,13 +218,37 @@
                         </div>
                         <br>
                         <button type="button" (click)="nextPage()"
-                            [disabled]="registerBarberiaForm.get('name')?.invalid || registerBarberiaForm.get('email')?.invalid || registerBarberiaForm.get('password')?.invalid || registerBarberiaForm.get('confirmPassword')?.invalid || registerBarberiaForm.get('telefono')?.invalid || (selectedRole === 'barberia' && registerBarberiaForm.get('cuilResponsable')?.invalid)"
-                            [ngClass]="{
-                                'bg-orange-300': registerBarberiaForm.get('name')?.invalid || registerBarberiaForm.get('email')?.invalid || registerBarberiaForm.get('password')?.invalid || registerBarberiaForm.get('confirmPassword')?.invalid || registerBarberiaForm.get('telefono')?.invalid || (selectedRole === 'barberia' && registerBarberiaForm.get('cuilResponsable')?.invalid),
-                                'bg-amber-300 hover:bg-amber-400': !(registerBarberiaForm.get('name')?.invalid || registerBarberiaForm.get('email')?.invalid || registerBarberiaForm.get('password')?.invalid || registerBarberiaForm.get('confirmPassword')?.invalid || registerBarberiaForm.get('telefono')?.invalid || (selectedRole === 'barberia' && registerBarberiaForm.get('cuilResponsable')?.invalid))
-                            }" class="w-full py-3 rounded-md text-black">
-                            Siguiente
-                        </button>
+                        [disabled]="registerBarberiaForm.get('nombreBarberia')?.invalid || 
+                                   registerBarberiaForm.get('email')?.invalid || 
+                                   registerBarberiaForm.get('telefono')?.invalid || 
+                                   registerBarberiaForm.get('cuilResponsable')?.invalid || 
+                                   registerBarberiaForm.get('contrasena')?.invalid || 
+                                   registerBarberiaForm.get('confirmPassword')?.invalid || 
+                                   (registerBarberiaForm.get('contrasena')?.value.length < 6) || 
+                                   (registerBarberiaForm.get('confirmPassword')?.value.length < 6) || 
+                                   (registerBarberiaForm.errors?.['mismatch'])"
+                        [ngClass]="{
+                            'bg-orange-300': registerBarberiaForm.get('nombreBarberia')?.invalid || 
+                                             registerBarberiaForm.get('email')?.invalid || 
+                                             registerBarberiaForm.get('telefono')?.invalid || 
+                                             registerBarberiaForm.get('cuilResponsable')?.invalid || 
+                                             registerBarberiaForm.get('contrasena')?.invalid || 
+                                             registerBarberiaForm.get('confirmPassword')?.invalid || 
+                                             (registerBarberiaForm.get('contrasena')?.value.length < 6) || 
+                                             (registerBarberiaForm.get('confirmPassword')?.value.length < 6) || 
+                                             (registerBarberiaForm.errors?.['mismatch']),
+                            'bg-amber-300 hover:bg-amber-400': !(registerBarberiaForm.get('nombreBarberia')?.invalid || 
+                                                                   registerBarberiaForm.get('email')?.invalid || 
+                                                                   registerBarberiaForm.get('telefono')?.invalid || 
+                                                                   registerBarberiaForm.get('cuilResponsable')?.invalid || 
+                                                                   registerBarberiaForm.get('contrasena')?.invalid || 
+                                                                   registerBarberiaForm.get('confirmPassword')?.invalid || 
+                                                                   (registerBarberiaForm.get('contrasena')?.value.length < 6) || 
+                                                                   (registerBarberiaForm.get('confirmPassword')?.value.length < 6) || 
+                                                                   (registerBarberiaForm.errors?.['mismatch']))
+                        }" class="w-full py-3 rounded-md text-black">
+                        Siguiente
+                    </button>
                     </div>
                     <div *ngIf="currentPage === 2">
                         <div class="mt-4" *ngIf="selectedRole === 'barberia'">
@@ -259,7 +283,7 @@
                         <div class="mt-4">
                             <label for="message"
                                 class="block mb-2 text-sm font-medium text-white dark:text-white">Descripción:</label>
-                            <textarea id="message" rows="4" formControlName="descripcion"
+                            <textarea id="message" rows="8" class="textarea" formControlName="descripcion"
                                 class="block p-2.5 w-full text-sm text-white bg-black rounded-lg border border-gray-600 focus:ring-blue-500 focus:border-blue-500"></textarea>
                             <div
                                 *ngIf="registerBarberiaForm.get('descripcion')?.invalid && (registerBarberiaForm.get('descripcion')?.touched || registerBarberiaForm.get('descripcion')?.dirty)">
@@ -290,27 +314,27 @@
                         <div class="mt-4">
                             <h2 class="text-white text-xl mb-4">Horario de atención</h2>
                             <p class="text-gray-400 mb-4">¿En qué horarios pueden atenderse los clientes?</p>
-                            <div *ngFor="let day of days; let i = index" class="mb-2">
+                            <div *ngFor="let fecha of fechas; let i = index" class="mb-2">
                                 <div class="flex items-center p-3 rounded-lg bg-neutral-800">
                                     <div class="flex items-center">
                                         <div
                                             class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
                                             <input type="checkbox" name="toggle" id="toggle_{{i}}"
                                                 class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"
-                                                [(ngModel)]="day.active" [ngModelOptions]="{standalone: true}">
+                                                [(ngModel)]="fecha.active" [ngModelOptions]="{standalone: true}">
                                             <label for="toggle_{{i}}"
                                                 class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer">
                                             </label>
                                         </div>
-                                        <span class="text-white">{{ day.name }}</span>
+                                        <span class="text-white">{{ fecha.name }}</span>
                                     </div>
                                     <div class="flex-grow flex justify-center">
-                                        <span class="text-gray-400" *ngIf="!day.hours">Registrar hora</span>
-                                        <span class="text-gray-400" *ngIf="day.hours">{{ day.hours }}</span>
+                                        <span class="text-gray-400" *ngIf="!fecha.hours">Registrar hora</span>
+                                        <span class="text-gray-400" *ngIf="fecha.hours">{{ fecha.hours }}</span>
                                     </div>
                                     <svg xmlns="http://www.w3.org/2000/svg"
                                         class="h-5 w-5 text-gray-400 cursor-pointer ml-auto" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor" (click)="openModal(day)">
+                                        viewBox="0 0 24 24" stroke="currentColor" (click)="openModal(fecha)">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M9 5l7 7-7 7" />
                                     </svg>
@@ -318,9 +342,9 @@
                             </div>
                         </div>
                         <br>
-                        <button type="submit" [disabled]="registerBarberiaForm.invalid || !hasSelectedDays()" [ngClass]="{
-                            'bg-amber-300 hover:bg-amber-400': registerBarberiaForm.valid && hasSelectedDays(),
-                            'bg-orange-300': (registerBarberiaForm.invalid || !hasSelectedDays())
+                        <button type="submit" [disabled]="registerBarberiaForm.invalid || !hasSelectedfechas()" [ngClass]="{
+                            'bg-amber-300 hover:bg-amber-400': registerBarberiaForm.valid && hasSelectedfechas(),
+                            'bg-orange-300': (registerBarberiaForm.invalid || !hasSelectedfechas())
                         }" class="w-full py-3 rounded-md  text-black">
                             Registrarse
                         </button>
@@ -333,7 +357,7 @@
                     <div *ngIf="showModal"
                         class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
                         <div class="bg-neutral-900 p-6 rounded-lg w-96">
-                            <h2 class="text-white text-lg mb-4">{{ selectedDay.name }}</h2>
+                            <h2 class="text-white text-lg mb-4">{{ selectedfecha.name }}</h2>
                             <div class="mb-4">
                                 <label class="block text-gray-400 mb-2">Apertura:</label>
                                 <div class="flex items-center">

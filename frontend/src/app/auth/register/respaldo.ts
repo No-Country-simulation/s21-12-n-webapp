@@ -4,9 +4,10 @@ import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl, Valid
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { Cliente } from '../../models-interfaces/Cliente';
-import { Barberia } from '../../models-interfaces/Barberia';
+import { Barberia, Horario } from '../../models-interfaces/Barberia';
 import { NotificacionesService } from '../../services/notificaciones.service';
 import { Login } from '../../models-interfaces/Login';
+import { ResponseAcceso } from '../../models-interfaces/ResponseAcceso';
 
 @Component({
     selector: 'app-register',
@@ -113,7 +114,7 @@ export class RegisterComponent {
 
     onPasteTelefono(event: ClipboardEvent) {
         const pastedInput: string = (event.clipboardData || (window as any).clipboardData).getData('text');
-    
+
         // Permite solo números y el símbolo "+" al inicio
         if (!/^\+\d*$/.test(pastedInput)) {
             event.preventDefault(); // Evita pegar caracteres inválidos
@@ -125,7 +126,7 @@ export class RegisterComponent {
             this.showLettersError = false;
         }
     }
-    
+
 
     onPaste(event: ClipboardEvent) {
         const pastedInput: string = (event.clipboardData || (window as any).clipboardData).getData('text');
@@ -139,8 +140,11 @@ export class RegisterComponent {
             this.showLettersError = false; // Asegura que el mensaje esté oculto si no hay letras
         }
     }
+
+    // register.component.ts
+    // register.component.ts
     registroBarberia(): void {
-        if (this.registerBarberiaForm.valid) {
+        if (this.registerBarberiaForm.valid && this.hasSelectedfechas()) {
             const formData: Barberia = {
                 nombreBarberia: this.registerBarberiaForm.value.nombreBarberia,
                 email: this.registerBarberiaForm.value.email,
@@ -149,30 +153,66 @@ export class RegisterComponent {
                 cuilResponsable: this.registerBarberiaForm.value.cuilResponsable,
                 direccion: this.registerBarberiaForm.value.direccion,
                 descripcion: this.registerBarberiaForm.value.descripcion,
-                horario: this.registerBarberiaForm.value.horario,
-                imagen: this.registerBarberiaForm.value.imagen,
-            };
+                horarios: this.fechas
+                    .filter(fecha => fecha.active && fecha.hours)
+                    .map(fecha => {
+                        const [inicio, fin] = fecha.hours.split(' - ');
+                        const [horaInicio, minutosInicio] = inicio.split(':').map(Number);
+                        const [horaFin, minutosFin] = fin.split(':').map(Number);
 
+                        const fechaInicioDate = new Date();
+                        fechaInicioDate.setHours(horaInicio, minutosInicio, 0, 0);
+                        const fechaFinDate = new Date();
+                        fechaFinDate.setHours(horaFin, minutosFin, 0, 0);
+
+                        return {
+                            fecha: new Date().toISOString(),
+                            horaInicio: fechaInicioDate.toISOString(),
+                            horaFin: fechaFinDate.toISOString(),
+                            estado: 'DISPONIBLE'
+                        };
+                    })
+            };
+            console.log("Datos a enviar:", formData);
             this.authService.registroBarberia(formData).subscribe({
-                next: (response) => {
+                next: (response: ResponseAcceso) => { // Especifica el tipo ResponseAcceso
                     console.log('Registro de barbería exitoso:', response);
-                    this.loginUsuario(formData.email, formData.contrasena); // Iniciar sesión después del registro
+                    const barberiaId = response.id; // Ahora puedes acceder a response.id
+                    const horarios: Horario[] = this.fechas
+                        .filter(fecha => fecha.active && fecha.hours)
+                        .map(fecha => {
+                            const [inicio, fin] = fecha.hours.split(' - ');
+                            const [horaInicio, minutosInicio] = inicio.split(':').map(Number);
+                            const [horaFin, minutosFin] = fin.split(':').map(Number);
+
+                            const fechaInicioDate = new Date();
+                            fechaInicioDate.setHours(horaInicio, minutosInicio, 0, 0);
+                            const fechaFinDate = new Date();
+                            fechaFinDate.setHours(horaFin, minutosFin, 0, 0);
+
+                            return {
+                                fecha: new Date().toISOString(),
+                                horaInicio: fechaInicioDate.toISOString(),
+                                horaFin: fechaFinDate.toISOString(),
+                                estado: 'DISPONIBLE',
+                                barberiaId: barberiaId
+                            };
+                        });
+                    formData.horarios = horarios;
+                    this.authService.registroBarberia(formData).subscribe({
+                        next: (response: ResponseAcceso) => {
+                            console.log('Registro de barbería exitoso:', response);
+                            this.loginUsuario(formData.email, formData.contrasena);
+                        },
+                        error: (error) => {
+                            console.error('Error en el registro de barbería:', error);
+                            this.notificacionService.showMessage('Ocurrió un error al registrar la barbería. Inténtalo de nuevo.', 'error');
+                        }
+                    });
                 },
                 error: (error) => {
                     console.error('Error en el registro de barbería:', error);
-                    let message = 'Ocurrió un error al registrar la barbería. Inténtalo de nuevo.';
-
-                    if (error.status === 0) {
-                        message = 'Has perdido la conexión a Internet. Por favor, intenta más tarde.';
-                    } else if (error.status === 409) {
-                        message = 'El email ya está registrado. Por favor, utiliza otro email.';
-                    } else if (error.status === 500) {
-                        if (error.error && error.error.detalle && error.error.detalle.includes('Duplicate entry')) {
-                            message = 'El email ya está registrado. Por favor, utiliza otro email.';
-                        }
-                    }
-
-                    this.notificacionService.showMessage(message, 'error');
+                    this.notificacionService.showMessage('Ocurrió un error al registrar la barbería. Inténtalo de nuevo.', 'error');
                 }
             });
         } else {

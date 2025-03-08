@@ -29,3 +29,12 @@ input[type="number"] {
     @apply: bg-amber-400;
     background-color: #f59e0b; /* Amber 400 */
   }
+
+textarea {
+    /**Estilos para el formulario***/
+ 
+    resize: none;
+    /* No aumenta el tamaño del textarea*/
+  
+  
+}  
