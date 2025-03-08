@@ -75,12 +75,8 @@ export class BarberProfileComponent implements OnInit{
 }
 
 
-  goBack(): void {
-    if (window.history.length > 1) {
-      this.location.back();
-    } else {
-      this.router.navigate(['/']);
-    }
-  }
+goBack(): void {
+  this.router.navigate(['']); // Siempre redirige a la ruta de inicio
+}
 
 }
