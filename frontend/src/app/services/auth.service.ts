@@ -32,7 +32,6 @@ export class AuthService {
         );
     }
     
-    // auth.service.ts
     getBarberias(): Observable<Barberia[]> {
         const token = this.getToken();
         const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
@@ -43,6 +42,28 @@ export class AuthService {
             })
         );
     }
+    getTurnos(): Observable<any[]> {
+        const token = this.getToken();
+        const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+        return this.http.get<any[]>(`${this.baseUrl}turnos`, { headers }).pipe(
+            catchError(error => {
+                console.error('Error obteniendo turnos:', error);
+                return of([]); // Retorna un arreglo vacío en caso de error
+            })
+        );
+    }
+    cancelarTurno(id: number): Observable<any> {
+        const token = this.getToken();
+        const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    
+        return this.http.put(`${this.baseUrl}turnos/${id}/cancel`, {}, { headers }).pipe(
+            catchError(error => {
+                console.error('Error cancelando el turno:', error);
+                return of(null);
+            })
+        );
+    }
+    
     
     private getUserIdFromToken(token: string): string {
         const decoded: any = jwtDecode(token);

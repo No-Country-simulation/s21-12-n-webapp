@@ -63,7 +63,7 @@
         (click)="selectContent('comments')">Comentarios</button>
     </section>
     <section class="p-4">
-      <app-turno *ngIf="selectedContent === 'turno'"></app-turno>
+      <app-turno-barberia *ngIf="selectedContent === 'turno'"></app-turno-barberia>
       <app-comments *ngIf="selectedContent === 'comments'"></app-comments>
     </section>
   </main>

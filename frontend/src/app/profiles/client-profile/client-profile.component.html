@@ -34,10 +34,10 @@
   <main class="p-4">
     <section class="w-full flex justify-center gap-1">
       <button class="button-toggle-profile" [class.button-activate]="selectedContent === 'turno'"
-        (click)="selectContent('turno')">Turno</button>
+        (click)="selectContent('turno')">Turnos</button>
     </section>
     <section class="p-4">
-      <app-turno *ngIf="selectedContent === 'turno'"></app-turno>
+      <app-turno-cliente *ngIf="selectedContent === 'turno'"></app-turno-cliente>
     </section>
   </main>
 </div>

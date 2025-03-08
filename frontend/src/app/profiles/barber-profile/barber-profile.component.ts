@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BarberProfileService } from '../../services/barber-profile.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule, Location } from '@angular/common';
-import { TurnoComponent } from './turno/turno.component';
+import { TurnoBarberiaComponent } from './turno/turno-barberia.component';
 import { CommentsComponent } from './comments/comments.component';
 import { NotificacionesService } from '../../services/notificaciones.service';
 import { HeaderComponent } from '../../shared/header/header.component';
@@ -10,7 +10,7 @@ import { HeaderComponent } from '../../shared/header/header.component';
 @Component({
   
   selector: 'app-barber-profile',
-  imports: [CommonModule, RouterModule, TurnoComponent, CommentsComponent, HeaderComponent],
+  imports: [CommonModule, RouterModule, TurnoBarberiaComponent, CommentsComponent, HeaderComponent],
   templateUrl: './barber-profile.component.html',
   styleUrl: './barber-profile.component.css'
 })

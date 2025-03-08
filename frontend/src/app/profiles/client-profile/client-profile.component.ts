@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule, Location } from '@angular/common';
-import { TurnoComponent } from '../barber-profile/turno/turno.component'; 
-import { CommentsComponent } from '../barber-profile/comments/comments.component'; 
+import { TurnoClienteComponent } from './turno-cliente/turno-cliente.component'; 
 import { NotificacionesService } from '../../services/notificaciones.service';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { ClientProfileService } from '../../services/client-profile.service';
 
 @Component({
   selector: 'app-cliente-profile',
-  imports: [CommonModule, RouterModule, TurnoComponent, HeaderComponent],
+  imports: [CommonModule, RouterModule, TurnoClienteComponent, HeaderComponent],
   templateUrl: './client-profile.component.html',
   styleUrls: ['./client-profile.component.css']
 })
