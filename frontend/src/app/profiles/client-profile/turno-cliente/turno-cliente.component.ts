@@ -19,8 +19,8 @@ export class TurnoClienteComponent implements OnInit {
         fechaTurno: '', // Se debe asignar en el formulario
         horaInicio: '',
         horaFin: '',
-        barberiaId: 1,
-        clienteId: 0 // Se llenará al autenticarse
+        barberiaId: null,
+        clienteId: null // Se llenará al autenticarse
     };
     
     horasDisponibles: string[] = Array.from({ length: 24 }, (_, i) => i.toString().padStart(2, '0')); // ["00", "01", ..., "23"]
