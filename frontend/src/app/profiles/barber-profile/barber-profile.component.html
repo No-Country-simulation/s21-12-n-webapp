@@ -57,12 +57,15 @@
   </header>
   <main class="p-4">
     <section class="w-full flex justify-center gap-1">
+      <button class="button-toggle-profile" [class.button-activate]="selectedContent === 'horario'"
+        (click)="selectContent('horario')">Horarios</button>
       <button class="button-toggle-profile" [class.button-activate]="selectedContent === 'turno'"
         (click)="selectContent('turno')">Turnos</button>
       <button class="button-toggle-profile" [class.button-activate]="selectedContent === 'comments'"
         (click)="selectContent('comments')">Comentarios</button>
     </section>
     <section class="p-4">
+      <app-horario *ngIf="selectedContent === 'horario'"></app-horario>
       <app-turno-barberia *ngIf="selectedContent === 'turno'"></app-turno-barberia>
       <app-comments *ngIf="selectedContent === 'comments'"></app-comments>
     </section>

@@ -19,7 +19,7 @@
   <div *ngIf="filteredBarberias.length > 0" class="container mx-auto p-4 mt-4">
     <div *ngFor="let barberia of filteredBarberias" class="barberia-item">
       <div *ngFor="let barberia of filteredBarberias" class="barberia-item">
-        <a [routerLink]="['/profile/barber', barberia.id]">{{ barberia.nombreBarberia }}</a>
+        <a [routerLink]="['/profile/barber', barberia.id]">{{ barberia.nombreBarberia }} {{ barberia.direccion }}</a>
       </div>      
     </div>
   </div>

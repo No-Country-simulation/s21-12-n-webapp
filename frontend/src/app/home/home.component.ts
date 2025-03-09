@@ -62,7 +62,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
         if (searchTerm) {
             this.filteredBarberias = this.barberias.filter(barberia => 
-                barberia.nombreBarberia.toLowerCase().startsWith(searchTerm) // Filtra solo por las iniciales
+                barberia.nombreBarberia.toLowerCase().startsWith(searchTerm) ||  // Filtra solo por las iniciales
+                barberia.direccion.toLowerCase().startsWith(searchTerm) // Filtra solo por las iniciales
             );
         } else {
             this.filteredBarberias = [];

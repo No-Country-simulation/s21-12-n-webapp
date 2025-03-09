@@ -1,6 +1,6 @@
-<div class="relative overflow-x-auto shadow-md sm:rounded-lg bg-amber-400">
-    <table class="w-full text-sm text-left rtl:text-right bg-amber-400 text-gray-500 dark:text-gray-400">
-        <thead class="text-xs text-gray-700 uppercase bg-amber-400 dark:bg-gray-700 dark:text-gray-400">
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg bg-amber-500">
+    <table class="w-full text-sm text-left rtl:text-right bg-amber-500 text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-amber-500 dark:bg-gray-700 dark:text-gray-400">
             <tr>
                 <th scope="col" class="px-6 py-3 text-black">Cliente</th>
                 <th scope="col" class="px-6 py-3 text-black">Hora de la cita</th>
@@ -8,6 +8,7 @@
 
                 <th scope="col" class="px-6 py-3 text-black">Estado:</th>
                 <th scope="col" class="px-6 py-3 text-black">Acciones</th>
+                <th></th>
             </tr>
         </thead>
         <tbody class="bg-amber-400">
@@ -16,11 +17,17 @@
                     {{ turno.id }}
                 </th>
                 
-                <td class="px-6 py-4">{{ turno.horaInicio }}</td>
-                <td class="px-6 py-4">{{ turno.horaFin }}</td>
-                <td class="px-6 py-4">{{ turno.estado }}</td>
+                <td class="px-6 py-4 text-black">{{ turno.horaInicio }}</td>
+                <td class="px-6 py-4 text-black">{{ turno.horaFin }}</td>
+                <td class="px-6 py-4 text-black">{{ turno.estado }}</td>
                 <td class="px-6 py-4 flex space-x-2">
-                    <button 
+                <button 
+                    type="button" 
+                    class="px-4 py-2 rounded-md bg-green-700 hover:bg-green-800 text-white"
+                    >
+                    Agendar turno
+                </button>
+                <button 
                     type="button" 
                     class="px-4 py-2 rounded-md bg-red-700 hover:bg-red-800 text-white"
                     (click)="cancelarTurno(turno.id)">

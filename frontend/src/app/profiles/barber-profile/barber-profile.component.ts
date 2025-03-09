@@ -6,11 +6,11 @@ import { TurnoBarberiaComponent } from './turno/turno-barberia.component';
 import { CommentsComponent } from './comments/comments.component';
 import { NotificacionesService } from '../../services/notificaciones.service';
 import { HeaderComponent } from '../../shared/header/header.component';
-
+import { HorarioComponent } from './horario/horario.component';
 @Component({
   
   selector: 'app-barber-profile',
-  imports: [CommonModule, RouterModule, TurnoBarberiaComponent, CommentsComponent, HeaderComponent],
+  imports: [CommonModule, RouterModule, TurnoBarberiaComponent, CommentsComponent, HeaderComponent, HorarioComponent],
   templateUrl: './barber-profile.component.html',
   styleUrl: './barber-profile.component.css'
 })
@@ -19,7 +19,7 @@ export class BarberProfileComponent implements OnInit{
   errorMessage: string = '';
   id!: string;
 
-  selectedContent: string = 'turno'
+  selectedContent: string = 'horario'
 
   selectContent(content: string){
     this.selectedContent = content
@@ -28,7 +28,6 @@ export class BarberProfileComponent implements OnInit{
   constructor(
     private route: ActivatedRoute,
     private barberProfileService: BarberProfileService,
-    private location: Location,
     private router: Router,
     private notificacionService: NotificacionesService
   ){}
