@@ -58,10 +58,11 @@
   <main class="p-4">
     <section class="w-full flex justify-center gap-1">
 
-      <button class="button-toggle-profile" [class.button-activate]="selectedContent === 'turno'"
-        (click)="selectContent('turno')">Turnos</button>
       <button class="button-toggle-profile" [class.button-activate]="selectedContent === 'horario'"
         (click)="selectContent('horario')">Horarios</button>
+
+      <button class="button-toggle-profile" [class.button-activate]="selectedContent === 'turno'"
+      (click)="selectContent('turno')">Turnos</button>
       <button class="button-toggle-profile" [class.button-activate]="selectedContent === 'comments'"
         (click)="selectContent('comments')">Comentarios</button>
     </section>

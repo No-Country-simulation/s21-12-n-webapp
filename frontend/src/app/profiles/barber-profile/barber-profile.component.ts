@@ -19,7 +19,7 @@ export class BarberProfileComponent implements OnInit{
   errorMessage: string = '';
   id!: string;
 
-  selectedContent: string = 'turno'
+  selectedContent: string = 'horario'
 
   selectContent(content: string){
     this.selectedContent = content
