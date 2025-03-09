@@ -10,12 +10,24 @@
                 <th scope="col" class="px-6 py-3 text-black">Estado:</th>
                 <th scope="col" class="px-6 py-3 text-black">Acciones</th>
                 <th scope="col" class="px-6 py-3">
-                    <button 
-                        type="button" 
-                        class="px-4 py-2 rounded-md bg-green-700 hover:bg-green-800 text-white"
-                        >
+                    <!-- Botón para abrir el modal -->
+                    <button type="button" class="px-4 py-2 rounded-md bg-green-700 hover:bg-green-800 text-white"
+                        (click)="openModal()">
                         Nuevo turno
                     </button>
+                    <!-- Modal -->
+                    <div *ngIf="isModalOpen"
+                        class="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+                        <div class="bg-white rounded-lg p-6 w-1/3">
+                            <h2 class="text-lg font-bold mb-4 text-black">Modal para registrar turnos... 
+                                <br> 
+                                Se necesita elegir los turnos disponibles y seleccionar la horas y los minutos. Los minutos son como en el formulario de registro</h2>
+                            <form>
+                                <!-- Aquí puedes agregar los campos del formulario para el nuevo turno -->
+                              
+                            </form>
+                        </div>
+                    </div>
                 </th>
             </tr>
         </thead>
@@ -27,30 +39,26 @@
                 <td class="px-6 py-4 text-black">{{ turno.fechaTurno }}</td>
                 <td class="px-6 py-4 text-black">{{ turno.horaInicio }}</td>
                 <td class="px-6 py-4 text-black">{{ turno.horaFin }}</td>
-                <td 
-                class="px-6 py-4 text-black text-center font-bold"
-                [ngClass]="{
+                <td class="px-6 py-4 text-black text-center font-bold" [ngClass]="{
                     'bg-red-500 text-white': turno.estado === 'CANCELADO',
                     'bg-green-500 text-white': turno.estado === 'CONFIRMADO',
                     'bg-blue-500 text-white': turno.estado === 'DISPONIBLE'
                 }">
-                {{ turno.estado }}
-            </td>
+                    {{ turno.estado }}
+                </td>
                 <td class="px-6 py-4 flex space-x-2">
-                    <button *ngIf="turno.estado == 'CONFIRMADO' " 
-                    type="button" 
-                    class="px-4 py-2 rounded-md bg-red-700 hover:bg-red-800 text-white"
-                    (click)="cancelarTurno(turno.id)">
-                    Cancelar
-                </button>
-            
-                <button *ngIf="turno.estado === 'CANCELADO' || turno.estado === 'DISPONIBLE'" 
-                type="button" 
-                class="px-4 py-2 rounded-md bg-blue-700 hover:bg-blue-800 text-white"
-                (click)="confirmarTurno(turno.id)">
-                Confirmar
-            </button>
-                
+                    <button *ngIf="turno.estado == 'CONFIRMADO' " type="button"
+                        class="px-4 py-2 rounded-md bg-red-700 hover:bg-red-800 text-white"
+                        (click)="cancelarTurno(turno.id)">
+                        Cancelar
+                    </button>
+
+                    <button *ngIf="turno.estado === 'CANCELADO' || turno.estado === 'DISPONIBLE'" type="button"
+                        class="px-4 py-2 rounded-md bg-blue-700 hover:bg-blue-800 text-white"
+                        (click)="confirmarTurno(turno.id)">
+                        Confirmar
+                    </button>
+
                 </td>
             </tr>
         </tbody>

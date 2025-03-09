@@ -20,7 +20,19 @@ export class TurnoClienteComponent {
         private route: ActivatedRoute // Inyectar ActivatedRoute
     ) { }
 
-
+    isModalOpen: boolean = false;
+    openModal() {
+      this.isModalOpen = true;
+    }
+    closeModal() {
+      this.isModalOpen = false;
+    }
+    submitTurno() {
+      // Lógica para crear el nuevo turno
+      console.log('Nuevo turno creado');
+      this.closeModal(); // Cierra el modal después de crear el turno
+    }
+    
     ngOnInit() {
         this.cargarTurnos();
     }
