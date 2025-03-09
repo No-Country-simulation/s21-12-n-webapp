@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../services/auth.service'; 
 import { CommonModule } from '@angular/common';
 
+import { NotificacionesService } from '../../../services/notificaciones.service';
+import Swal from 'sweetalert2';
+import { ActivatedRoute } from '@angular/router';
+
 @Component({
   selector: 'app-turno-cliente',
   imports: [CommonModule],
@@ -11,7 +15,11 @@ import { CommonModule } from '@angular/common';
 export class TurnoClienteComponent {
   turnos: any[] = [];
 
-    constructor(private authService: AuthService) {}
+    constructor(private authService: AuthService,
+        private notificacionService: NotificacionesService,
+        private route: ActivatedRoute // Inyectar ActivatedRoute
+    ) { }
+
 
     ngOnInit() {
         this.cargarTurnos();
@@ -22,17 +30,55 @@ export class TurnoClienteComponent {
             this.turnos = turnos;
         });
     }
+    confirmarTurno(id: number) {
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: 'Esta acción confirmara tu turno.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, confirmar',
+            cancelButtonText: 'No, cancelar',
+            background: '#000', // Fondo negro
+            color: '#fff' // Texto en blanco para mejor visibilidad
+        }).then((result) => {
+            if (result.isConfirmed) {
+                this.authService.confirmarTurno(id).subscribe(response => {
+                    if (response) {
+                        this.notificacionService.showMessage('Turno confirmado con éxito', 'success');
+                        this.cargarTurnos(); // Recargar lista de turnos
+                    } else {
+                        this.notificacionService.showMessage('Hubo un problema al confirmar el turno', 'error');
+                    }
+                });
+            }
+        });
+    }
 
-    cancelarTurno(id: number) {
-        if (confirm('¿Estás seguro de que deseas cancelar este turno?')) {
-            this.authService.cancelarTurno(id).subscribe(response => {
-                if (response) {
-                    alert('Turno cancelado con éxito');
-                    this.cargarTurnos(); // Recargar la lista de turnos
-                } else {
-                    alert('Hubo un problema al cancelar el turno');
+     cancelarTurno(id: number) {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: 'Esta acción cancelará tu turno.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Sí, cancelar',
+                cancelButtonText: 'No, mantener',
+                background: '#000', // Fondo negro
+                color: '#fff' // Texto en blanco para mejor visibilidad
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.authService.cancelarTurno(id).subscribe(response => {
+                        if (response) {
+                            this.notificacionService.showMessage('Turno cancelado con éxito', 'success');
+                            this.cargarTurnos(); // Recargar lista de turnos
+                        } else {
+                            this.notificacionService.showMessage('Hubo un problema al cancelar el turno', 'error');
+                        }
+                    });
                 }
             });
         }
-    }
 }

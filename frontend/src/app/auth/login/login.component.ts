@@ -28,9 +28,9 @@ export class LoginComponent {
 
   mostrarPassword: boolean = false;
 
-togglePassword() {
-  this.mostrarPassword = !this.mostrarPassword;
-}
+  togglePassword() {
+    this.mostrarPassword = !this.mostrarPassword;
+  }
 
 
   iniciarSesion() {
@@ -38,12 +38,12 @@ togglePassword() {
       this.loginForm.markAllAsTouched();
       return;
     }
-  
+
     const objeto: Login = {
       email: this.loginForm.value.email,
       contrasena: this.loginForm.value.contrasena
     };
-  
+
     this.AuthService.login(objeto).subscribe({
       next: (data) => {
         if (data && data.accessToken) {
@@ -56,23 +56,23 @@ togglePassword() {
       },
       error: (error) => {
         console.error("Error al iniciar sesión:", error);
-  
+
         let message = 'Usuario o contraseña incorrecta.';
-  
+
         // Verificación de error por falta de conexión a la red
         if (error.status === 0) {  // Esto indica un error de red
           message = 'Has perdido la conexión a Internet. Por favor, intenta más tarde.';
-        } 
+        }
         // Verificación de error de credenciales incorrectas
         else if (error.status === 401) {  // Esto generalmente es un código de error para "Unauthorized"
           message = 'Usuario o contraseña incorrecta.';
         }
-  
+
         // Muestra el mensaje de error adecuado
         this.notificacionService.showMessage(message, 'error');
       }
     });
   }
-  
+
 
 }

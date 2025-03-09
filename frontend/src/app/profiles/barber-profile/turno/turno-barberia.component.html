@@ -3,12 +3,14 @@
         <thead class="text-xs text-gray-700 uppercase bg-amber-500 dark:bg-gray-700 dark:text-gray-400">
             <tr>
                 <th scope="col" class="px-6 py-3 text-black">Cliente</th>
+
+                <th scope="col" class="px-6 py-3 text-black">Dia</th>
                 <th scope="col" class="px-6 py-3 text-black">Hora de la cita</th>
                 <th scope="col" class="px-6 py-3 text-black">Hora de finalización</th>
 
                 <th scope="col" class="px-6 py-3 text-black">Estado:</th>
                 <th scope="col" class="px-6 py-3 text-black">Acciones</th>
-                <th></th>
+
             </tr>
         </thead>
         <tbody class="bg-amber-400">
@@ -16,25 +18,36 @@
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                     {{ turno.id }}
                 </th>
-                
+
+                <td class="px-6 py-4 text-black">{{ turno.fechaTurno }}</td>
                 <td class="px-6 py-4 text-black">{{ turno.horaInicio }}</td>
                 <td class="px-6 py-4 text-black">{{ turno.horaFin }}</td>
-                <td class="px-6 py-4 text-black">{{ turno.estado }}</td>
-                <td class="px-6 py-4 flex space-x-2">
-                <button 
-                    type="button" 
-                    class="px-4 py-2 rounded-md bg-green-700 hover:bg-green-800 text-white"
-                    >
-                    Agendar turno
-                </button>
-                <button 
-                    type="button" 
-                    class="px-4 py-2 rounded-md bg-red-700 hover:bg-red-800 text-white"
-                    (click)="cancelarTurno(turno.id)">
-                    Cancelar
-                </button>
-                
+                <td class="px-6 py-4 text-black text-center font-bold" [ngClass]="{
+                    'bg-red-500 text-white': turno.estado === 'CANCELADO',
+                    'bg-green-500 text-white': turno.estado === 'CONFIRMADO',
+                    'bg-blue-500 text-white': turno.estado === 'DISPONIBLE'
+                }">
+                    {{ turno.estado }}
                 </td>
+
+                <td class="px-6 py-4 flex space-x-2">
+
+                    <button *ngIf="turno.estado == 'CONFIRMADO' && esPropietario()" type="button"
+                        class="px-4 py-2 rounded-md bg-red-700 hover:bg-red-800 text-white"
+                        (click)="cancelarTurno(turno.id)">
+                        Cancelar
+                    </button>
+
+
+                    <!--
+     
+                -->
+
+                </td>
+                <td class="px-6 py-4"></td>
+
+
+
             </tr>
         </tbody>
     </table>

@@ -52,6 +52,19 @@ export class AuthService {
             })
         );
     }
+
+    confirmarTurno(id: number): Observable<any> {
+        const token = this.getToken();
+        const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    
+        return this.http.put(`${this.baseUrl}turnos/${id}/confirm`, {}, { headers }).pipe(
+            catchError(error => {
+                console.error('Error confirmando el turno:', error);
+                return of(null);
+            })
+        );
+    }
+    
     cancelarTurno(id: number): Observable<any> {
         const token = this.getToken();
         const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
