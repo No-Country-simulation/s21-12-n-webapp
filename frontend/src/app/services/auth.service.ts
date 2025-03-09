@@ -42,6 +42,8 @@ export class AuthService {
             })
         );
     }
+
+    
     getTurnos(): Observable<any[]> {
         const token = this.getToken();
         const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
@@ -53,6 +55,18 @@ export class AuthService {
         );
     }
 
+    crearTurno(turno: any): Observable<any> {
+        const token = this.getToken();
+        const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    
+        return this.http.post<any>(`${this.baseUrl}turnos/book`, turno, { headers }).pipe(
+            catchError(error => {
+                console.error('Error creando turno:', error);
+                return of(null);
+            })
+        );
+    }
+    
     confirmarTurno(id: number): Observable<any> {
         const token = this.getToken();
         const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);

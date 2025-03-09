@@ -21,7 +21,7 @@
   <div *ngIf="filteredBarberias.length > 0" class="absolute top-16 left-0  w-full container p-4 max-w-md z-[2]">
     <ul class="rounded-8 border-neutral-80 border-[1px] bg-neutral-100 p-4 space-y-1">
       <li *ngFor="let barberia of filteredBarberias">
-        <a [routerLink]="['/profile/barber', barberia.id]" class="search-item">{{ barberia.nombreBarberia }}</a>
+        <a [routerLink]="['/profile/barber', barberia.id]" class="search-item">{{ barberia.nombreBarberia }} {{ barberia.direccion }}</a>
       </li>      
     </ul>
   </div>
