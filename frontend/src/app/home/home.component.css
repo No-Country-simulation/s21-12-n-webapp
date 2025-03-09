@@ -6,10 +6,10 @@
     -webkit-transition-timing-function: linear !important;
     transition-timing-function: linear !important;
     position: relative;
-    }
-    .swiper-pagination-current {
+}
+.swiper-pagination-current {
     color: #111827 !important;
-    }
-    .swiper-pagination-total {
+}
+.swiper-pagination-total {
     color: #9CA3AF;
-    }
+}

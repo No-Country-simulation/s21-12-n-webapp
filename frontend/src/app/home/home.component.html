@@ -2,7 +2,7 @@
 
 <br>
 
-<form class="px-4 max-w-md mx-auto bg-neutral-950" (ngSubmit)="onSearch()">
+<form class="px-4 max-w-md mx-auto relative" (ngSubmit)="onSearch()">
   <div class="flex gap-1 input">
     <button type="submit">
       <img src="assets/icons/Search.svg" class="opacity-60" />
@@ -13,32 +13,25 @@
   </div>
 
   <!-- Mensaje de error si el usuario no está autenticado -->
-  <small *ngIf="errorMessage" class="text-red-500">{{ errorMessage }}</small>
+  <span class="block w-full min-h-10 text-red-500 text-xs mt-2 pl-2" role="alert">
+    {{ errorMessage }}
+  </span>
 
-  <!-- Mostrar solo si hay resultados en la búsqueda -->
-  <div *ngIf="filteredBarberias.length > 0" class="container mx-auto p-4 mt-4">
-
-    <div *ngFor="let barberia of filteredBarberias" class="barberia-item">
-      <a [routerLink]="['/profile/barber', barberia.id]">
-        <li>
-
-          {{ barberia.nombreBarberia }} {{ barberia.direccion }}
-
-        </li>
-
-      </a>
-    </div>
-
+ 
+  <div *ngIf="filteredBarberias.length > 0" class="absolute top-16 left-0  w-full container p-4 max-w-md z-[2]">
+    <ul class="rounded-8 border-neutral-80 border-[1px] bg-neutral-100 p-4 space-y-1">
+      <li *ngFor="let barberia of filteredBarberias">
+        <a [routerLink]="['/profile/barber', barberia.id]" class="search-item">{{ barberia.nombreBarberia }}</a>
+      </li>      
+    </ul>
   </div>
 </form>
-
-<br>
 
 <div class="px-4 md:px-16 lg:px-32">
   <div #fractionSlideCarousel class="fraction-slide-carousel">
     <h1 class="mx-auto text-white text-3xl">Recomendaciones</h1>
-    <div class="w-full relative">
-      <div class="swiper fraction-slide-carousel swiper-container relative">
+    <div class="w-full ">
+      <div class="swiper fraction-slide-carousel swiper-container ">
         <div class="swiper-wrapper">
           <div class="swiper-slide">
             <div class="bg-neutral-950  rounded-2xl p-4 h-96 flex flex-col">
