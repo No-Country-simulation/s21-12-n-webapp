@@ -34,6 +34,25 @@ export class AuthService {
             })
         );
     }
+
+    getHorarios(): Observable<any[]> {
+        const token = this.getToken();
+        const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    
+        return this.http.get<any[]>(`${this.baseUrl}horarios`, { headers }).pipe(
+            catchError(error => {
+                console.error('Error obteniendo horarios:', error);
+                return of([]);
+            })
+        );
+    }
+    
+    getHorariosPorBarberia(barberiaId: number): Observable<any[]> {
+        return this.getHorarios().pipe(
+            map(horarios => horarios.filter(horario => horario.barberiaId === barberiaId))
+        );
+    }
+    
     
 
     //registroBarberia(objeto: FormData): Observable<ResponseAcceso> {

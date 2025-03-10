@@ -371,6 +371,7 @@
                         <div class="mt-4">
                             <h2 class="text-white text-xl mb-4">Horario de atención</h2>
                             <p class="text-gray-400 mb-4">¿En qué horarios pueden atenderse los clientes?</p>
+                            <p class="text-gray-400 mb-4">El tiempo maximo para atender a un cliente es de 1 hora</p>
                             <div *ngFor="let fecha of fechas; let i = index" class="mb-2">
                                 <div class="flex items-center p-3 rounded-lg bg-neutral-800">
                                     <div class="flex items-center">
@@ -418,8 +419,7 @@
                         </button>
                     </div>
                     <!--Modal de horas-->
-                    <div *ngIf="showModal"
-                        class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+                    <div *ngIf="showModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
                         <div class="bg-neutral-900 p-6 rounded-lg w-96">
                             <h2 class="text-white text-lg mb-4">{{ selectedfecha.name }}</h2>
                             <div class="mb-4">
@@ -495,10 +495,8 @@
                                 </div>
                             </div>
                             <div class="flex justify-end">
-                                <button (click)="closeModal()"
-                                    class="bg-gray-700 hover:bg-gray-600 text-black px-4 py-2 rounded mr-2">Cancelar</button>
-                                <button (click)="saveHours()"
-                                    class="bg-amber-500 hover:bg-amber-600 text-black px-4 py-2 rounded ">Guardar</button>
+                                <button (click)="closeModal()" class="bg-gray-700 hover:bg-gray-600 text-black px-4 py-2 rounded mr-2">Cancelar</button>
+                                <button (click)="saveHours()" class="bg-amber-500 hover:bg-amber-600 text-black px-4 py-2 rounded">Guardar</button>
                             </div>
                         </div>
                     </div>

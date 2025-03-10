@@ -1,53 +1,22 @@
-
-
-<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-    <table class="w-full text-sm text-left rtl:text-right text-black dark:text-blue-100">
-        <thead class="text-xs text-black uppercase bg-amber-500 dark:text-white">
+<div *ngIf="barberProfile" class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <table class="w-full text-sm text-left text-black">
+        <thead class="text-xs text-black uppercase bg-amber-500">
             <tr>
-                
-                <th scope="col" class="px-6 py-3 text-black">
-                    Dias laburantes
-                </th>
-                <th scope="col" class="px-6 py-3 text-black">
-                    Horario de apertura
-                </th>
-                <th scope="col" class="px-6 py-3 text-black">
-                    Hora de cierre
-                </th>
+                <th scope="col" class="px-6 py-3">Día</th>
+                <th scope="col" class="px-6 py-3">Horario de apertura</th>
+                <th scope="col" class="px-6 py-3">Hora de cierre</th>
             </tr>
         </thead>
         <tbody>
-            <tr class="bg-amber-400 border-b">
-                <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap dark:text-blue-100">
-                  Lunes
+            <tr *ngFor="let horario of barberProfile.horarios" class="bg-amber-400 border-b">
+                <th scope="row" class="px-6 py-4 font-medium text-black">
+                    {{ horario.fecha | date:'shortDate' }} <!-- Formatear la fecha -->
                 </th>
                 <td class="px-6 py-4 text-black">
-               8 AM
+                    {{ horario.horaInicio | date:'shortTime' }} <!-- Formatear la hora de inicio -->
                 </td>
                 <td class="px-6 py-4 text-black">
-                   5 PM
-                </td>
-            </tr>
-            <tr class="bg-amber-400 border-b">
-                <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap dark:text-blue-100">
-                   Miercoles
-                </th>
-                <td class="px-6 py-4 text-black">
-                    10 AM 
-                </td>
-                <td class="px-6 py-4 text-black">
-                    10 PM
-                </td>
-            </tr>
-            <tr class="bg-amber-400 border-b">
-                <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap dark:text-blue-100">
-                 Viernes
-                </th>
-                <td class="px-6 py-4 text-black">
-                    2 PM
-                </td>
-                <td class="px-6 py-4 text-black">
-                    8 PM
+                    {{ horario.horaFin | date:'shortTime' }} <!-- Formatear la hora de cierre -->
                 </td>
             </tr>
         </tbody>
