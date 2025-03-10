@@ -133,8 +133,6 @@
                             *ngIf="registerForm.get('confirmPassword')?.invalid && (registerForm.get('confirmPassword')?.touched || registerForm.get('confirmPassword')?.dirty)">
                             <small *ngIf="registerForm.get('confirmPassword')?.errors?.['required']"
                                 class="text-red-500">La confirmación de contraseña es obligatoria.</small>
-                                <small *ngIf="registerForm.get('confirmPassword')?.errors?.['minlength']" class="text-red-500">La
-                                    contraseña debe tener al menos 6 caracteres.</small>
                         </div>
                         <div
                             *ngIf="registerForm.errors?.['mismatch'] && (registerForm.get('confirmPassword')?.touched || registerForm.get('confirmPassword')?.dirty)">
@@ -153,6 +151,10 @@
             <form [formGroup]="registerBarberiaForm" (ngSubmit)="registroBarberia()">
                 <div *ngIf="selectedRole === 'barberia'">
                     <div *ngIf="currentPage === 1">
+                        <div class="mt-4">
+                            <input id="RegisterFotoPerfil" type="file" (change)="onFileSelected($event)"
+                            class="block w-full px-4 py-2 border rounded-lg bg-black dark:bg-black dark:text-neutral-50 dark:border-neutral-50 focus:ring-opacity-40 dark:focus:border-amber-400 focus:outline-none focus:ring" />
+                            </div>
                         <div class="mt-4">
                             <input id="RegisterName" placeholder="Nombre del barbero o barberia"
                                 formControlName="nombreBarberia"
@@ -236,10 +238,10 @@
                                   </svg>
                             </button>
                             <div
-                                *ngIf="registerBarberiaForm.get('contrasena')?.invalid && (registerBarberiaForm.get('contrasena')?.touched || registerBarberiaForm.get('contrasena')?.dirty)">
-                                <small *ngIf="registerBarberiaForm.get('contrasena')?.errors?.['required']" class="text-red-500">La
+                                *ngIf="registerForm.get('contrasena')?.invalid && (registerForm.get('contrasena')?.touched || registerForm.get('contrasena')?.dirty)">
+                                <small *ngIf="registerForm.get('contrasena')?.errors?.['required']" class="text-red-500">La
                                     contraseña es obligatoria.</small>
-                                <small *ngIf="registerBarberiaForm.get('contrasena')?.errors?.['minlength']" class="text-red-500">La
+                                <small *ngIf="registerForm.get('contrasena')?.errors?.['minlength']" class="text-red-500">La
                                     contraseña debe tener al menos 6 caracteres.</small>
                             </div>
                         </div>
@@ -262,14 +264,12 @@
                                   </svg>
                             </button>
                             <div
-                                *ngIf="registerBarberiaForm.get('confirmPassword')?.invalid && (registerBarberiaForm.get('confirmPassword')?.touched || registerBarberiaForm.get('confirmPassword')?.dirty)">
-                                <small *ngIf="registerBarberiaForm.get('confirmPassword')?.errors?.['required']"
+                                *ngIf="registerForm.get('confirmPassword')?.invalid && (registerForm.get('confirmPassword')?.touched || registerForm.get('confirmPassword')?.dirty)">
+                                <small *ngIf="registerForm.get('confirmPassword')?.errors?.['required']"
                                     class="text-red-500">La confirmación de contraseña es obligatoria.</small>
-                                    <small *ngIf="registerBarberiaForm.get('confirmPassword')?.errors?.['minlength']" class="text-red-500">La
-                                        contraseña debe tener al menos 6 caracteres.</small>
                             </div>
                             <div
-                                *ngIf="registerBarberiaForm.errors?.['mismatch'] && (registerBarberiaForm.get('confirmPassword')?.touched || registerBarberiaForm.get('confirmPassword')?.dirty)">
+                                *ngIf="registerForm.errors?.['mismatch'] && (registerForm.get('confirmPassword')?.touched || registerForm.get('confirmPassword')?.dirty)">
                                 <small class="text-red-500">Las contraseñas no coinciden.</small>
                             </div>
                         </div>
@@ -399,19 +399,12 @@
                             </div>
                         </div>
                         <br>
-                        
-                        <button type="submit" 
-                        [disabled]="registerBarberiaForm.invalid || !hasSelectedfechas() || isSubmitting" 
-                        [ngClass]="{
-                            'bg-amber-300 hover:bg-amber-400': registerBarberiaForm.valid && hasSelectedfechas() && !isSubmitting,
-                            'bg-orange-300': (registerBarberiaForm.invalid || !hasSelectedfechas() || isSubmitting)
-                        }" 
-                        class="w-full py-3 rounded-md text-black"
-                        (click)="registrarBarberiaYAgregarHorario()">
-                        Registrarse
-                    </button>
-                    
-                    
+                        <button type="submit" [disabled]="registerBarberiaForm.invalid || !hasSelectedfechas()" [ngClass]="{
+                            'bg-amber-300 hover:bg-amber-400': registerBarberiaForm.valid && hasSelectedfechas(),
+                            'bg-orange-300': (registerBarberiaForm.invalid || !hasSelectedfechas())
+                        }" class="w-full py-3 rounded-md  text-black">
+                            Registrarse
+                        </button>
                         <button type="button" (click)="previousPage()"
                             class="w-full py-3 rounded-md bg-neutral-600 hover:bg-neutral-700  text-black">
                             Anterior

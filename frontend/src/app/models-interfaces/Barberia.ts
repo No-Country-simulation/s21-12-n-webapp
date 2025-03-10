@@ -1,7 +1,7 @@
 export interface Barberia{
   id?: string;
     email: string,
-    imagen: string,
+    fotoPerfil: string,
     contrasena: string,
     telefono: string,
     nombreBarberia: string,

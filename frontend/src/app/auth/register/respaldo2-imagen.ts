@@ -32,7 +32,7 @@ export class RegisterComponent {
         nombreCompleto: ['', [Validators.required, Validators.minLength(4)]],
         email: ['', [Validators.required, Validators.email]],
         contrasena: ['', [Validators.required, Validators.minLength(6)]],
-        confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
+        confirmPassword: ['', [Validators.required]],
         telefono: ['', [Validators.required, Validators.pattern(/^\+\d{1,15}$/), Validators.minLength(12), Validators.maxLength(15)]],
     }, { validators: this.passwordsMatchValidator() });
 
@@ -106,16 +106,17 @@ export class RegisterComponent {
         nombreBarberia: ['', [Validators.required, Validators.minLength(4)]],
         email: ['', [Validators.required, Validators.email]],
         contrasena: ['', [Validators.required, Validators.minLength(6)]],
-        confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
+        confirmPassword: ['', [Validators.required]],
         telefono: ['', [Validators.required, Validators.pattern(/^\+\d{1,15}$/), Validators.minLength(12), Validators.maxLength(15)]],
         cuilResponsable: ['', [Validators.required, Validators.pattern(/^\d{11}$/)]],
 
         direccion: ['', [Validators.required, Validators.minLength(8), Validators.pattern(/^[a-zA-Z0-9\s.,-]+$/), Validators.maxLength(100)]],
         descripcion: [''],
         horario: [''],
-        fotoPerfil: [''],
+        fotoPerfil: [null, [Validators.required]],
     }, { validators: this.passwordsMatchValidator() });
 
+    selectedFile: File | null = null;
     showLettersError = false;
 
     onPasteTelefono(event: ClipboardEvent) {
@@ -146,92 +147,50 @@ export class RegisterComponent {
             this.showLettersError = false; // Asegura que el mensaje esté oculto si no hay letras
         }
     }
-
-    isSubmitting = false;
-
-    registrarBarberiaYAgregarHorario(): void {
-        if (this.isSubmitting) return; // Evita que se ejecute más de una vez
-        this.isSubmitting = true; // Bloquea el botón para evitar doble envío
-    
-        if (this.registerBarberiaForm.valid) {
-            this.registroBarberia(); // Llama primero a registroBarberia
-        } else {
-            this.registerBarberiaForm.markAllAsTouched();
-            this.isSubmitting = false; // Si hay error, desbloquea el botón
-        }
+    onFileSelected(event: any): void {
+        this.selectedFile = event.target.files[0];
+        this.registerBarberiaForm.get('fotoPerfil')?.setValue(this.selectedFile);
     }
-    
+
     registroBarberia(): void {
         if (this.registerBarberiaForm.valid) {
-            const formData: Barberia = {
-                nombreBarberia: this.registerBarberiaForm.value.nombreBarberia,
-                email: this.registerBarberiaForm.value.email,
-                contrasena: this.registerBarberiaForm.value.contrasena,
-                telefono: this.registerBarberiaForm.value.telefono,
-                cuilResponsable: this.registerBarberiaForm.value.cuilResponsable,
-                direccion: this.registerBarberiaForm.value.direccion,
-                descripcion: this.registerBarberiaForm.value.descripcion,
-                horario: this.registerBarberiaForm.value.horario,
-                fotoPerfil: this.registerBarberiaForm.value.fotoPerfil,
-            };
-    
+            const formData = new FormData();
+            formData.append('nombreBarberia', this.registerBarberiaForm.value.nombreBarberia);
+            formData.append('email', this.registerBarberiaForm.value.email);
+            formData.append('contrasena', this.registerBarberiaForm.value.contrasena);
+            formData.append('telefono', this.registerBarberiaForm.value.telefono);
+            formData.append('cuilResponsable', this.registerBarberiaForm.value.cuilResponsable);
+            formData.append('direccion', this.registerBarberiaForm.value.direccion);
+            formData.append('descripcion', this.registerBarberiaForm.value.descripcion);
+            formData.append('horario', this.registerBarberiaForm.value.horario);
+            if (this.selectedFile) {
+                formData.append('fotoPerfil', this.selectedFile, this.selectedFile.name);
+            }
             this.authService.registroBarberia(formData).subscribe({
                 next: (response) => {
                     console.log('Registro de barbería exitoso:', response);
-                    this.loginUsuario(formData.email, formData.contrasena);
-    
-                    setTimeout(() => {
-                        this.agregarMiHorario();
-                        this.isSubmitting = false; // Desbloquea el botón después de completar la operación
-                    }, 1000);
+                    this.loginUsuario(this.registerBarberiaForm.value.email, this.registerBarberiaForm.value.contrasena);
                 },
                 error: (error) => {
                     console.error('Error en el registro de barbería:', error);
-                    this.isSubmitting = false; // Desbloquea el botón en caso de error
-    
                     let message = 'Ocurrió un error al registrar la barbería. Inténtalo de nuevo.';
+
                     if (error.status === 0) {
                         message = 'Has perdido la conexión a Internet. Por favor, intenta más tarde.';
                     } else if (error.status === 409) {
                         message = 'El email ya está registrado. Por favor, utiliza otro email.';
-                    } else if (error.status === 500 && error.error?.detalle?.includes('Duplicate entry')) {
-                        message = 'El email ya está registrado. Por favor, utiliza otro email.';
+                    } else if (error.status === 500) {
+                        if (error.error && error.error.detalle && error.error.detalle.includes('Duplicate entry')) {
+                            message = 'El email ya está registrado. Por favor, utiliza otro email.';
+                        }
                     }
-    
+
                     this.notificacionService.showMessage(message, 'error');
                 }
             });
         } else {
             this.registerBarberiaForm.markAllAsTouched();
-            this.isSubmitting = false; // Desbloquea el botón si hay errores en el formulario
         }
-    }
-    
-    agregarMiHorario(): void {
-        const userId = this.authService.getUserId(); // Obtiene el ID del usuario autenticado
-        if (!userId) {
-            console.error('No se encontró el ID del usuario');
-            return;
-        }
-    
-        const horario = {
-            barberiaId: userId,
-            fecha: new Date().toISOString(), // Fecha actual
-            horaInicio: new Date().toISOString(), // Puedes cambiar esto a la hora deseada
-            horaFin: new Date(new Date().getTime() + 60 * 60 * 1000).toISOString(), // 1 hora después
-            estado: 'DISPONIBLE'
-        };
-    
-        this.authService.agregarHorario(horario).subscribe({
-            next: (response) => {
-            //    console.log('Horario agregado con éxito:', response);
-            //    this.notificacionService.showMessage('Horario agregado correctamente', 'success');
-            },
-            error: (error) => {
-            //    console.error('Error agregando horario:', error);
-            //    this.notificacionService.showMessage('Error al agregar horario', 'error');
-            }
-        });
     }
     selectRole(role: string) {
         this.selectedRole = role;
@@ -264,9 +223,6 @@ export class RegisterComponent {
         horarioControl?.updateValueAndValidity();
     }
 
-   
-
-    
 
     // Agrega este método en tu clase RegisterComponent
     hasSelectedfechas(): boolean {
@@ -285,37 +241,6 @@ export class RegisterComponent {
     showModal = false;
     selectedfecha: any;
 
-
-
-    saveHours() {
-        if (this.selectedfecha) {
-            const horaInicio = parseInt((document.querySelector('select[name="horaInicio"]') as HTMLSelectElement).value, 10);
-            const minutos = parseInt((document.querySelector('select[name="minutos"]') as HTMLSelectElement).value, 10);
-            const horaFin = parseInt((document.querySelector('select[name="horaFin"]') as HTMLSelectElement).value, 10);
-            const endTimeMinute = parseInt((document.querySelector('select[name="endTimeMinute"]') as HTMLSelectElement).value, 10);
-    
-            // Validar que la hora de cierre es posterior a la de apertura
-            if (horaFin < horaInicio || (horaFin === horaInicio && endTimeMinute <= minutos)) {
-                this.notificacionService.showMessage('La hora de cierre debe ser superior a la hora de apertura', 'error');
-                return;
-            }
-    
-            // Formatear la hora correctamente
-            this.selectedfecha.hours = `${this.pad(horaInicio)}:${this.pad(minutos)} - ${this.pad(horaFin)}:${this.pad(endTimeMinute)}`;
-    
-            // Actualizar el campo 'horario' en el formulario con los horarios seleccionados
-            const horariosActivos = this.fechas
-                .filter(fecha => fecha.active && fecha.hours)
-                .map(fecha => `${fecha.name}: ${fecha.hours}`)
-                .join(', ');
-    
-            this.registerBarberiaForm.get('horario')?.setValue(horariosActivos);
-            this.registerBarberiaForm.get('horario')?.updateValueAndValidity();
-    
-            this.showModal = false;
-        }
-    }
-    
     openModal(fecha: any) {
         this.selectedfecha = fecha;
         this.showModal = true;
@@ -324,6 +249,35 @@ export class RegisterComponent {
 
     closeModal() {
         this.showModal = false;
+    }
+
+    saveHours() {
+        if (this.selectedfecha) {
+            const horaInicio = parseInt((document.querySelector('select[name="horaInicio"]') as HTMLSelectElement).value, 10);
+            const minutos = parseInt((document.querySelector('select[name="minutos"]') as HTMLSelectElement).value, 10);
+            const horaFin = parseInt((document.querySelector('select[name="horaFin"]') as HTMLSelectElement).value, 10);
+            const endTimeMinute = parseInt((document.querySelector('select[name="endTimeMinute"]') as HTMLSelectElement).value, 10);
+
+            // Validación: la hora de cierre debe ser posterior a la de apertura
+            if (horaFin < horaInicio || (horaFin === horaInicio && endTimeMinute <= minutos)) {
+
+                this.notificacionService.showMessage('La hora de cierre debe ser superior a la hora de apertura', 'error');
+                return; // Detiene la ejecución si la validación falla
+            }
+
+            this.selectedfecha.hours = `${this.pad(horaInicio)}:${this.pad(minutos)} - ${this.pad(horaFin)}:${this.pad(endTimeMinute)}`;
+
+            // Actualizar el campo 'horario' en el formulario
+            const horariosActivos = this.fechas
+                .filter(fecha => fecha.active && fecha.hours)
+                .map(fecha => `${fecha.name}: ${fecha.hours}`)
+                .join(', ');
+
+            this.registerBarberiaForm.get('horario')?.setValue(horariosActivos);
+            this.registerBarberiaForm.get('horario')?.updateValueAndValidity();
+
+            this.showModal = false;
+        }
     }
 
     // Función auxiliar para agregar ceros a la izquierda (por ejemplo, 9 -> 09)
@@ -344,6 +298,5 @@ export class RegisterComponent {
         };
     }
     
-
 
 }

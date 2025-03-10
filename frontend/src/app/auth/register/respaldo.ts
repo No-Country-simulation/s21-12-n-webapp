@@ -4,10 +4,9 @@ import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl, Valid
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { Cliente } from '../../models-interfaces/Cliente';
-import { Barberia, Horario } from '../../models-interfaces/Barberia';
+import { Barberia } from '../../models-interfaces/Barberia';
 import { NotificacionesService } from '../../services/notificaciones.service';
 import { Login } from '../../models-interfaces/Login';
-import { ResponseAcceso } from '../../models-interfaces/ResponseAcceso';
 
 @Component({
     selector: 'app-register',
@@ -63,6 +62,13 @@ export class RegisterComponent {
 
 
 
+    mostrarPassword: boolean = false;
+
+    togglePassword() {
+      this.mostrarPassword = !this.mostrarPassword;
+    }
+    
+
 
     loginUsuario(email: string, contrasena: string) {
         const loginObject: Login = {
@@ -107,14 +113,25 @@ export class RegisterComponent {
         direccion: ['', [Validators.required, Validators.minLength(8), Validators.pattern(/^[a-zA-Z0-9\s.,-]+$/), Validators.maxLength(100)]],
         descripcion: [''],
         horario: [''],
-        imagen: [''],
+        fotoPerfil: [null, Validators.required],
+
     }, { validators: this.passwordsMatchValidator() });
+
+    onFileSelected(event: any) {
+        const file = event.target.files[0];
+        if (file) {
+            this.registerBarberiaForm.patchValue({ fotoPerfil: file });
+            this.registerBarberiaForm.get('fotoPerfil')?.updateValueAndValidity();
+        }
+    }
+    
+    
 
     showLettersError = false;
 
     onPasteTelefono(event: ClipboardEvent) {
         const pastedInput: string = (event.clipboardData || (window as any).clipboardData).getData('text');
-
+    
         // Permite solo números y el símbolo "+" al inicio
         if (!/^\+\d*$/.test(pastedInput)) {
             event.preventDefault(); // Evita pegar caracteres inválidos
@@ -126,7 +143,7 @@ export class RegisterComponent {
             this.showLettersError = false;
         }
     }
-
+    
 
     onPaste(event: ClipboardEvent) {
         const pastedInput: string = (event.clipboardData || (window as any).clipboardData).getData('text');
@@ -140,79 +157,41 @@ export class RegisterComponent {
             this.showLettersError = false; // Asegura que el mensaje esté oculto si no hay letras
         }
     }
-
-    // register.component.ts
-    // register.component.ts
     registroBarberia(): void {
-        if (this.registerBarberiaForm.valid && this.hasSelectedfechas()) {
-            const formData: Barberia = {
-                nombreBarberia: this.registerBarberiaForm.value.nombreBarberia,
-                email: this.registerBarberiaForm.value.email,
-                contrasena: this.registerBarberiaForm.value.contrasena,
-                telefono: this.registerBarberiaForm.value.telefono,
-                cuilResponsable: this.registerBarberiaForm.value.cuilResponsable,
-                direccion: this.registerBarberiaForm.value.direccion,
-                descripcion: this.registerBarberiaForm.value.descripcion,
-                horarios: this.fechas
-                    .filter(fecha => fecha.active && fecha.hours)
-                    .map(fecha => {
-                        const [inicio, fin] = fecha.hours.split(' - ');
-                        const [horaInicio, minutosInicio] = inicio.split(':').map(Number);
-                        const [horaFin, minutosFin] = fin.split(':').map(Number);
-
-                        const fechaInicioDate = new Date();
-                        fechaInicioDate.setHours(horaInicio, minutosInicio, 0, 0);
-                        const fechaFinDate = new Date();
-                        fechaFinDate.setHours(horaFin, minutosFin, 0, 0);
-
-                        return {
-                            fecha: new Date().toISOString(),
-                            horaInicio: fechaInicioDate.toISOString(),
-                            horaFin: fechaFinDate.toISOString(),
-                            estado: 'DISPONIBLE'
-                        };
-                    })
-            };
-            console.log("Datos a enviar:", formData);
+        if (this.registerBarberiaForm.valid) {
+            const formData = new FormData();
+            formData.append('nombreBarberia', this.registerBarberiaForm.value.nombreBarberia);
+            formData.append('email', this.registerBarberiaForm.value.email);
+            formData.append('contrasena', this.registerBarberiaForm.value.contrasena);
+            formData.append('telefono', this.registerBarberiaForm.value.telefono);
+            formData.append('cuilResponsable', this.registerBarberiaForm.value.cuilResponsable);
+            formData.append('direccion', this.registerBarberiaForm.value.direccion);
+            formData.append('descripcion', this.registerBarberiaForm.value.descripcion);
+            formData.append('horario', this.registerBarberiaForm.value.horario);
+            
+            // Agregar la imagen
+            formData.append('fotoPerfil', this.registerBarberiaForm.value.fotoPerfil);
+    
             this.authService.registroBarberia(formData).subscribe({
-                next: (response: ResponseAcceso) => { // Especifica el tipo ResponseAcceso
+                next: (response) => {
                     console.log('Registro de barbería exitoso:', response);
-                    const barberiaId = response.id; // Ahora puedes acceder a response.id
-                    const horarios: Horario[] = this.fechas
-                        .filter(fecha => fecha.active && fecha.hours)
-                        .map(fecha => {
-                            const [inicio, fin] = fecha.hours.split(' - ');
-                            const [horaInicio, minutosInicio] = inicio.split(':').map(Number);
-                            const [horaFin, minutosFin] = fin.split(':').map(Number);
-
-                            const fechaInicioDate = new Date();
-                            fechaInicioDate.setHours(horaInicio, minutosInicio, 0, 0);
-                            const fechaFinDate = new Date();
-                            fechaFinDate.setHours(horaFin, minutosFin, 0, 0);
-
-                            return {
-                                fecha: new Date().toISOString(),
-                                horaInicio: fechaInicioDate.toISOString(),
-                                horaFin: fechaFinDate.toISOString(),
-                                estado: 'DISPONIBLE',
-                                barberiaId: barberiaId
-                            };
-                        });
-                    formData.horarios = horarios;
-                    this.authService.registroBarberia(formData).subscribe({
-                        next: (response: ResponseAcceso) => {
-                            console.log('Registro de barbería exitoso:', response);
-                            this.loginUsuario(formData.email, formData.contrasena);
-                        },
-                        error: (error) => {
-                            console.error('Error en el registro de barbería:', error);
-                            this.notificacionService.showMessage('Ocurrió un error al registrar la barbería. Inténtalo de nuevo.', 'error');
-                        }
-                    });
+                    this.loginUsuario(this.registerBarberiaForm.value.email, this.registerBarberiaForm.value.contrasena);
                 },
                 error: (error) => {
                     console.error('Error en el registro de barbería:', error);
-                    this.notificacionService.showMessage('Ocurrió un error al registrar la barbería. Inténtalo de nuevo.', 'error');
+                    let message = 'Ocurrió un error al registrar la barbería. Inténtalo de nuevo.';
+
+                    if (error.status === 0) {
+                        message = 'Has perdido la conexión a Internet. Por favor, intenta más tarde.';
+                    } else if (error.status === 409) {
+                        message = 'El email ya está registrado. Por favor, utiliza otro email.';
+                    } else if (error.status === 500) {
+                        if (error.error && error.error.detalle && error.error.detalle.includes('Duplicate entry')) {
+                            message = 'El email ya está registrado. Por favor, utiliza otro email.';
+                        }
+                    }
+
+                    this.notificacionService.showMessage(message, 'error');
                 }
             });
         } else {
@@ -220,6 +199,36 @@ export class RegisterComponent {
         }
     }
 
+    selectRole(role: string) {
+        this.selectedRole = role;
+        this.updateBarberiaValidators();
+    }
+    private updateBarberiaValidators() {
+        const cuilResponsableControl = this.registerBarberiaForm.get('cuilResponsable');
+        const direccionControl = this.registerBarberiaForm.get('direccion');
+        const descripcionControl = this.registerBarberiaForm.get('descripcion');
+        const horarioControl = this.registerBarberiaForm.get('horario');
+        if (this.selectedRole === 'barberia') {
+            cuilResponsableControl?.setValidators([
+                Validators.required,
+                Validators.pattern(/^\d{11}$/)
+            ]);
+
+            direccionControl?.setValidators([Validators.required, Validators.minLength(4), Validators.pattern(/^[a-zA-Z0-9,. -]*$/)]);
+            descripcionControl?.setValidators([Validators.required]);
+            horarioControl?.setValidators([Validators.required]);
+        } else {
+            cuilResponsableControl?.clearValidators();
+            direccionControl?.clearValidators();
+            descripcionControl?.clearValidators();
+            horarioControl?.clearValidators();
+        }
+
+        cuilResponsableControl?.updateValueAndValidity();
+        direccionControl?.updateValueAndValidity();
+        descripcionControl?.updateValueAndValidity();
+        horarioControl?.updateValueAndValidity();
+    }
 
     // Agrega este método en tu clase RegisterComponent
     hasSelectedfechas(): boolean {
@@ -293,36 +302,6 @@ export class RegisterComponent {
             const confirmPassword = control.get('confirmPassword')?.value;
             return contrasena === confirmPassword ? null : { mismatch: true };
         };
-    }
-    selectRole(role: string) {
-        this.selectedRole = role;
-        this.updateBarberiaValidators();
-    }
-    private updateBarberiaValidators() {
-        const cuilResponsableControl = this.registerBarberiaForm.get('cuilResponsable');
-        const direccionControl = this.registerBarberiaForm.get('direccion');
-        const descripcionControl = this.registerBarberiaForm.get('descripcion');
-        const horarioControl = this.registerBarberiaForm.get('horario');
-        if (this.selectedRole === 'barberia') {
-            cuilResponsableControl?.setValidators([
-                Validators.required,
-                Validators.pattern(/^\d{11}$/)
-            ]);
-
-            direccionControl?.setValidators([Validators.required, Validators.minLength(4), Validators.pattern(/^[a-zA-Z0-9,. -]*$/)]);
-            descripcionControl?.setValidators([Validators.required]);
-            horarioControl?.setValidators([Validators.required]);
-        } else {
-            cuilResponsableControl?.clearValidators();
-            direccionControl?.clearValidators();
-            descripcionControl?.clearValidators();
-            horarioControl?.clearValidators();
-        }
-
-        cuilResponsableControl?.updateValueAndValidity();
-        direccionControl?.updateValueAndValidity();
-        descripcionControl?.updateValueAndValidity();
-        horarioControl?.updateValueAndValidity();
     }
 
 

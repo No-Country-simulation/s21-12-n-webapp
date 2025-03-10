@@ -22,6 +22,31 @@ export class AuthService {
     registroBarberia(objeto: Barberia): Observable<ResponseAcceso> {
         return this.http.post<ResponseAcceso>(`${this.baseUrl}barberias/register`, objeto);
     }
+    
+    agregarHorario(horario: any): Observable<any> {
+        const token = this.getToken();
+        const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    
+        return this.http.post<any>(`${this.baseUrl}horarios`, horario, { headers }).pipe(
+            catchError(error => {
+                console.error('Error agregando horario:', error);
+                return of(null);
+            })
+        );
+    }
+    
+
+    //registroBarberia(objeto: FormData): Observable<ResponseAcceso> {
+    //    const headers = new HttpHeaders();
+    //    headers.append('Accept', 'application/json'); // No establecer 'Content-Type' ya que FormData lo maneja
+    //
+    //    return this.http.post<ResponseAcceso>(`${this.baseUrl}barberias/register`, objeto, { headers });
+    //}
+    
+
+    //registroBarberia(formData: FormData): Observable<ResponseAcceso> {
+    //    return this.http.post<ResponseAcceso>(`${this.baseUrl}barberias/register`, formData);
+    //}
     login(objeto: Login): Observable<ResponseAcceso> {
         return this.http.post<ResponseAcceso>(`${this.baseUrl}login`, objeto).pipe(
             map(response => {

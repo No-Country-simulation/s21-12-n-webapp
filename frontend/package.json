@@ -19,6 +19,7 @@
     "@angular/platform-browser": "^19.2.0",
     "@angular/platform-browser-dynamic": "^19.2.0",
     "@angular/router": "^19.2.0",
+    "@capacitor/android": "^7.0.1",
     "cors": "^2.8.5",
     "flowbite": "^2.3.0",
     "jwt-decode": "^4.0.0",
