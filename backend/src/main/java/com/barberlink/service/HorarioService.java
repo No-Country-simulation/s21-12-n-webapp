@@ -3,7 +3,9 @@ package com.barberlink.service;
 import com.barberlink.mapper.HorarioMapper;
 import com.barberlink.mapper.request.HorarioRequest;
 import com.barberlink.mapper.response.HorarioResponse;
+import com.barberlink.model.Barberia;
 import com.barberlink.model.Horario;
+import com.barberlink.repository.BarberiaRepository;
 import com.barberlink.repository.HorarioRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,15 +17,27 @@ public class HorarioService {
 
     private final HorarioRepository horarioRepository;
     private final HorarioMapper horarioMapper;
+    private final BarberiaRepository barberiaRepository;
 
-    public HorarioService(HorarioRepository horarioRepository, HorarioMapper horarioMapper) {
+    public HorarioService(HorarioRepository horarioRepository, HorarioMapper horarioMapper, BarberiaRepository barberiaRepository) {
         this.horarioRepository = horarioRepository;
         this.horarioMapper = horarioMapper;
+        this.barberiaRepository = barberiaRepository;
     }
 
     // Agregar un horario
     public HorarioResponse addHorario(HorarioRequest request) {
+
+
+
         Horario horario = horarioMapper.toHorario(request);
+
+        // Fetch Barberia by ID and set it in Horario
+        Barberia barberia = barberiaRepository.findById(request.barberiaId())
+                .orElseThrow(() -> new RuntimeException("Barbería no encontrada con ID: " + request.barberiaId()));
+        horario.setBarberia(barberia);
+
+
         Horario saved = horarioRepository.save(horario);
         return horarioMapper.toHorarioResponse(saved);
     }
