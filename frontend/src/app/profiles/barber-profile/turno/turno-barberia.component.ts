@@ -17,6 +17,7 @@ export class TurnoBarberiaComponent implements OnInit {
     userId: string | null = null; // ID del usuario autenticado
     profileId: string | null = null; // ID 
 
+    isModalOpen: boolean = false;
     constructor(private authService: AuthService,
         private notificacionService: NotificacionesService,
         private route: ActivatedRoute // Inyectar ActivatedRoute
@@ -29,12 +30,20 @@ export class TurnoBarberiaComponent implements OnInit {
         });
         this.cargarTurnos();
     }
-
+    
+    openModal() {
+        this.isModalOpen = true;
+    }
+    
+    closeModal() {
+        this.isModalOpen = false;
+    }
     cargarTurnos() {
         this.authService.getTurnos().subscribe(turnos => {
             this.turnos = turnos;
         });
     }
+    
 
     // Función para verificar si el usuario es dueño del perfil
     esPropietario(): boolean {

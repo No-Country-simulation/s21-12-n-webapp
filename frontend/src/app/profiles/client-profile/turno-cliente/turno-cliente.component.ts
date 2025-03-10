@@ -14,45 +14,13 @@ import { FormsModule } from '@angular/forms';
 })
 export class TurnoClienteComponent implements OnInit {
     turnos: any[] = [];
-    isModalOpen: boolean = false;
-    nuevoTurno: any = {
-        fechaTurno: '', // Se debe asignar en el formulario
-        horaInicio: '',
-        horaFin: '',
-        barberiaId: null,
-        clienteId: null // Se llenará al autenticarse
-    };
-    
-    horasDisponibles: string[] = Array.from({ length: 24 }, (_, i) => i.toString().padStart(2, '0')); // ["00", "01", ..., "23"]
-
+  
     constructor(
         private authService: AuthService,
         private notificacionService: NotificacionesService,
         private route: ActivatedRoute
     ) { }
 
-    openModal() {
-        this.isModalOpen = true;
-    }
-    
-    closeModal() {
-        this.isModalOpen = false;
-    }
-
-    submitTurno() {
-        this.nuevoTurno.clienteId = this.authService.getUserId();
-        this.nuevoTurno.horaFin = this.calcularHoraFin(this.nuevoTurno.horaInicio);
-        
-        this.authService.crearTurno(this.nuevoTurno).subscribe(response => {
-            if (response) {
-                this.notificacionService.showMessage('Turno reservado con éxito', 'success');
-                this.cargarTurnos();
-                this.closeModal();
-            } else {
-                this.notificacionService.showMessage('Error al reservar el turno', 'error');
-            }
-        });
-    }
 
     calcularHoraFin(horaInicio: string): string {
         const hora = parseInt(horaInicio, 10);

@@ -220,10 +220,10 @@ export class RegisterComponent {
             return;
         }
         // Extraer horas y minutos
-        const [horaInicio, minutosInicio] = this.horaInicioSeleccionada.split(':').map(Number);
-        const [horaFin, minutosFin] = this.horaFinSeleccionada.split(':').map(Number);
+        const [horaInicio] = this.horaInicioSeleccionada.split(':').map(Number);
+        const [horaFin] = this.horaFinSeleccionada.split(':').map(Number);
         // Validar que las horas y minutos sean números válidos
-        if (isNaN(horaInicio) || isNaN(minutosInicio) || isNaN(horaFin) || isNaN(minutosFin)) {
+        if (isNaN(horaInicio) ||  isNaN(horaFin) ) {
             console.error('Las horas o minutos no son válidos');
             this.notificacionService.showMessage('Por favor, selecciona horas y minutos válidos.', 'error');
             return;
@@ -233,20 +233,20 @@ export class RegisterComponent {
         // Crear el objeto de horario
         const horario = {
             barberiaId: userId,
-            fecha: new Date(fechaActual.getFullYear(), fechaActual.getMonth(), fechaActual.getDate(), horaInicio, minutosInicio).toISOString(), // Fecha completa con hora de inicio
-            horaInicio: new Date(fechaActual.getFullYear(), fechaActual.getMonth(), fechaActual.getDate(), horaInicio, minutosInicio).toISOString(), // Hora de inicio
-            horaFin: new Date(fechaActual.getFullYear(), fechaActual.getMonth(), fechaActual.getDate(), horaFin, minutosFin).toISOString(), // Hora de fin
+            fecha: new Date(fechaActual.getFullYear(), fechaActual.getMonth(), fechaActual.getDate(), horaInicio).toISOString(), // Fecha completa con hora de inicio
+            horaInicio: new Date(fechaActual.getFullYear(), fechaActual.getMonth(), fechaActual.getDate(), horaInicio).toISOString(), // Hora de inicio
+            horaFin: new Date(fechaActual.getFullYear(), fechaActual.getMonth(), fechaActual.getDate(), horaFin).toISOString(), // Hora de fin
             estado: 'DISPONIBLE'
         };
         // Agregar horario mediante el servicio
         this.authService.agregarHorario(horario).subscribe({
             next: (response) => {
                 console.log('Horario agregado con éxito:', response);
-                this.notificacionService.showMessage('Horario agregado correctamente', 'success');
+               
             },
             error: (error) => {
                 console.error('Error agregando horario:', error);
-                this.notificacionService.showMessage('Error al agregar horario', 'error');
+               
             }
         });
     }
@@ -312,20 +312,18 @@ export class RegisterComponent {
         if (this.selectedfecha) {
             // Obtener las horas y minutos seleccionados
             const horaInicio = parseInt((document.querySelector('select[name="horaInicio"]') as HTMLSelectElement).value, 10);
-            const minutosInicio = parseInt((document.querySelector('select[name="minutos"]') as HTMLSelectElement).value, 10);
             const horaFin = parseInt((document.querySelector('select[name="horaFin"]') as HTMLSelectElement).value, 10);
-            const minutosFin = parseInt((document.querySelector('select[name="endTimeMinute"]') as HTMLSelectElement).value, 10);
             // Agregar depuración para verificar los valores
-            console.log('Hora Inicio:', horaInicio, 'Minutos Inicio:', minutosInicio);
-            console.log('Hora Fin:', horaFin, 'Minutos Fin:', minutosFin);
+            console.log('Hora Inicio:', horaInicio, 'Minutos Inicio:');
+            console.log('Hora Fin:', horaFin, 'Minutos Fin:');
             // Validar que la hora de cierre es posterior a la de apertura
-            if (horaFin < horaInicio || (horaFin === horaInicio && minutosFin <= minutosInicio)) {
+            if (horaFin < horaInicio || (horaFin === horaInicio )) {
                 this.notificacionService.showMessage('La hora de cierre debe ser superior a la hora de apertura', 'error');
                 return;
             }
             // Asignar las horas seleccionadas a las propiedades
-            this.horaInicioSeleccionada = `${this.pad(horaInicio)}:${this.pad(minutosInicio)}`;
-            this.horaFinSeleccionada = `${this.pad(horaFin)}:${this.pad(minutosFin)}`;
+            this.horaInicioSeleccionada = `${this.pad(horaInicio)}:${this.pad}`;
+            this.horaFinSeleccionada = `${this.pad(horaFin)}:${this.pad}`;
             // Actualizar el campo 'horario' en el formulario con los horarios seleccionados
             const horariosActivos = this.fechas
                 .filter(fecha => fecha.active)

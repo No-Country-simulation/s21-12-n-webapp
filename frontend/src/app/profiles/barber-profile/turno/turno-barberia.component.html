@@ -1,3 +1,45 @@
+
+<!-- Botón para abrir el modal -->
+<div class="flex justify-end mt-4">
+    <button type="button" class="px-4 py-2 rounded-md bg-green-700 hover:bg-green-800 text-white"
+        (click)="openModal()">
+        Nuevo turno
+    </button>
+</div>
+
+<!-- Modal -->
+<div *ngIf="isModalOpen" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+    <div class="bg-neutral-900 p-6 rounded-lg w-96 relative">
+        <div class="mb-4">
+            <label class="block text-gray-400 mb-2">Seleccione un dia</label>
+            <select name="horaInicio" class="bg-neutral-800 text-white p-2 rounded w-full">
+                <option>Lunes</option>
+                <option>Martes</option>
+                <option>Miercoles</option>
+                <option>Jueves</option>
+                <option>Viernes</option>
+                <option>Sabado</option>
+                <option>Domingo</option>
+            </select>
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-400 mb-2">Seleccione una hora</label>
+            <select class="bg-neutral-800 text-white p-2 rounded w-full">
+                <option>Hora</option>
+            </select>
+        </div>
+        <div class="flex justify-end">
+            <button
+                class="bg-amber-500 hover:bg-amber-600 text-black px-4 py-2 rounded">Guardar</button>
+            <button (click)="closeModal()"
+                class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded ml-2">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+
+<br>
+
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg bg-amber-500">
     <table class="w-full text-sm text-left rtl:text-right bg-amber-500 text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-amber-500 dark:bg-gray-700 dark:text-gray-400">
