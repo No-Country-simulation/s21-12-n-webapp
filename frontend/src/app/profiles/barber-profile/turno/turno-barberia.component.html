@@ -76,6 +76,17 @@
                         Cancelar
                     </button>
 
+                    <button *ngIf="turno.estado === 'RESERVADO' && !esCliente(turno.cliente_id) && !esBarber()" type="button"
+                    class="px-4 py-2 rounded-md bg-slate-500 hover:bg-slate-600 text-white">
+                    Reservado por otro cliente
+                </button>
+
+                    <button *ngIf="turno.estado === 'RESERVADO' && esCliente(turno.cliente_id)" type="button"
+                    class="px-4 py-2 rounded-md bg-red-700 hover:bg-red-800 text-white"
+                    (click)="cancelarTurno(turno.id)">
+                    Cancelar
+                </button>
+
                 </td>
 
 
