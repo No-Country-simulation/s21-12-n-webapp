@@ -109,11 +109,10 @@ export class RegisterComponent {
         confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
         telefono: ['', [Validators.required, Validators.pattern(/^\+\d{1,15}$/), Validators.minLength(12), Validators.maxLength(15)]],
         cuilResponsable: ['', [Validators.required, Validators.pattern(/^\d{11}$/)]],
-
         direccion: ['', [Validators.required, Validators.minLength(8), Validators.pattern(/^[a-zA-Z0-9\s.,-]+$/), Validators.maxLength(100)]],
         descripcion: [''],
         horario: [''],
-        fotoPerfil: [''],
+        fotoPerfil: ['', [Validators.required, Validators.pattern(/^(http|https):\/\/[^ "]+$/)]], // Validación para URL
     }, { validators: this.passwordsMatchValidator() });
 
     showLettersError = false;
@@ -152,7 +151,21 @@ export class RegisterComponent {
     registrarBarberiaYAgregarHorario(): void {
         if (this.isSubmitting) return; // Evita que se ejecute más de una vez
         this.isSubmitting = true; // Bloquea el botón para evitar doble envío
-
+        // Verifica que las horas seleccionadas sean válidas
+        if (!this.horaInicioSeleccionada || !this.horaFinSeleccionada) {
+            this.notificacionService.showMessage('Por favor, selecciona horas válidas.', 'error');
+            this.isSubmitting = false; // Desbloquea el botón en caso de error
+            return;
+        }
+        // Extraer horas y minutos
+        const [horaInicio] = this.horaInicioSeleccionada.split(':').map(Number);
+        const [horaFin] = this.horaFinSeleccionada.split(':').map(Number);
+        // Validar que la hora de cierre es posterior a la de apertura
+        if (horaFin <= horaInicio) {
+            this.notificacionService.showMessage('La hora de cierre debe ser superior a la hora de apertura', 'error');
+            this.isSubmitting = false; // Desbloquea el botón en caso de error
+            return;
+        }
         if (this.registerBarberiaForm.valid) {
             this.registroBarberia(); // Llama primero a registroBarberia
         } else {
@@ -160,7 +173,6 @@ export class RegisterComponent {
             this.isSubmitting = false; // Si hay error, desbloquea el botón
         }
     }
-
     registroBarberia(): void {
         if (this.registerBarberiaForm.valid) {
             const formData: Barberia = {
@@ -172,7 +184,7 @@ export class RegisterComponent {
                 direccion: this.registerBarberiaForm.value.direccion,
                 descripcion: this.registerBarberiaForm.value.descripcion,
                 horario: this.registerBarberiaForm.value.horario,
-                fotoPerfil: this.registerBarberiaForm.value.fotoPerfil,
+                fotoPerfil: this.registerBarberiaForm.value.fotoPerfil, // Aquí se envía la URL de la imagen
             };
 
             this.authService.registroBarberia(formData).subscribe({
@@ -213,43 +225,41 @@ export class RegisterComponent {
             console.error('No se encontró el ID del usuario');
             return;
         }
-        // Verifica que las horas seleccionadas no sean nulas o indefinidas
-        if (!this.horaInicioSeleccionada || !this.horaFinSeleccionada) {
-            console.error('Las horas seleccionadas no son válidas');
-            this.notificacionService.showMessage('Por favor, selecciona horas válidas.', 'error');
-            return;
-        }
-        // Extraer horas y minutos
+        // ... (resto del código)
+    
+        // Extraer horas
         const [horaInicio] = this.horaInicioSeleccionada.split(':').map(Number);
         const [horaFin] = this.horaFinSeleccionada.split(':').map(Number);
-        // Validar que las horas y minutos sean números válidos
-        if (isNaN(horaInicio) ||  isNaN(horaFin) ) {
-            console.error('Las horas o minutos no son válidos');
-            this.notificacionService.showMessage('Por favor, selecciona horas y minutos válidos.', 'error');
-            return;
-        }
-        // Crear la fecha actual
+        
+        // Obtener la fecha actual
         const fechaActual = new Date();
+        
+        // Depuración: Imprimir la fecha actual
+        console.log("Fecha actual:", fechaActual);
+        
         // Crear el objeto de horario
         const horario = {
             barberiaId: userId,
-            fecha: new Date(fechaActual.getFullYear(), fechaActual.getMonth(), fechaActual.getDate(), horaInicio).toISOString(), // Fecha completa con hora de inicio
-            horaInicio: new Date(fechaActual.getFullYear(), fechaActual.getMonth(), fechaActual.getDate(), horaInicio).toISOString(), // Hora de inicio
-            horaFin: new Date(fechaActual.getFullYear(), fechaActual.getMonth(), fechaActual.getDate(), horaFin).toISOString(), // Hora de fin
+            fecha: new Date(fechaActual.getFullYear(), fechaActual.getMonth(), fechaActual.getDate()).toISOString(), // Fecha actual
+            horaInicio: new Date(Date.UTC(fechaActual.getFullYear(), fechaActual.getMonth(), fechaActual.getDate(), horaInicio)).toISOString(), // Hora de inicio con fecha actual y UTC
+            horaFin: new Date(Date.UTC(fechaActual.getFullYear(), fechaActual.getMonth(), fechaActual.getDate(), horaFin)).toISOString(), // Hora de fin con fecha actual y UTC
             estado: 'DISPONIBLE'
         };
+        
+        // Depuración: Imprimir el objeto horario antes de enviarlo
+        console.log("Objeto horario:", horario);
+    
         // Agregar horario mediante el servicio
         this.authService.agregarHorario(horario).subscribe({
             next: (response) => {
                 console.log('Horario agregado con éxito:', response);
-               
             },
             error: (error) => {
                 console.error('Error agregando horario:', error);
-               
             }
         });
     }
+
     selectRole(role: string) {
         this.selectedRole = role;
         this.updateBarberiaValidators();
@@ -313,17 +323,14 @@ export class RegisterComponent {
             // Obtener las horas y minutos seleccionados
             const horaInicio = parseInt((document.querySelector('select[name="horaInicio"]') as HTMLSelectElement).value, 10);
             const horaFin = parseInt((document.querySelector('select[name="horaFin"]') as HTMLSelectElement).value, 10);
-            // Agregar depuración para verificar los valores
-            console.log('Hora Inicio:', horaInicio, 'Minutos Inicio:');
-            console.log('Hora Fin:', horaFin, 'Minutos Fin:');
             // Validar que la hora de cierre es posterior a la de apertura
-            if (horaFin < horaInicio || (horaFin === horaInicio )) {
+            if (horaFin <= horaInicio) {
                 this.notificacionService.showMessage('La hora de cierre debe ser superior a la hora de apertura', 'error');
                 return;
             }
             // Asignar las horas seleccionadas a las propiedades
-            this.horaInicioSeleccionada = `${this.pad(horaInicio)}:${this.pad}`;
-            this.horaFinSeleccionada = `${this.pad(horaFin)}:${this.pad}`;
+            this.horaInicioSeleccionada = `${this.pad(horaInicio)}:00`;
+            this.horaFinSeleccionada = `${this.pad(horaFin)}:00`;
             // Actualizar el campo 'horario' en el formulario con los horarios seleccionados
             const horariosActivos = this.fechas
                 .filter(fecha => fecha.active)
@@ -331,6 +338,8 @@ export class RegisterComponent {
                 .join(', ');
             this.registerBarberiaForm.get('horario')?.setValue(horariosActivos);
             this.registerBarberiaForm.get('horario')?.updateValueAndValidity();
+            // Actualizar la propiedad hours de la fecha seleccionada
+            this.selectedfecha.hours = `Desde ${this.horaInicioSeleccionada} hasta ${this.horaFinSeleccionada}`;
             this.showModal = false; // Cerrar el modal
         } else {
             console.error('No se ha seleccionado una fecha válida.');

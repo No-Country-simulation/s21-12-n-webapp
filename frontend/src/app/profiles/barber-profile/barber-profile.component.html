@@ -7,7 +7,7 @@
     </button>
     <div class="relative w-full h-full">
       <div class="absolute inset-0 w-full h-full bg-neutral-100/30"></div>
-      <img src="assets/barberia-profile.jpg" class="w-full lg:max-h-96 lg:rounded-b-8 object-cover" />
+      <img *ngIf="barberProfile.fotoPerfil" [src]="barberProfile.fotoPerfil" class="w-full lg:max-h-96 lg:rounded-b-8 object-cover" />
     </div>
     <section class="p-4">
       <br><br>
