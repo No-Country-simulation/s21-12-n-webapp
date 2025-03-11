@@ -17,10 +17,15 @@ public interface TurnoMapper {
     Turno toTurno(TurnoRequest request);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     @Mapping(target = "barberia_id", source = "barberia.id")
     @Mapping(target = "cliente_id", source = "cliente.id")
 >>>>>>> 0d0041b2d668ecf170ebb209c40de3d592c06eb4
+=======
+    @Mapping(target = "barberia_id", source = "barberia.id")
+    @Mapping(target = "cliente_id", source = "cliente.id")
+>>>>>>> afb5fb47a99f669b8821df915d71eb411b6a3da8
     TurnoResponse toTurnoResponse(Turno turno);
 
     @Named("mapBarberiaId")
