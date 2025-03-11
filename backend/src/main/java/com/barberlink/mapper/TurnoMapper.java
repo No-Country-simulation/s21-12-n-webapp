@@ -16,6 +16,8 @@ public interface TurnoMapper {
     @Mapping(source = "clienteId", target = "cliente", qualifiedByName = "mapClienteId")
     Turno toTurno(TurnoRequest request);
 
+    @Mapping(target = "barberia_id", source = "barberia.id")
+    @Mapping(target = "cliente_id", source = "cliente.id")
     TurnoResponse toTurnoResponse(Turno turno);
 
     @Named("mapBarberiaId")
