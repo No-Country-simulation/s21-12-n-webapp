@@ -6,13 +6,18 @@
     </button>
 </div>
 <!-- Modal -->
-<!-- Modal -->
 <div *ngIf="isModalOpen" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
     <div class="bg-neutral-900 p-6 rounded-lg w-96 relative">
         <div class="mb-4">
-            <label class="block text-gray-400 mb-2">Seleccione una fecha</label>
-            <select [(ngModel)]="selectedDate" class="bg-neutral-800 text-white p-2 rounded w-full">
-                <option *ngFor="let date of fechasDisponibles" [value]="date">{{ date }}</option>
+            <label class="block text-gray-400 mb-2">Seleccione un día</label>
+            <select [(ngModel)]="selectedDay" class="bg-neutral-800 text-white p-2 rounded w-full">
+                <option>Lunes</option>
+                <option>Martes</option>
+                <option>Miércoles</option>
+                <option>Jueves</option>
+                <option>Viernes</option>
+                <option>Sábado</option>
+                <option>Domingo</option>
             </select>
         </div>
         <div class="mb-4">
@@ -31,6 +36,7 @@
         </div>
     </div>
 </div>
+
 
 <br>
 

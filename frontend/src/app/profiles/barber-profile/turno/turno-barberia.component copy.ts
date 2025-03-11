@@ -15,22 +15,11 @@ export class TurnoBarberiaComponent implements OnInit {
     turnos: any[] = [];
     userId: string | null = null;
     isModalOpen: boolean = false;
-    selectedDate: string = ''; // Cambiado a selectedDate
+    selectedDate: string = ''; // Cambiar selectedDay por selectedDate
     selectedTime: string = '';
     horarios: any[] = []; // Propiedad para almacenar los horarios de la barbería
+    availableDates: { fecha: string, horaInicio: string, horaFin: string }[] = []; // Fechas y horarios disponibles
     availableTimes: string[] = []; // Horas disponibles para reservar
-
-    fechasDisponibles: string[] = [];
-
-    turno = {
-        barberia_id: 0,
-        cliente_id: 0,
-        fechaTurno: '',
-        horaInicio: '',
-        horaFin: '',
-        estado: 'DISPONIBLE',
-        metodoPago: 'EFECTIVO'
-    };
     constructor(
         private authService: AuthService,
         private notificacionService: NotificacionesService
@@ -42,14 +31,22 @@ export class TurnoBarberiaComponent implements OnInit {
             this.obtenerHorariosBarberia();
         }
     }
-    
     obtenerHorariosBarberia() {
         this.authService.getHorariosPorBarberia(Number(this.barberId)).subscribe(horarios => {
             this.horarios = horarios;
-            // Asegúrate de que fechasDisponibles se llene correctamente
-            this.fechasDisponibles = horarios.map(horario => {
-                // Extraer solo la fecha en formato 'YYYY-MM-DD'
-                return new Date(horario.fecha).toISOString().split('T')[0]; // Ajusta esto según el formato que necesites
+            this.generarFechasDisponibles(); // Llamar al método para generar fechas
+        });
+    }
+    generarFechasDisponibles() {
+        this.availableDates = []; // Reiniciar las fechas disponibles
+        this.horarios.forEach(horario => {
+            const fecha = new Date(horario.fecha);
+            const horaInicio = new Date(horario.horaInicio);
+            const horaFin = new Date(horario.horaFin);
+            this.availableDates.push({
+                fecha: fecha.toLocaleDateString('es-ES'), // Formato de fecha
+                horaInicio: horaInicio.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }), // Formato de hora
+                horaFin: horaFin.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) // Formato de hora
             });
         });
     }
@@ -60,22 +57,15 @@ export class TurnoBarberiaComponent implements OnInit {
     closeModal() {
         this.isModalOpen = false;
     }
-    cargarTurnos() {
-        this.authService.getTurnos().subscribe(turnos => {
-            this.turnos = turnos;
-        });
-    }
     generarHorasDisponibles() {
         this.availableTimes = []; // Reiniciar las horas disponibles
-        const horario = this.horarios[0]; // Suponiendo que solo hay un horario por barbería
-        if (horario) {
-            const horaInicio = new Date(horario.horaInicio);
-            const horaFin = new Date(horario.horaFin);
-            // Generar horas disponibles en intervalos de 30 minutos, por ejemplo
-            for (let hour = horaInicio.getHours(); hour <= horaFin.getHours(); hour++) {
-                for (let minute = 0; minute < 60; minute += 30 ) { // Cambia 30 por el intervalo deseado
-                    this.availableTimes.push(`${hour}:${minute.toString().padStart(2, '0')}`);
-                }
+        const selectedHorario = this.availableDates.find(date => date.fecha === this.selectedDate); // Encuentra el horario correspondiente a la fecha seleccionada
+        if (selectedHorario) {
+            const horaInicio = new Date(`1970-01-01T${selectedHorario.horaInicio}`);
+            const horaFin = new Date(`1970-01-01T${selectedHorario.horaFin}`);
+            // Generar horas disponibles solo con horas enteras
+            for (let hour = horaInicio.getHours(); hour < horaFin.getHours(); hour++) {
+                this.availableTimes.push(`${hour}:00`); // Solo agregar horas enteras
             }
         }
     }
@@ -84,48 +74,26 @@ export class TurnoBarberiaComponent implements OnInit {
             this.notificacionService.showMessage('Seleccione un día y una hora', 'error');
             return;
         }
-    
-        // Asegúrate de que selectedTime tenga el formato correcto (ej. "15:00")
-        const formattedDate = this.selectedDate; // Asegúrate de que esté en formato 'YYYY-MM-DD'
-        const formattedTime = this.selectedTime; // Debe estar en 'HH:mm'
-    
-        // Combina fecha y hora en formato ISO 8601
-        const fechaTurnoISO = `${formattedDate}T${formattedTime}:00`; // Esto da como resultado 'YYYY-MM-DDTHH:mm:ss'
-    
-        // Separar la hora en horas y minutos
-        const [hours, minutes] = formattedTime.split(':').map(Number);
-    
-        // Crear objetos Date para horaInicio y horaFin
-        const horaInicio = new Date(0, 0, 0, hours, minutes); // Usamos una fecha base arbitraria, ya que solo nos importa la hora
-        const horaFin = new Date(0, 0, 0, hours, minutes); // Puedes ajustarlo si la hora de fin es diferente
-    
         const nuevoTurno = {
-            barberia_id: Number(this.barberId),
-            cliente_id: Number(this.userId),
-            fechaTurno: fechaTurnoISO, // Usa el formato ISO
-            horaInicio: horaInicio.toISOString(), // Convertir a ISO
-            horaFin: horaFin.toISOString(),   // Convertir a ISO
-            estado: 'RESERVADO',
-            metodoPago: 'EFECTIVO'
+            barberId: this.barberId,
+            userId: this.userId,
+            dia: this.selectedDate,
+            hora: this.selectedTime
         };
-    
         this.authService.crearTurno(nuevoTurno).subscribe({
             next: () => {
                 this.notificacionService.showMessage('Turno creado con éxito', 'success');
                 this.closeModal();
                 this.cargarTurnos(); // Recargar turnos
             },
-            error: (err) => {
-                console.error('Error al crear el turno:', err);
+            error: () => {
                 this.notificacionService.showMessage('Error al crear el turno', 'error');
             }
         });
     }
     // Función para verificar si el usuario es dueño del perfil
     esPropietario(): boolean {
-        // Aquí deberías implementar la lógica que determine si el usuario es propietario.
-        // Por ejemplo, podrías comparar el userId con el id del barbero.
-        return this.userId === this.barberId; // Asegúrate de que barberId sea del mismo tipo que userId.
+        return this.userId === this.userId;
     }
     cancelarTurno(id: number) {
         Swal.fire({
@@ -150,6 +118,11 @@ export class TurnoBarberiaComponent implements OnInit {
                     }
                 });
             }
+        });
+    }
+    cargarTurnos() {
+        this.authService.getTurnos().subscribe(turnos => {
+            this.turnos = turnos;
         });
     }
 }

@@ -10,7 +10,7 @@ import { HorarioComponent } from './horario/horario.component';
 @Component({
   
   selector: 'app-barber-profile',
-  imports: [CommonModule, RouterModule, TurnoBarberiaComponent, CommentsComponent, HeaderComponent, HorarioComponent],
+  imports: [CommonModule, RouterModule, TurnoBarberiaComponent, CommentsComponent,  HorarioComponent],
   templateUrl: './barber-profile.component.html',
   styleUrl: './barber-profile.component.css'
 })
@@ -19,7 +19,7 @@ export class BarberProfileComponent implements OnInit{
   errorMessage: string = '';
   id!: string;
 
-  selectedContent: string = 'horario'
+  selectedContent: string = 'turno'
 
   selectContent(content: string){
     this.selectedContent = content

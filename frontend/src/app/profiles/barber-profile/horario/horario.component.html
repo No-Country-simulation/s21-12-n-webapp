@@ -2,15 +2,15 @@
     <table class="w-full text-sm text-left text-black">
         <thead class="text-xs text-black uppercase bg-amber-500">
             <tr>
-                <th scope="col" class="px-6 py-3">Día</th>
-                <th scope="col" class="px-6 py-3">Horario de apertura</th>
-                <th scope="col" class="px-6 py-3">Hora de cierre</th>
+                <th scope="col" class="px-6 py-3 text-black">Día</th>
+                <th scope="col" class="px-6 py-3 text-black">Horario de apertura</th>
+                <th scope="col" class="px-6 py-3 text-black">Hora de cierre</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let horario of barberProfile.horarios" class="bg-amber-400 border-b">
                 <th scope="row" class="px-6 py-4 font-medium text-black">
-                    {{ horario.fecha | date:'shortDate' }} <!-- Formatear la fecha -->
+                    {{ horario.fecha | date:'dd/MM/yy EEEE' }}
                 </th>
                 <td class="px-6 py-4 text-black">
                     {{ horario.horaInicio | date:'shortTime' }} <!-- Formatear la hora de inicio -->
