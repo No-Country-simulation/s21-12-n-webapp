@@ -1,4 +1,3 @@
-
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg bg-amber-400">
 
 
@@ -6,10 +5,13 @@
     <table class="w-full text-sm text-left rtl:text-right bg-amber-400 text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-amber-400 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-                <th scope="col" class="px-6 py-3 text-black">Barberia</th>
+                <th scope="col" class="px-6 py-3 text-black">Cita</th>
                 <th scope="col" class="px-6 py-3 text-black">Día</th>
                 <th scope="col" class="px-6 py-3 text-black">Hora de la cita</th>
+                <!--
+                
                 <th scope="col" class="px-6 py-3 text-black">Hora de finalización</th>
+                -->
                 <th scope="col" class="px-6 py-3 text-black">Estado</th>
                 <th scope="col" class="px-6 py-3 text-black">Acciones</th>
             </tr>
@@ -17,27 +19,25 @@
         <tbody class="bg-amber-400">
             <tr *ngFor="let turno of turnos" class="border-b border-gray-200">
                 <td class="px-6 py-4 text-black">{{ turno.id }}</td>
-                <td class="px-6 py-4 text-black">{{ turno.fechaTurno }}</td>
-                <td class="px-6 py-4 text-black">{{ turno.horaInicio }}</td>
-                <td class="px-6 py-4 text-black">{{ turno.horaFin }}</td>
-                <td class="px-6 py-4 text-black text-center font-bold" 
-                    [ngClass]="{
+                <td class="px-6 py-4 text-black">{{ turno.fechaTurno | date:'dd/MM/yy EEEE' }}</td>
+                <td class="px-6 py-4 text-black">{{ turno.horaInicio | date:'shortTime' }}</td>
+                <!-- Formatear la hora de inicio --
+
+
+                <td class="px-6 py-4 text-black">{{ turno.horaFin | date:'shortTime' }}</td>
+                <!-- Formatear la hora de cierre -->
+                <td class="px-6 py-4 text-black text-center font-bold" [ngClass]="{
                         'bg-red-500 text-white': turno.estado === 'CANCELADO',
                         'bg-green-500 text-white': turno.estado === 'CONFIRMADO',
-                        'bg-blue-500 text-white': turno.estado === 'DISPONIBLE'
+                        'bg-blue-500 text-white': turno.estado === 'RESERVADO'
                     }">
                     {{ turno.estado }}
                 </td>
                 <td class="px-6 py-4 flex space-x-2">
-                    <button *ngIf="turno.estado == 'CONFIRMADO'" 
+                    <button *ngIf="turno.estado == 'RESERVADO'"
                         class="px-4 py-2 rounded-md bg-red-700 hover:bg-red-800 text-white"
                         (click)="cancelarTurno(turno.id)">
                         Cancelar
-                    </button>
-                    <button *ngIf="turno.estado === 'CANCELADO' || turno.estado === 'DISPONIBLE'"
-                        class="px-4 py-2 rounded-md bg-blue-700 hover:bg-blue-800 text-white"
-                        (click)="confirmarTurno(turno.id)">
-                        Confirmar
                     </button>
                 </td>
             </tr>

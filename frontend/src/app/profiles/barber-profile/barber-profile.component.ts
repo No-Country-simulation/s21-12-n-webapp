@@ -10,7 +10,7 @@ import { HorarioComponent } from './horario/horario.component';
 @Component({
   
   selector: 'app-barber-profile',
-  imports: [CommonModule, RouterModule, TurnoBarberiaComponent, CommentsComponent,  HorarioComponent],
+  imports: [CommonModule, RouterModule, TurnoBarberiaComponent, CommentsComponent, HeaderComponent,  HorarioComponent],
   templateUrl: './barber-profile.component.html',
   styleUrl: './barber-profile.component.css'
 })

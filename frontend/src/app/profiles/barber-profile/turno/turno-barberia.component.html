@@ -1,8 +1,7 @@
 <!-- Botón para abrir el modal -->
-<div class="flex justify-end mt-4">
-    <button type="button" class="px-4 py-2 rounded-md bg-green-700 hover:bg-green-800 text-white"
-        (click)="openModal()">
-        Nuevo turno
+<div  *ngIf="isLoggedIn && !isBarber" class="flex justify-end mt-4">
+    <button type="button" class="px-4 py-2 rounded-md bg-green-700 hover:bg-green-800 text-white" (click)="openModal()">
+        Agendar turno
     </button>
 </div>
 <!-- Modal -->
@@ -22,8 +21,7 @@
             </select>
         </div>
         <div class="flex justify-end">
-            <button (click)="crearTurno()"
-                class="bg-amber-500 hover:bg-amber-600 text-black px-4 py-2 rounded">
+            <button (click)="crearTurno()" class="bg-amber-500 hover:bg-amber-600 text-black px-4 py-2 rounded">
                 Guardar
             </button>
             <button (click)="closeModal()"
@@ -38,14 +36,16 @@
     <table class="w-full text-sm text-left rtl:text-right bg-amber-500 text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-amber-500 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-                <th scope="col" class="px-6 py-3 text-black">Cliente</th>
+                <th scope="col" class="px-6 py-3 text-black">Cita</th>
 
                 <th scope="col" class="px-6 py-3 text-black">Dia</th>
                 <th scope="col" class="px-6 py-3 text-black">Hora de la cita</th>
-                <th scope="col" class="px-6 py-3 text-black">Hora de finalización</th>
+             <!--
+                <th scope="col" class="px-6 py-3 text-black">Hora de finalización</th>   
+             -->
 
                 <th scope="col" class="px-6 py-3 text-black">Estado</th>
-                <th scope="col" class="px-6 py-3 text-black">Acciones</th>
+                <th *ngIf="esPropietario()" scope="col" class="px-6 py-3 text-black">Acciones</th>
 
             </tr>
         </thead>
@@ -55,32 +55,28 @@
                     {{ turno.id }}
                 </th>
 
-                <td class="px-6 py-4 text-black">{{ turno.fechaTurno }}</td>
-                <td class="px-6 py-4 text-black">{{ turno.horaInicio }}</td>
-                <td class="px-6 py-4 text-black">{{ turno.horaFin }}</td>
+                <td class="px-6 py-4 text-black">{{ turno.fechaTurno | date:'dd/MM/yy EEEE' }}</td>
+                <td class="px-6 py-4 text-black">{{ turno.horaInicio | date:'shortTime' }}</td>
+                <!-- Formatear la hora de inicio --
+                <td class="px-6 py-4 text-black">{{ turno.horaFin | date:'shortTime' }}</td>
+                <!-- Formatear la hora de cierre -->
                 <td class="px-6 py-4 text-black text-center font-bold" [ngClass]="{
                     'bg-red-500 text-white': turno.estado === 'CANCELADO',
                     'bg-green-500 text-white': turno.estado === 'CONFIRMADO',
-                    'bg-blue-500 text-white': turno.estado === 'DISPONIBLE'
+                    'bg-blue-500 text-white': turno.estado === 'RESERVADO'
                 }">
                     {{ turno.estado }}
                 </td>
 
                 <td class="px-6 py-4 flex space-x-2">
 
-                    <button *ngIf="turno.estado == 'CONFIRMADO' && esPropietario()" type="button"
+                    <button *ngIf="turno.estado == 'RESERVADO' && esPropietario()" type="button"
                         class="px-4 py-2 rounded-md bg-red-700 hover:bg-red-800 text-white"
                         (click)="cancelarTurno(turno.id)">
                         Cancelar
                     </button>
 
-
-                    <!--
-     
-                -->
-
                 </td>
-                <td class="px-6 py-4"></td>
 
 
 

@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { NotificacionesService } from '../../../services/notificaciones.service';
 import Swal from 'sweetalert2';
 import { FormsModule } from '@angular/forms';
+import { Barberia } from '../../../models-interfaces/Barberia';
 @Component({
     selector: 'app-turno-barberia',
     imports: [CommonModule, FormsModule],
@@ -22,6 +23,12 @@ export class TurnoBarberiaComponent implements OnInit {
 
     fechasDisponibles: string[] = [];
 
+    isBarber: boolean = false; // Propiedad para determinar si es barbero
+
+  
+
+    isLoggedIn: boolean = false;
+    
     turno = {
         barberia_id: 0,
         cliente_id: 0,
@@ -40,6 +47,17 @@ export class TurnoBarberiaComponent implements OnInit {
         this.cargarTurnos();
         if (this.barberId) {
             this.obtenerHorariosBarberia();
+        }
+        this.isLoggedIn = this.authService.isAuthenticated();
+        if (this.isLoggedIn) {
+          const userId = this.authService.getUserId();
+          if (userId) {
+            this.authService.getUserInfo(userId).subscribe((user: Barberia | null) => {
+              if (user) {
+                this.isBarber = !!user.cuilResponsable; // Verifica si tiene cuilResponsable
+              }
+            });
+          }
         }
     }
     
