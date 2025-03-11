@@ -64,4 +64,8 @@
     .text-link {
         @apply font-bold underline text-primary text-14
     }
+
+    .search-item {
+        @apply block hover:bg-neutral-80/50 p-2 rounded-[4px] w-full
+    }
 }

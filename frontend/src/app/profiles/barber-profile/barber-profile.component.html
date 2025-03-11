@@ -1,5 +1,4 @@
 <app-header></app-header>
-
 <div *ngIf="barberProfile" class="w-full h-full max-w-7xl mx-auto">
   <header class="w-full relative">
     <button (click)="goBack()" class="bg-primary p-2 rounded-16 top-4 left-4 absolute z-[1]">
@@ -7,7 +6,7 @@
     </button>
     <div class="relative w-full h-full">
       <div class="absolute inset-0 w-full h-full bg-neutral-100/30"></div>
-      <img src="assets/barberia-profile.jpg" class="w-full lg:max-h-96 lg:rounded-b-8 object-cover" />
+      <img *ngIf="barberProfile.fotoPerfil" [src]="barberProfile.fotoPerfil" class="w-full lg:max-h-96 lg:rounded-b-8 object-cover" />
     </div>
     <section class="p-4">
       <br><br>
@@ -44,18 +43,29 @@
         </svg>
         Numero de telefono: {{barberProfile.telefono}}
       </h3>
+      <h3 class="flex gap-1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+          <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
+        </svg> 
+        Descripcion: {{barberProfile.descripcion}}
+      </h3>
 
     </section>
   </header>
   <main class="p-4">
     <section class="w-full flex justify-center gap-1">
-      <button class="button-toggle-profile" [class.button-activate]="selectedContent === 'catalog'"
-        (click)="selectContent('catalog')">Catálogo</button>
+
+      <button class="button-toggle-profile" [class.button-activate]="selectedContent === 'horario'"
+        (click)="selectContent('horario')">Horarios</button>
+
+      <button class="button-toggle-profile" [class.button-activate]="selectedContent === 'turno'"
+      (click)="selectContent('turno')">Turnos</button>
       <button class="button-toggle-profile" [class.button-activate]="selectedContent === 'comments'"
         (click)="selectContent('comments')">Comentarios</button>
     </section>
     <section class="p-4">
-      <app-catalog *ngIf="selectedContent === 'catalog'"></app-catalog>
+      <app-horario *ngIf="selectedContent === 'horario'"></app-horario>
+      <app-turno-barberia [barberId]="id" *ngIf="selectedContent === 'turno'"></app-turno-barberia>
       <app-comments *ngIf="selectedContent === 'comments'"></app-comments>
     </section>
   </main>

@@ -1,16 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule, Location } from '@angular/common';
-import { CatalogComponent } from '../barber-profile/catalog/catalog.component';
-import { CommentsComponent } from '../barber-profile/comments/comments.component'; 
+import { TurnoClienteComponent } from './turno-cliente/turno-cliente.component'; 
 import { NotificacionesService } from '../../services/notificaciones.service';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { ClientProfileService } from '../../services/client-profile.service';
 
 @Component({
   selector: 'app-cliente-profile',
-  imports: [CommonModule, RouterModule, CatalogComponent, 
-    CommentsComponent, HeaderComponent],
+  imports: [CommonModule, RouterModule, TurnoClienteComponent, HeaderComponent],
   templateUrl: './client-profile.component.html',
   styleUrls: ['./client-profile.component.css']
 })
@@ -19,7 +17,7 @@ export class ClientProfileComponent implements OnInit {
     errorMessage: string = '';
     id!: string;
   
-    selectedContent: string = 'catalog'
+    selectedContent: string = 'turno'
   
     selectContent(content: string){
       this.selectedContent = content
@@ -27,7 +25,7 @@ export class ClientProfileComponent implements OnInit {
   
     constructor(
       private route: ActivatedRoute,
-      private barberProfileService: ClientProfileService,
+      private clientProfileService: ClientProfileService,
       private location: Location,
       private router: Router,
       private notificacionService: NotificacionesService
@@ -43,7 +41,7 @@ export class ClientProfileComponent implements OnInit {
     }
   
     getProfile(){
-      this.barberProfileService.getClientProfile(this.id).subscribe({
+      this.clientProfileService.getClientProfile(this.id).subscribe({
         next: (data) => {
           this.clientProfile = data
           this.errorMessage = ''
@@ -56,7 +54,7 @@ export class ClientProfileComponent implements OnInit {
     }
     
     getProfileJson() {
-      this.barberProfileService.getClient(this.id).subscribe({
+      this.clientProfileService.getClient(this.id).subscribe({
           next: (data) => {
               this.clientProfile = data;
               this.errorMessage = '';
@@ -75,11 +73,7 @@ export class ClientProfileComponent implements OnInit {
   }
   
   
-    goBack(): void {
-      if (window.history.length > 1) {
-        this.location.back();
-      } else {
-        this.router.navigate(['/']);
-      }
-    }
+  goBack(): void {
+    this.router.navigate(['']); // Siempre redirige a la ruta de inicio
+  }
 }

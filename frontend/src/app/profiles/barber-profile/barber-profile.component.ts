@@ -2,16 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { BarberProfileService } from '../../services/barber-profile.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule, Location } from '@angular/common';
-import { ErrorComponent } from "../../shared/error/error.component";
-import { CatalogComponent } from './catalog/catalog.component';
+import { TurnoBarberiaComponent } from './turno/turno-barberia.component';
 import { CommentsComponent } from './comments/comments.component';
 import { NotificacionesService } from '../../services/notificaciones.service';
 import { HeaderComponent } from '../../shared/header/header.component';
-
+import { HorarioComponent } from './horario/horario.component';
 @Component({
   
   selector: 'app-barber-profile',
-  imports: [CommonModule, RouterModule,CatalogComponent, CommentsComponent, HeaderComponent],
+  imports: [CommonModule, RouterModule, TurnoBarberiaComponent, CommentsComponent, HeaderComponent,  HorarioComponent],
   templateUrl: './barber-profile.component.html',
   styleUrl: './barber-profile.component.css'
 })
@@ -20,7 +19,7 @@ export class BarberProfileComponent implements OnInit{
   errorMessage: string = '';
   id!: string;
 
-  selectedContent: string = 'catalog'
+  selectedContent: string = 'turno'
 
   selectContent(content: string){
     this.selectedContent = content
@@ -29,7 +28,6 @@ export class BarberProfileComponent implements OnInit{
   constructor(
     private route: ActivatedRoute,
     private barberProfileService: BarberProfileService,
-    private location: Location,
     private router: Router,
     private notificacionService: NotificacionesService
   ){}
@@ -64,7 +62,7 @@ export class BarberProfileComponent implements OnInit{
         },
         error: (err) => {
             this.barberProfile = null;
-            this.errorMessage = 'No tienes permiso para ver esta barbería';
+            this.errorMessage = 'Esta barberia no existe';
             
             // Mostrar alerta con NotificacionService
             this.notificacionService.showMessage(this.errorMessage, 'error');
@@ -76,12 +74,8 @@ export class BarberProfileComponent implements OnInit{
 }
 
 
-  goBack(): void {
-    if (window.history.length > 1) {
-      this.location.back();
-    } else {
-      this.router.navigate(['/']);
-    }
-  }
+goBack(): void {
+  this.router.navigate(['']); // Siempre redirige a la ruta de inicio
+}
 
 }

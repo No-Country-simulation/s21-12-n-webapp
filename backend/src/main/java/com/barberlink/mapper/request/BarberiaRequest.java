@@ -11,6 +11,11 @@ public record BarberiaRequest(
         String direccion,
         String descripcion,
         String fotoPerfil,
+<<<<<<< HEAD
         Integer recomendaciones,
         List<HorarioRequest> horarios // nuevo atributo opcional
+=======
+        Integer recomendaciones
+        //List<HorarioRequest> horarios // nuevo atributo opcional
+>>>>>>> 0d0041b2d668ecf170ebb209c40de3d592c06eb4
 ) { }

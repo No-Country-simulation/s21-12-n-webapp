@@ -33,14 +33,11 @@
   </header>
   <main class="p-4">
     <section class="w-full flex justify-center gap-1">
-      <button class="button-toggle-profile" [class.button-activate]="selectedContent === 'catalog'"
-        (click)="selectContent('catalog')">Catálogo</button>
-      <button class="button-toggle-profile" [class.button-activate]="selectedContent === 'comments'"
-        (click)="selectContent('comments')">Comentarios</button>
+      <button class="button-toggle-profile" [class.button-activate]="selectedContent === 'turno'"
+        (click)="selectContent('turno')">Turnos</button>
     </section>
     <section class="p-4">
-      <app-catalog *ngIf="selectedContent === 'catalog'"></app-catalog>
-      <app-comments *ngIf="selectedContent === 'comments'"></app-comments>
+      <app-turno-cliente *ngIf="selectedContent === 'turno'"></app-turno-cliente>
     </section>
   </main>
 </div>
