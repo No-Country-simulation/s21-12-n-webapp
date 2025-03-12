@@ -152,22 +152,22 @@ export class RegisterComponent {
     registrarBarberiaYAgregarHorario(): void {
         if (this.isSubmitting) return;
         this.isSubmitting = true;
-
+    
         if (!this.horaInicioSeleccionada || !this.horaFinSeleccionada) {
             this.notificacionService.showMessage('Por favor, selecciona horas válidas.', 'error');
             this.isSubmitting = false;
             return;
         }
-
+    
         const [horaInicio] = this.horaInicioSeleccionada.split(':').map(Number);
         const [horaFin] = this.horaFinSeleccionada.split(':').map(Number);
-
+    
         if (horaFin <= horaInicio) {
             this.notificacionService.showMessage('La hora de cierre debe ser superior a la hora de apertura', 'error');
             this.isSubmitting = false;
             return;
         }
-
+    
         if (this.registerBarberiaForm.valid) {
             this.registroBarberia();
         } else {
@@ -227,10 +227,10 @@ export class RegisterComponent {
             console.error('No se encontró el ID del usuario');
             return;
         }
-
+    
         const [horaInicio] = this.horaInicioSeleccionada.split(':').map(Number);
         const [horaFin] = this.horaFinSeleccionada.split(':').map(Number);
-
+    
         this.fechas
             .filter(fecha => fecha.active)
             .forEach(fecha => {
@@ -240,7 +240,7 @@ export class RegisterComponent {
     agregarMiHorario(userId: string, dia: string, horaInicio: number, horaFin: number): void {
         const fechaActual = new Date();
         const fecha = this.obtenerFechaParaDia(fechaActual, dia); // Obtiene la fecha para el día específico
-
+    
         const horario = {
             barberiaId: userId,
             fecha: fecha.toISOString(),
@@ -248,7 +248,7 @@ export class RegisterComponent {
             horaFin: new Date(Date.UTC(fecha.getFullYear(), fecha.getMonth(), fecha.getDate(), horaFin)).toISOString(),
             estado: 'DISPONIBLE'
         };
-
+    
         this.authService.agregarHorario(horario).subscribe({
             next: (response) => {
                 console.log(`Horario para ${dia} agregado con éxito:`, response);
@@ -262,8 +262,13 @@ export class RegisterComponent {
         const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
         const diaActual = fechaActual.getDay();
         const diaSeleccionado = diasSemana.indexOf(dia);
-        const diferencia = diaSeleccionado - diaActual;
-
+        
+        // Calcular la diferencia de días
+        let diferencia = diaSeleccionado - diaActual;
+        // Si la diferencia es negativa, significa que el día seleccionado ya pasó esta semana
+        if (diferencia < 0) {
+            diferencia += 6; // Mover a la próxima semana
+        }
         const fecha = new Date(fechaActual);
         fecha.setDate(fechaActual.getDate() + diferencia);
         return fecha;
@@ -331,13 +336,13 @@ export class RegisterComponent {
         // Obtener las horas y minutos seleccionados
         const horaInicio = parseInt((document.querySelector('select[name="horaInicio"]') as HTMLSelectElement).value, 10);
         const horaFin = parseInt((document.querySelector('select[name="horaFin"]') as HTMLSelectElement).value, 10);
-
+    
         // Validar que la hora de cierre es posterior a la de apertura
         if (horaFin <= horaInicio) {
             this.notificacionService.showMessage('La hora de cierre debe ser superior a la hora de apertura', 'error');
             return;
         }
-
+    
         // Asignar las horas seleccionadas a las propiedades
         this.horaInicioSeleccionada = `${this.pad(horaInicio)}:00`;
         this.horaFinSeleccionada = `${this.pad(horaFin)}:00`;
@@ -348,15 +353,15 @@ export class RegisterComponent {
             .filter(fecha => fecha.active)
             .map(fecha => `${fecha.name}: ${this.horaInicioSeleccionada} - ${this.horaFinSeleccionada}`)
             .join(', ');
-
+    
         this.registerBarberiaForm.get('horario')?.setValue(horariosActivos);
         this.registerBarberiaForm.get('horario')?.updateValueAndValidity();
-
+    
         // Actualizar la propiedad hours de todas las fechas activas
         this.fechas.filter(fecha => fecha.active).forEach(fecha => {
             fecha.hours = `Desde ${this.horaInicioSeleccionada} hasta ${this.horaFinSeleccionada}`;
         });
-
+    
         this.showModal = false; // Cerrar el modal
     }
     openModal() {

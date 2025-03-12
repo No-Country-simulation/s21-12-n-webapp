@@ -22,11 +22,11 @@ export class AuthService {
     registroBarberia(objeto: Barberia): Observable<ResponseAcceso> {
         return this.http.post<ResponseAcceso>(`${this.baseUrl}barberias/register`, objeto);
     }
-
+    
     agregarHorario(horario: any): Observable<any> {
         const token = this.getToken();
         const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-
+    
         return this.http.post<any>(`${this.baseUrl}horarios`, horario, { headers }).pipe(
             catchError(error => {
                 console.error('Error agregando horario:', error);
@@ -38,7 +38,7 @@ export class AuthService {
     getHorarios(): Observable<any[]> {
         const token = this.getToken();
         const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-
+    
         return this.http.get<any[]>(`${this.baseUrl}horarios`, { headers }).pipe(
             catchError(error => {
                 console.error('Error obteniendo horarios:', error);
@@ -46,16 +46,16 @@ export class AuthService {
             })
         );
     }
-
+    
     getHorariosPorBarberia(barberiaId: number): Observable<any[]> {
         return this.getHorarios().pipe(
             map(horarios => horarios.filter(horario => horario.barberiaId === barberiaId))
         );
     }
-
-
-
-
+    
+    
+   
+    
     login(objeto: Login): Observable<ResponseAcceso> {
         return this.http.post<ResponseAcceso>(`${this.baseUrl}login`, objeto).pipe(
             map(response => {
@@ -65,11 +65,11 @@ export class AuthService {
             })
         );
     }
+    
+
 
     getBarberias(): Observable<Barberia[]> {
-        const token = this.getToken();
-        const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-        return this.http.get<Barberia[]>(`${this.baseUrl}barberias`, { headers }).pipe(
+        return this.http.get<Barberia[]>(`${this.baseUrl}barberias`).pipe(
             catchError(error => {
                 console.error('Error fetching barberias:', error);
                 return of([]); // Retorna un arreglo vacío en caso de error
@@ -77,7 +77,7 @@ export class AuthService {
         );
     }
 
-
+    
     getTurnos(): Observable<any[]> {
         const token = this.getToken();
         const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
@@ -123,12 +123,12 @@ export class AuthService {
             return null;
         }
     }
-
-
+    
+    
     confirmarTurno(id: number): Observable<any> {
         const token = this.getToken();
         const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-
+    
         return this.http.put(`${this.baseUrl}turnos/${id}/confirm`, {}, { headers }).pipe(
             catchError(error => {
                 console.error('Error confirmando el turno:', error);
@@ -136,11 +136,11 @@ export class AuthService {
             })
         );
     }
-
+    
     cancelarTurno(id: number): Observable<any> {
         const token = this.getToken();
         const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-
+    
         return this.http.put(`${this.baseUrl}turnos/${id}/cancel`, {}, { headers }).pipe(
             catchError(error => {
                 console.error('Error cancelando el turno:', error);
@@ -148,8 +148,8 @@ export class AuthService {
             })
         );
     }
-
-
+    
+    
     private getUserIdFromToken(token: string): string {
         const decoded: any = jwtDecode(token);
         return decoded.id;

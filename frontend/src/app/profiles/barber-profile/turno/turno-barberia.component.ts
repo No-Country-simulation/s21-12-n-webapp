@@ -114,18 +114,20 @@ export class TurnoBarberiaComponent implements OnInit {
             this.notificacionService.showMessage('Seleccione un día y una hora', 'error');
             return;
         }
-        // Asegúrate de que selectedTime tenga el formato correcto (ej. "15")
         const formattedDate = this.selectedDate; // Asegúrate de que esté en formato 'YYYY-MM-DD'
         const formattedTime = this.selectedTime; // Debe estar en 'HH'
         // Combina fecha y hora en formato ISO 8601
         const fechaTurnoISO = `${formattedDate}T${formattedTime}:00`; // Esto da como resultado 'YYYY-MM-DDTHH:mm:ss'
         // Crear objeto Date para horaInicio y horaFin
-        const horaInicio = new Date(fechaTurnoISO); // Usamos el formato ISO para crear la fecha
+        const horaInicio = new Date(fechaTurnoISO);
+        
+        // Ajustar la hora a UTC-4 (Venezuela)
+        horaInicio.setHours(horaInicio.getHours() - 4);
         const horaFin = new Date(horaInicio.getTime() + 30 * 60000); // Suponiendo que la duración es de 30 minutos
         const nuevoTurno = {
             barberia_id: Number(this.barberId),
             cliente_id: Number(this.userId),
-            fechaTurno: fechaTurnoISO, // Usa el formato ISO
+            fechaTurno: horaInicio.toISOString(), // Usa el formato ISO
             horaInicio: horaInicio.toISOString(), // Convertir a ISO
             horaFin: horaFin.toISOString(),   // Convertir a ISO
             estado: 'RESERVADO',

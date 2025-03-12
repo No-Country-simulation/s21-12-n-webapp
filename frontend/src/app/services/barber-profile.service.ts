@@ -14,18 +14,20 @@ export class BarberProfileService {
 
   getBarbers(id: string): Observable<any> {
     const token = localStorage.getItem('token');
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-
+    let headers = new HttpHeaders();
+    // Solo agregar el header de autorización si el token está presente
+    if (token) {
+        headers = headers.set('Authorization', `Bearer ${token}`);
+    }
     return this.http.get(`${this.baseUrl}barberias/${id}`, { headers }).pipe(
-      catchError((err: Error) => {
-        console.error('Error al obtener barbería:', err);
-        return new Observable((observer) => {
-          observer.error(err);
-        });
-      })
+        catchError((err: Error) => {
+            console.error('Error al obtener barbería:', err);
+            return new Observable((observer) => {
+                observer.error(err);
+            });
+        })
     );
-  }
-
+}
   putBarbers(id: string): Observable<any> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
