@@ -37,7 +37,11 @@ export class RegisterComponent {
     }, { validators: this.passwordsMatchValidator() });
 
 
-
+    constructor() {
+        this.registerBarberiaForm.get('fotoPerfil')?.valueChanges.subscribe(() => {
+            this.verificarImagen();
+        });
+    }
 
     registroCliente() {
         if (this.registerForm.invalid) return;
@@ -267,7 +271,7 @@ export class RegisterComponent {
         let diferencia = diaSeleccionado - diaActual;
         // Si la diferencia es negativa, significa que el día seleccionado ya pasó esta semana
         if (diferencia < 0) {
-            diferencia += 6; // Mover a la próxima semana
+            diferencia += 7; // Mover a la próxima semana
         }
         const fecha = new Date(fechaActual);
         fecha.setDate(fechaActual.getDate() + diferencia);
@@ -379,6 +383,25 @@ export class RegisterComponent {
     pad(num: number): string {
         return num.toString().padStart(2, '0');
     }
+
+    verificarImagen(): void {
+        const url = this.registerBarberiaForm.get('fotoPerfil')?.value;
+        if (!url) {
+            this.imagenValida = false;
+            return;
+        }
+    
+        const img = new Image();
+        img.onload = () => {
+            this.imagenValida = true;
+        };
+        img.onerror = () => {
+            this.imagenValida = false;
+            this.notificacionService.showMessage('La URL de la imagen no es válida o no se puede cargar.', 'error');
+        };
+        img.src = url;
+    }
+    imagenValida: boolean = false;
     nextPage() {
         this.currentPage++;
     }

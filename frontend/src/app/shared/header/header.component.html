@@ -9,11 +9,11 @@
 
     <div class="flex items-center gap-4">
       <div class="space-x-2" *ngIf="!isLoggedIn">
-        <a class="inline-block rounded-md bg-amber-400 px-5 py-2.5 text-sm font-medium text-black transition hover:bg-amber-600"
+        <a class="inline-block rounded-md bg-amber-400 px-3 py-2 text-xs sm:px-5 sm:py-2.5 sm:text-sm font-medium text-black transition hover:bg-amber-600"
           href="login">
           Iniciar sesión
         </a>
-        <a class="inline-block rounded-md bg-amber-400 px-5 py-2.5 text-sm font-medium text-black transition hover:bg-amber-600"
+        <a class="inline-block rounded-md bg-amber-400 px-3 py-2 text-xs sm:px-5 sm:py-2.5 sm:text-sm font-medium text-black transition hover:bg-amber-600"
           href="register">
           Registro
         </a>
@@ -21,19 +21,19 @@
       <div class="space-x-2">
 
         <button *ngIf="isLoggedIn && isBarber"
-          class="inline-block rounded-md bg-amber-400 px-5 py-2.5 text-sm font-medium text-black transition hover:bg-amber-600"
+          class="inline-block rounded-md bg-amber-400 px-3 py-2 text-xs sm:px-5 sm:py-2.5 sm:text-sm font-medium text-black transition hover:bg-amber-600"
           (click)="goToProfileBarber()">
           Mi perfil
         </button>
         <button *ngIf="isLoggedIn && !isBarber"
-          class="inline-block rounded-md bg-amber-400 px-5 py-2.5 text-sm font-medium text-black transition hover:bg-amber-600"
+          class="inline-block rounded-md bg-amber-400 px-3 py-2 text-xs sm:px-5 sm:py-2.5 sm:text-sm font-medium text-black transition hover:bg-amber-600"
           (click)="goToProfileClient()">
           Mi perfil
         </button>
 
 
         <button *ngIf="isLoggedIn" (click)="cerrarSesion()"
-          class="inline-block rounded-md bg-red-500 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-red-700">
+          class="inline-block rounded-md bg-red-500 px-3 py-2 text-xs sm:px-5 sm:py-2.5 sm:text-sm font-medium text-white transition hover:bg-red-700">
           Cerrar sesión
         </button>
       </div>

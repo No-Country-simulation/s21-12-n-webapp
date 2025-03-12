@@ -50,21 +50,30 @@ export class HorarioComponent implements OnInit {
   getProfileJson() {
     this.barberProfileService.getBarbers(this.id).subscribe({
       next: (data) => {
+        const now = new Date();
+  
+        data.horarios = data.horarios.filter((horario: any) => {
+          const fechaHorario = new Date(horario.fecha);
+  
+          // Si la fecha es hoy o futura, mostrarla
+          return (
+            fechaHorario.toDateString() === now.toDateString() || // Mostrar fechas de hoy
+            fechaHorario > now // Mostrar fechas futuras
+          );
+        });
+  
         this.barberProfile = data;
         this.errorMessage = '';
       },
       error: (err) => {
         this.barberProfile = null;
-        this.errorMessage = 'Esta barberia no existe';
-
-        // Mostrar alerta con NotificacionService
-
-        // Redirigir al usuario al inicio o a otra página segura
+        this.errorMessage = 'Esta barbería no existe';
         this.router.navigate(['/']);
       }
     });
   }
-
+  
+  
 
   goBack(): void {
     this.router.navigate(['']); // Siempre redirige a la ruta de inicio

@@ -332,22 +332,26 @@
                                 <div *ngIf="registerBarberiaForm.get('fotoPerfil')?.invalid && (registerBarberiaForm.get('fotoPerfil')?.touched || registerBarberiaForm.get('fotoPerfil')?.dirty)">
                                     <small *ngIf="registerBarberiaForm.get('fotoPerfil')?.errors?.['required']" class="text-red-500">La URL de la foto es obligatoria.</small>
                                     <small *ngIf="registerBarberiaForm.get('fotoPerfil')?.errors?.['pattern']" class="text-red-500">La URL debe ser un enlace válido.</small>
+                                    <small *ngIf="!imagenValida" class="text-red-500">La imagen no se pudo cargar. Por favor, verifica la URL o elige otra imagen.</small>
+                               
                                 </div>
                                 <div *ngIf="registerBarberiaForm.get('fotoPerfil')?.value">
                                     <img [src]="registerBarberiaForm.get('fotoPerfil')?.value" alt="Foto de perfil" class="mt-4 w-32 h-32 object-cover rounded" />
-                                </div>
+                               </div>
                             </div>
                         
                         </div>
                         <br>
                      
                         <button type="button" (click)="nextPage()"
-                            [disabled]="registerBarberiaForm.get('direccion')?.invalid  || registerBarberiaForm.get('fotoPerfil')?.invalid" [ngClass]="{
-                                'bg-orange-300': registerBarberiaForm.get('direccion')?.invalid  || registerBarberiaForm.get('fotoPerfil')?.invalid,
-                                'bg-amber-300 hover:bg-amber-400': !registerBarberiaForm.get('direccion')?.invalid || !registerBarberiaForm.get('fotoPerfil')?.invalid
-                            }" class="w-full py-3 rounded-md text-black">
-                            Siguiente
-                        </button>
+                        [disabled]="!imagenValida || registerBarberiaForm.get('direccion')?.invalid || registerBarberiaForm.get('fotoPerfil')?.invalid"
+                        [ngClass]="{
+                            'bg-orange-300': !imagenValida || registerBarberiaForm.get('direccion')?.invalid || registerBarberiaForm.get('fotoPerfil')?.invalid,
+                            'bg-amber-300 hover:bg-amber-400': imagenValida && !registerBarberiaForm.get('direccion')?.invalid && !registerBarberiaForm.get('fotoPerfil')?.invalid
+                        }"
+                        class="w-full py-3 rounded-md text-black">
+                        Siguiente
+                    </button>
                         <button type="button" (click)="previousPage()"
                             class="w-full py-3 rounded-md bg-neutral-600 hover:bg-neutral-700  text-black">
                             Anterior
