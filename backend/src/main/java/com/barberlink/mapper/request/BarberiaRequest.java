@@ -1,5 +1,7 @@
 package com.barberlink.mapper.request;
 
+import java.util.List;
+
 public record BarberiaRequest(
         String email,
         String contrasena,
@@ -8,5 +10,7 @@ public record BarberiaRequest(
         String cuilResponsable,
         String direccion,
         String descripcion,
-        String fotoPerfil
+        String fotoPerfil,
+        Integer recomendaciones,
+        List<HorarioRequest> horarios // nuevo atributo opcional
 ) { }

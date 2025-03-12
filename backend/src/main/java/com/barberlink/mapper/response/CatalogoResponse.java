@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 public record CatalogoResponse(
         Long id,
-        Long barberiaId,
+        Long barberia_id,
         TipoCatalogo tipo,
         String nombre,
         String descripcion,

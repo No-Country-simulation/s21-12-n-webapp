@@ -13,18 +13,16 @@ public class Turno {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "barberia_id")
+    @JoinColumn(name = "barberia_id", nullable = false) // Asegúrate de que esta anotación está
     private Barberia barberia;
 
     @ManyToOne
-    @JoinColumn(name = "cliente_id")
+    @JoinColumn(name = "cliente_id", nullable = false)
     private Cliente cliente;
 
-    private LocalDateTime fechaTurno; // Fecha de la cita
-
+    private LocalDateTime fechaTurno;
     private LocalDateTime horaInicio;
-
-    private LocalDateTime horaFin; // Opcional, según duración del servicio
+    private LocalDateTime horaFin;
 
     @Enumerated(EnumType.STRING)
     private EstadoTurno estado;
@@ -33,7 +31,6 @@ public class Turno {
     private MetodoPago metodoPago;
 
     private LocalDateTime createdAt;
-
     private LocalDateTime updatedAt;
 
     public Turno() {

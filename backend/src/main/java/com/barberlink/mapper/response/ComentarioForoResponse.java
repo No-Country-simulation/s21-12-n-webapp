@@ -4,8 +4,8 @@ import java.time.LocalDateTime;
 
 public record ComentarioForoResponse(
         Long id,
-        Long barberiaId,
-        Long clienteId,
+        Long barberia_id,
+        Long cliente_id,
         int calificacion,
         String comentarioTexto,
         String respuesta,

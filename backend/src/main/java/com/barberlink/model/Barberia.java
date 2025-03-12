@@ -1,10 +1,10 @@
 package com.barberlink.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "barberia")
@@ -21,21 +21,32 @@ public class Barberia extends Usuario {
 
     private String fotoPerfil;
 
-    public Barberia(Long id, String email, String contrasena, String telefono, Rol rol, Boolean estado, LocalDateTime createdAt, LocalDateTime updatedAt, String nombreBarberia, String cuilResponsable, String direccion, String descripcion, String fotoPerfil) {
+    private Integer recomendaciones;
+
+    @OneToMany(mappedBy = "barberia", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Horario> horarios;
+
+    public Barberia(Long id) {
+        super.setId(id);
+    }
+
+    public Barberia(String nombreBarberia, String cuilResponsable, String direccion, String descripcion, String fotoPerfil, Integer recomendaciones) {
+        this.nombreBarberia = nombreBarberia;
+        this.cuilResponsable = cuilResponsable;
+        this.direccion = direccion;
+        this.descripcion = descripcion;
+        this.fotoPerfil = fotoPerfil;
+        this.recomendaciones = recomendaciones;
+    }
+
+    public Barberia(Long id, String email, String contrasena, String telefono, Rol rol, Boolean estado, LocalDateTime createdAt, LocalDateTime updatedAt, String nombreBarberia, String cuilResponsable, String direccion, String descripcion, String fotoPerfil, Integer recomendaciones) {
         super(id, email, contrasena, telefono, rol, estado, createdAt, updatedAt);
         this.nombreBarberia = nombreBarberia;
         this.cuilResponsable = cuilResponsable;
         this.direccion = direccion;
         this.descripcion = descripcion;
         this.fotoPerfil = fotoPerfil;
-    }
-
-    public Barberia(String nombreBarberia, String cuilResponsable, String direccion, String descripcion, String fotoPerfil) {
-        this.nombreBarberia = nombreBarberia;
-        this.cuilResponsable = cuilResponsable;
-        this.direccion = direccion;
-        this.descripcion = descripcion;
-        this.fotoPerfil = fotoPerfil;
+        this.recomendaciones = recomendaciones;
     }
 
     public Barberia() {
@@ -80,5 +91,21 @@ public class Barberia extends Usuario {
 
     public void setFotoPerfil(String fotoPerfil) {
         this.fotoPerfil = fotoPerfil;
+    }
+
+    public Integer getRecomendaciones() {
+        return recomendaciones;
+    }
+
+    public void setRecomendaciones(Integer recomendaciones) {
+        this.recomendaciones = recomendaciones;
+    }
+
+    public List<Horario> getHorarios() {
+        return horarios;
+    }
+
+    public void setHorarios(List<Horario> horarios) {
+        this.horarios = horarios;
     }
 }

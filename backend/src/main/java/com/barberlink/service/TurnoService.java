@@ -24,11 +24,23 @@ public class TurnoService {
 
     // Reservar turno
     public TurnoResponse bookTurno(TurnoRequest request) {
+        System.out.println("Request recibido: " + request);
+
         Turno turno = turnoMapper.toTurno(request);
+
+        // Validar que se haya convertido correctamente la barbería y el cliente
+        if (turno.getBarberia() == null || turno.getCliente() == null) {
+            throw new IllegalArgumentException("El ID de la barbería y del cliente no pueden ser null.");
+        }
+
+        // Configurar timestamps
         turno.setCreatedAt(LocalDateTime.now());
         turno.setUpdatedAt(LocalDateTime.now());
-        // Aquí puedes agregar lógica adicional, por ejemplo, validar disponibilidad.
+
+        // Guardar en la base de datos
         Turno saved = turnoRepository.save(turno);
+
+        // Convertir la entidad guardada en la respuesta y retornarla
         return turnoMapper.toTurnoResponse(saved);
     }
 
@@ -66,4 +78,11 @@ public class TurnoService {
         }
         turnoRepository.deleteById(id);
     }
+
+    public List<TurnoResponse> getTurnosCliente(Long id) {
+        return turnoRepository.findAllByCliente_Id(id).stream()
+                .map(turnoMapper::toTurnoResponse)
+                .toList();
+    }
+
 }

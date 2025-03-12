@@ -29,9 +29,6 @@ module.exports = {
       'body': ['Inter','ui-sans-serif'],
       'sans': ['Inter','ui-sans-serif']
     },
-    fontSize: {
-      '14':'14px',
-    },
     borderRadius: {
       '8': '8px',
       '16': '16px'
