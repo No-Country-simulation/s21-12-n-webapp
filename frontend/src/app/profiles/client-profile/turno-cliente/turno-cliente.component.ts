@@ -14,7 +14,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class TurnoClienteComponent implements OnInit {
     turnos: any[] = [];
-  
+    id!: string;
     constructor(
         private authService: AuthService,
         private notificacionService: NotificacionesService,
@@ -28,12 +28,18 @@ export class TurnoClienteComponent implements OnInit {
         return horaFin.toString().padStart(2, '0'); // Agrega el 0 si es menor a 10
     }
 
-    ngOnInit() {
+
+    ngOnInit(): void {
+     
+        this.route.paramMap.subscribe(params => {
+          this.id = params.get('id')!;
+          // console.log('ID obtenido', this.id)
+        })
         this.cargarTurnos();
-    }
+      }
 
     cargarTurnos() {
-        this.authService.getTurnos().subscribe(turnos => {
+        this.authService.getTurnosClientes(this.id).subscribe(turnos => {
             this.turnos = turnos;
         });
     }

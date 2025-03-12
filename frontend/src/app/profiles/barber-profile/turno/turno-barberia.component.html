@@ -36,7 +36,9 @@
     <table class="w-full text-sm text-left rtl:text-right bg-amber-500 text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-amber-500 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-                <th scope="col" class="px-6 py-3 text-black">Cita</th>
+             <!--
+                <th scope="col" class="px-6 py-3 text-black">Cita</th>   
+             -->
 
                 <th scope="col" class="px-6 py-3 text-black">Dia</th>
                 <th scope="col" class="px-6 py-3 text-black">Hora de la cita</th>
@@ -51,9 +53,11 @@
         </thead>
         <tbody class="bg-amber-400">
             <tr *ngFor="let turno of turnos" class="border-b border-gray-200">
+          <!---
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                     {{ turno.id }}
                 </th>
+          -->
 
                 <td class="px-6 py-4 text-black">{{ turno.fechaTurno | date:'dd/MM/yy EEEE' }}</td>
                 <td class="px-6 py-4 text-black">{{ turno.horaInicio | date:'shortTime' }}</td>
