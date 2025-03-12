@@ -8,20 +8,20 @@ import { NotificacionesService } from '../../services/notificaciones.service';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { HorarioComponent } from './horario/horario.component';
 @Component({
-  
+
   selector: 'app-barber-profile',
-  imports: [CommonModule, RouterModule, TurnoBarberiaComponent, CommentsComponent, HeaderComponent,  HorarioComponent],
+  imports: [CommonModule, RouterModule, TurnoBarberiaComponent, CommentsComponent, HeaderComponent, HorarioComponent],
   templateUrl: './barber-profile.component.html',
   styleUrl: './barber-profile.component.css'
 })
-export class BarberProfileComponent implements OnInit{
-  barberProfile:any;
+export class BarberProfileComponent implements OnInit {
+  barberProfile: any;
   errorMessage: string = '';
   id!: string;
 
   selectedContent: string = 'turno'
 
-  selectContent(content: string){
+  selectContent(content: string) {
     this.selectedContent = content
   }
 
@@ -30,18 +30,18 @@ export class BarberProfileComponent implements OnInit{
     private barberProfileService: BarberProfileService,
     private router: Router,
     private notificacionService: NotificacionesService
-  ){}
+  ) { }
 
-  ngOnInit(): void{
+  ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       this.id = params.get('id')!;
-     // console.log('ID obtenido', this.id)
+      // console.log('ID obtenido', this.id)
       this.getProfileJson()
       // this.getProfile
     })
   }
 
-  getProfile(){
+  getProfile() {
     this.barberProfileService.getBarberProfile(this.id).subscribe({
       next: (data) => {
         this.barberProfile = data
@@ -53,29 +53,29 @@ export class BarberProfileComponent implements OnInit{
       }
     })
   }
-  
+
   getProfileJson() {
     this.barberProfileService.getBarbers(this.id).subscribe({
-        next: (data) => {
-            this.barberProfile = data;
-            this.errorMessage = '';
-        },
-        error: (err) => {
-            this.barberProfile = null;
-            this.errorMessage = 'Esta barberia no existe';
-            
-            // Mostrar alerta con NotificacionService
-            this.notificacionService.showMessage(this.errorMessage, 'error');
+      next: (data) => {
+        this.barberProfile = data;
+        this.errorMessage = '';
+      },
+      error: (err) => {
+        this.barberProfile = null;
+        this.errorMessage = 'Esta barberia no existe';
 
-            // Redirigir al usuario al inicio o a otra página segura
-            this.router.navigate(['/']);
-        }
+        // Mostrar alerta con NotificacionService
+        this.notificacionService.showMessage(this.errorMessage, 'error');
+
+        // Redirigir al usuario al inicio o a otra página segura
+        this.router.navigate(['/']);
+      }
     });
-}
+  }
 
 
-goBack(): void {
-  this.router.navigate(['']); // Siempre redirige a la ruta de inicio
-}
+  goBack(): void {
+    this.router.navigate(['']); // Siempre redirige a la ruta de inicio
+  }
 
 }

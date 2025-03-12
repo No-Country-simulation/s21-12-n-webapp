@@ -64,11 +64,13 @@ export class TurnoBarberiaComponent implements OnInit {
     obtenerHorariosBarberia() {
         this.authService.getHorariosPorBarberia(Number(this.barberId)).subscribe(horarios => {
             this.horarios = horarios;
-            // Asegúrate de que fechasDisponibles se llene correctamente
-            this.fechasDisponibles = horarios.map(horario => {
-                // Extraer solo la fecha en formato 'YYYY-MM-DD'
-                return new Date(horario.fecha).toISOString().split('T')[0]; // Ajusta esto según el formato que necesites
-            });
+            // Obtener la fecha actual en formato 'YYYY-MM-DD'
+            const hoy = new Date();
+            const fechaActual = hoy.toISOString().split('T')[0]; // 'YYYY-MM-DD'
+            // Filtrar las fechas disponibles
+            this.fechasDisponibles = horarios
+                .map(horario => new Date(horario.fecha).toISOString().split('T')[0]) // Extraer solo la fecha en formato 'YYYY-MM-DD'
+                .filter(fecha => fecha >= fechaActual); // Filtrar fechas que son iguales o posteriores a la fecha actual
         });
     }
     openModal() {
@@ -80,7 +82,18 @@ export class TurnoBarberiaComponent implements OnInit {
     }
     cargarTurnos() {
         this.authService.getTurnos().subscribe(turnos => {
-            this.turnos = turnos;
+            console.log('Todos los turnos:', turnos); // Ver todos los turnos
+            console.log('Barber ID:', this.barberId); // Ver el ID de la barbería
+            
+            // Obtener la fecha actual en formato 'YYYY-MM-DD'
+            const hoy = new Date();
+            const fechaActual = hoy.toISOString().split('T')[0]; // 'YYYY-MM-DD'
+            // Filtrar los turnos para que solo queden los que pertenecen a la barbería y cuya fecha es hoy o posterior
+            this.turnos = turnos.filter(turno => 
+                turno.barberia_id === Number(this.barberId) && 
+                new Date(turno.fechaTurno).toISOString().split('T')[0] >= fechaActual
+            );
+            console.log('Turnos filtrados:', this.turnos); // Ver los turnos filtrados
         });
     }
     generarHorasDisponibles() {
@@ -89,11 +102,10 @@ export class TurnoBarberiaComponent implements OnInit {
         if (horario) {
             const horaInicio = new Date(horario.horaInicio);
             const horaFin = new Date(horario.horaFin);
-            // Generar horas disponibles en intervalos de 30 minutos, por ejemplo
+            
+            // Generar horas disponibles solo en horas completas
             for (let hour = horaInicio.getHours(); hour <= horaFin.getHours(); hour++) {
-                for (let minute = 0; minute < 60; minute += 30 ) { // Cambia 30 por el intervalo deseado
-                    this.availableTimes.push(`${hour}:${minute.toString().padStart(2, '0')}`);
-                }
+                this.availableTimes.push(hour.toString()); // Agregar solo la hora completa
             }
         }
     }
@@ -102,21 +114,14 @@ export class TurnoBarberiaComponent implements OnInit {
             this.notificacionService.showMessage('Seleccione un día y una hora', 'error');
             return;
         }
-    
-        // Asegúrate de que selectedTime tenga el formato correcto (ej. "15:00")
+        // Asegúrate de que selectedTime tenga el formato correcto (ej. "15")
         const formattedDate = this.selectedDate; // Asegúrate de que esté en formato 'YYYY-MM-DD'
-        const formattedTime = this.selectedTime; // Debe estar en 'HH:mm'
-    
+        const formattedTime = this.selectedTime; // Debe estar en 'HH'
         // Combina fecha y hora en formato ISO 8601
         const fechaTurnoISO = `${formattedDate}T${formattedTime}:00`; // Esto da como resultado 'YYYY-MM-DDTHH:mm:ss'
-    
-        // Separar la hora en horas y minutos
-        const [hours, minutes] = formattedTime.split(':').map(Number);
-    
-        // Crear objetos Date para horaInicio y horaFin
-        const horaInicio = new Date(0, 0, 0, hours, minutes); // Usamos una fecha base arbitraria, ya que solo nos importa la hora
-        const horaFin = new Date(0, 0, 0, hours, minutes); // Puedes ajustarlo si la hora de fin es diferente
-    
+        // Crear objeto Date para horaInicio y horaFin
+        const horaInicio = new Date(fechaTurnoISO); // Usamos el formato ISO para crear la fecha
+        const horaFin = new Date(horaInicio.getTime() + 30 * 60000); // Suponiendo que la duración es de 30 minutos
         const nuevoTurno = {
             barberia_id: Number(this.barberId),
             cliente_id: Number(this.userId),
@@ -126,7 +131,6 @@ export class TurnoBarberiaComponent implements OnInit {
             estado: 'RESERVADO',
             metodoPago: 'EFECTIVO'
         };
-    
         this.authService.crearTurno(nuevoTurno).subscribe({
             next: () => {
                 this.notificacionService.showMessage('Turno creado con éxito', 'success');
@@ -144,6 +148,12 @@ export class TurnoBarberiaComponent implements OnInit {
         // Aquí deberías implementar la lógica que determine si el usuario es propietario.
         // Por ejemplo, podrías comparar el userId con el id del barbero.
         return this.userId === this.barberId; // Asegúrate de que barberId sea del mismo tipo que userId.
+    }
+    esCliente(clienteId: number): boolean {
+        return this.userId === String(clienteId); // Asegúrate de que ambos sean del mismo tipo
+    }
+    esBarber(): boolean {
+        return this.isBarber; // Asumiendo que isBarber se establece correctamente en tu lógica de autenticación
     }
     cancelarTurno(id: number) {
         Swal.fire({

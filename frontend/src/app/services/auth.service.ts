@@ -88,6 +88,19 @@ export class AuthService {
             })
         );
     }
+
+    getTurnosClientes(id: string): Observable<any[]> {
+        const token = this.getToken();
+        const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+        return this.http.get<any[]>(`${this.baseUrl}turnos/${id}`, { headers }).pipe(
+            catchError(error => {
+                console.error('Error obteniendo turnos:', error);
+                return of([]); // Retorna un arreglo vacío en caso de error
+            })
+        );
+    }
+
+
     crearTurno(turno: any): Observable<any> {
         const token = this.getToken();
         const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
