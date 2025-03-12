@@ -32,10 +32,10 @@ public class SecurityConfigurations {
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll(); // Permite todas las OPTIONS
                     auth.requestMatchers(HttpMethod.POST, "/api/login").permitAll();
+                    auth.requestMatchers(HttpMethod.GET, "/api/barberias/**").permitAll();
                     auth.requestMatchers(HttpMethod.POST, "/api/administradores/register").permitAll();
                     auth.requestMatchers(HttpMethod.POST, "/api/clientes/register").permitAll();
                     auth.requestMatchers(HttpMethod.POST, "/api/barberias/register").permitAll();
-                    auth.requestMatchers(HttpMethod.GET, "/api/barberias").permitAll();
                     auth.requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll();
                     // El resto requiere autenticación
                     auth.anyRequest().authenticated();
