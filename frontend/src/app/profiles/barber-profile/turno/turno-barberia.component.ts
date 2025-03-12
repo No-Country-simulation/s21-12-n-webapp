@@ -62,25 +62,25 @@ export class TurnoBarberiaComponent implements OnInit {
     }
     
     obtenerHorariosBarberia() {
-        this.authService.getHorariosPorBarberia(Number(this.barberId)).subscribe(horarios => {
-            this.horarios = horarios;
-            const hoy = new Date();
-            const fechaActual = hoy.toISOString().split('T')[0];
-    
-            this.fechasDisponibles = horarios
-                .map(horario => {
-                    const fecha = new Date(horario.fecha);
-                    const nombreDia = fecha.toLocaleDateString('es-ES', { weekday: 'long' }); // Nombre del día
-                    const fechaFormato = fecha.toISOString().split('T')[0]; // Formato 'YYYY-MM-DD'
-                    return `${nombreDia} ${fechaFormato}`;
-                })
-                .filter(fecha => {
-                    const fechaSinNombreDia = fecha.split(' ')[1];
-                    return fechaSinNombreDia >= fechaActual;
-                });
-        });
-    }
-    
+    this.authService.getHorariosPorBarberia(Number(this.barberId)).subscribe(horarios => {
+        this.horarios = horarios;
+        const hoy = new Date();
+        const fechaActual = hoy.toISOString().split('T')[0];
+
+        this.fechasDisponibles = horarios
+            .map(horario => {
+                const fecha = new Date(horario.fecha);
+                const nombreDia = fecha.toLocaleDateString('es-ES', { weekday: 'long' }); // Nombre del día
+                const fechaFormato = fecha.toISOString().split('T')[0]; // Formato 'YYYY-MM-DD'
+                return `${nombreDia} ${fechaFormato}`;
+            })
+            .filter(fecha => {
+                const fechaSinNombreDia = fecha.split(' ')[1];
+                return fechaSinNombreDia >= fechaActual;
+            });
+    });
+}
+
     openModal() {
         this.isModalOpen = true;
         this.generarHorasDisponibles(); // Generar horas disponibles al abrir el modal

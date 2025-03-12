@@ -17,9 +17,12 @@
         <div class="mb-4">
             <label class="block text-gray-400 mb-2">Seleccione una fecha</label>
             <select [(ngModel)]="selectedDate" class="bg-neutral-800 text-white p-2 rounded w-full">
-                <option *ngFor="let date of fechasDisponibles" [value]="date">{{ date }}</option>
+                <option *ngFor="let date of fechasDisponibles" [value]="date.split(' ')[1]">
+                    {{ date }}
+                </option>
             </select>
         </div>
+        
         <div class="mb-4">
             <label class="block text-gray-400 mb-2">Seleccione una hora</label>
             <select [(ngModel)]="selectedTime" class="bg-neutral-800 text-white p-2 rounded w-full">
