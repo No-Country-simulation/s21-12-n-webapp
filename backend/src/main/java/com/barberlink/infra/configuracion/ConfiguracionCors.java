@@ -15,6 +15,7 @@ public class ConfiguracionCors {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of(
+                "https://barbelink.vercel.app/",
                 "http://localhost:4200",
                 "http://localhost:5173",
                 "https://jereprograma.com"
