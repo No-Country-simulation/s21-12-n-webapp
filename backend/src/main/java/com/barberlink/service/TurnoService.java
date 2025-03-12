@@ -78,4 +78,11 @@ public class TurnoService {
         }
         turnoRepository.deleteById(id);
     }
+
+    public List<TurnoResponse> getTurnosCliente(Long id) {
+        return turnoRepository.findAllByCliente_Id(id).stream()
+                .map(turnoMapper::toTurnoResponse)
+                .toList();
+    }
+
 }

@@ -14,5 +14,6 @@ public record BarberiaResponse(
         String fotoPerfil,
         LocalDateTime createdAt,
         LocalDateTime updatedAt,
-        List<HorarioResponse> horarios
+        List<HorarioResponse> horarios,
+        Integer recomendaciones
 ) { }

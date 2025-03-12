@@ -61,4 +61,11 @@ public class TurnoController {
         turnoService.deleteTurno(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<List<TurnoResponse>> getTurnosCliente(@PathVariable Long id) {
+        List<TurnoResponse> list = turnoService.getTurnosCliente(id);
+        return ResponseEntity.ok(list);
+    }
+
 }
