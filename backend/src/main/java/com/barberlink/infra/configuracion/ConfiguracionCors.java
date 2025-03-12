@@ -14,16 +14,17 @@ public class ConfiguracionCors {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of(
-                "https://barbelink.vercel.app/",
-                "http://localhost:4200",
-                "http://localhost:5173",
-                "https://jereprograma.com"
-        ));
+        // Permitir cualquier origen
+        configuration.setAllowedOriginPatterns(List.of("*"));
+        // Permitir los métodos que necesites
         configuration.setAllowedMethods(List.of("GET", "POST", "OPTIONS", "PUT", "DELETE", "PATCH"));
+        // Permitir los headers que necesites
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "Accept"));
-        configuration.addExposedHeader("Authorization");
+        // Si usas credenciales, no podrás usar "*" en allowedOrigins, por eso usamos allowedOriginPatterns
         configuration.setAllowCredentials(true);
+        // Si deseas exponer algún header, agrégalo aquí
+        configuration.addExposedHeader("Authorization");
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
