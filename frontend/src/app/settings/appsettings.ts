@@ -1,6 +1,6 @@
 export const appsettings = {
     apiUrl: "https://jereprograma.com/api/"
      
-     // local
+     // local     apiUrl: "http://localhost:8080/api/"
     
 }
