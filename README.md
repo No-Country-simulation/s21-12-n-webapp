@@ -8,8 +8,11 @@ Equipo-s21-12-n-webapp
 ℹ️ Información del Producto
 
 Nuestra plataforma es una aplicación web tipo red social de conexión de barberías; diseñada para conectar usuarios con barberías. El sistema permite a las barberías y barberos independientes registrar su negocio, agregando sus datos de contacto  y horarios disponibles para atender a los  clientes. Los clientes pueden buscar barberías aplicando filtros de búsquedas sin necesidad de registrarse en la plataforma; como usuarios registrados, los clientes podrán reservar turnos disponibles en la barbería de su elección y calificar el servicio de las mismas.
+
 Los usuarios pueden interactuar en tres modos: Modo cliente no registrado (Explorador), Modo cliente registrado (Reservar turnos y calificar barberías) y Modo barbería (carga de datos de contacto, publicación y confirmación de turnos). Los usuarios pueden registrarse en forma segura, accediendo de entrada al modo cliente registrado o barbería registrada: en el modo cliente registrado, pueden explorar la plataforma y reservar turno con las barbería de su elección; y el modo barbería o barbero independiente pueden cargar los horarios disponibles, confirmar o cancelar los turnos reservados de los clientes y agregar sus datos de contacto.
+
 Los administradores son los dueños de la plataforma y tienen acceso a todas las funcionalidades de administración y gestión de la misma; como son: Gestión de usuarios y contenido, configuración de la plataforma, supervisión de las transacciones y estadísticas  y soporte y resolución de problemas.
+
 La aplicación, construida con tecnologías web modernas, garantiza un rendimiento óptimo y una experiencia fluida. Se implementan medidas de seguridad robustas para proteger la información de los usuarios. El diseño asegura acceso desde dispositivos móviles, PC portátiles y de escritorio. Un equipo de soporte técnico mantiene la operatividad de la plataforma.
 Con un enfoque en la centralización de recursos y soporte global, Barbelink marcará un nuevo estándar en la conexión entre barberos, barberías y clientes, ayudando a la comunidad y asegurando una experiencia eficiente y sin complicaciones.
 
@@ -44,35 +47,35 @@ Administradores:
 
 🛠️ Tecnologías Utilizadas:
 
-Herramientas de Gestión y Diseño:
+- Herramientas de Gestión y Diseño:
 
-- Trello: Herramienta de gestión de proyectos basada en tableros.
-- Miro: Herramienta que facilita la elaboración de un tablero, donde se establecen y organizan las tareas y sub-tareas a realizar durante la elaboración del proyecto según su orden de prioridades.
+  . Trello: Herramienta de gestión de proyectos basada en tableros.
+  . Miro: Herramienta que facilita la elaboración de un tablero, donde se establecen y organizan las tareas y sub-tareas a realizar durante la elaboración del proyecto según su orden de prioridades.
 
-Frontend:
+- Frontend:
 
-- Tailwind: Framework de CSS que permite crear interfaces de usuario personalizadas para sitios web. Se basa en clases predefinidas que se pueden aplicar al código HTML.
-- Angular: Framework de JavaScript que se utiliza para crear aplicaciones web de una sola página. Herramienta de código abierto que permite construir aplicaciones escalables, dinámicas y de alta calidad.
-- Node.js: Entorno de ejecución de JavaScript que permite crear aplicaciones web, servidores, scripts y herramientas de línea de comando. Es una herramienta muy solicitada en entornos empresariales.
-- Visual Studio: Entorno de desarrollo integrado (IDE) que permite a los desarrolladores crear aplicaciones, juegos y extensiones. Se puede usar para editar, depurar, compilar y publicar código.
-- Nginx: Software de servidor web de código abierto que se utiliza para balancear carga, proxy inverso, almacenamiento en caché y más. Es conocido por su rendimiento, estabilidad y bajo consumo de recursos.
+  . Tailwind: Framework de CSS que permite crear interfaces de usuario personalizadas para sitios web. Se basa en clases predefinidas que se pueden aplicar al código HTML.
+  . Angular: Framework de JavaScript que se utiliza para crear aplicaciones web de una sola página. Herramienta de código abierto que permite construir aplicaciones escalables, dinámicas y de alta calidad.
+  . Node.js: Entorno de ejecución de JavaScript que permite crear aplicaciones web, servidores, scripts y herramientas de línea de comando. Es una herramienta muy solicitada en entornos empresariales.
+  . Visual Studio: Entorno de desarrollo integrado (IDE) que permite a los desarrolladores crear aplicaciones, juegos y extensiones. Se puede usar para editar, depurar, compilar y publicar código.
+  . Nginx: Software de servidor web de código abierto que se utiliza para balancear carga, proxy inverso, almacenamiento en caché y más. Es conocido por su rendimiento, estabilidad y bajo consumo de recursos.
 
-Backend:
+- Backend:
 
-- Intellij Idea: Entorno de desarrollo integrado (IDE) que se utiliza para desarrollar programas informáticos. Es una herramienta que ayuda a escribir código de alta calidad.
-- Java con Spring: Herramientas para crear aplicaciones web, microservicios y aplicaciones empresariales. Spring es un framework de Java que ayuda a los desarrolladores a crear aplicaciones de alto rendimiento.
-- MySQL: Sistema de gestión de bases de datos relacionales que se utiliza para almacenar y administrar datos. Es una de las bases de datos más populares del mundo y se usa en sitios web, redes sociales, y aplicaciones.
-- Server: Sistema que proporciona recursos, datos, servicios o programas a otros ordenadores, conocidos como clientes, a través de una red.
-- Swagger: Conjunto de herramientas para diseñar, construir, documentar y utilizar API RESTful. Es una especificación independiente del lenguaje que se ha usado como sinónimo de OpenAPI.
-- Nginx: Software de servidor web de código abierto que se utiliza para balancear carga, proxy inverso, almacenamiento en caché y más. Es conocido por su rendimiento, estabilidad y bajo consumo de recursos.
+  . Intellij Idea: Entorno de desarrollo integrado (IDE) que se utiliza para desarrollar programas informáticos. Es una herramienta que ayuda a escribir código de alta calidad.
+  . Java con Spring: Herramientas para crear aplicaciones web, microservicios y aplicaciones empresariales. Spring es un framework de Java que ayuda a los desarrolladores a crear aplicaciones de alto rendimiento.
+  . MySQL: Sistema de gestión de bases de datos relacionales que se utiliza para almacenar y administrar datos. Es una de las bases de datos más populares del mundo y se usa en sitios web, redes sociales, y aplicaciones.
+  . Server: Sistema que proporciona recursos, datos, servicios o programas a otros ordenadores, conocidos como clientes, a través de una red.
+  . Swagger: Conjunto de herramientas para diseñar, construir, documentar y utilizar API RESTful. Es una especificación independiente del lenguaje que se ha usado como sinónimo de OpenAPI.
+  . Nginx: Software de servidor web de código abierto que se utiliza para balancear carga, proxy inverso, almacenamiento en caché y más. Es conocido por su rendimiento, estabilidad y bajo consumo de recursos.
 
-UX/UI:
+- UX/UI:
 
-- Figma: Herramienta de diseño de interfaz de usuario y prototipado colaborativo basada en la nube.
+  . Figma: Herramienta de diseño de interfaz de usuario y prototipado colaborativo basada en la nube.
 
-Herramientas de QA:
+- Herramientas de QA:
 
-- Google Sheets: Herramienta de hoja de cálculo de Google para documentación y registro de Historias de Usuario y Casos de Prueba sobre las funcionalidades de la plataforma.
+  . Google Sheets: Herramienta de hoja de cálculo de Google para documentación y registro de Historias de Usuario y Casos de Prueba sobre las funcionalidades de la plataforma.
 
 💪🏻Equipo de trabajo
 
