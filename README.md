@@ -75,18 +75,17 @@ Herramientas de QA:
 - Google Sheets: Herramienta de hoja de cálculo de Google para documentación y registro de Historias de Usuario y Casos de Prueba sobre las funcionalidades de la plataforma.
 
 💪🏻Equipo de trabajo
-Rol	                            Nombre	              Redes
-                                 
 
-QA Tester	             Arnoldo Felce     https://www.linkedin.com/in/arnoldo-felce-rondón https://github.com/afelce
-QA Tester	            Javier Nicolás Godoy     https://www.linkedin.com/in/javier-nicolás-godoy-8427651b1/     https://github.com/nicolasgodoy231
-UX/UI Designer              
+| Rol       | Nombre        | Foto                                                                                                                                                                           | Perfil de LinkedIn                                                                       | Perfil de GitHub                                 |
+| --------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------- | ------------------------------------------------ |
+| QA Tester | Arnoldo Felce | <img src="https://github.com/user-attachments/assets/189f0c8b-86d6-4664-954d-3d208fd556fe" alt="Bordes redondeados de la imagen"  style="border-radius: 30px; width: 395px ;"> | [LinkedIn Arnoldo](https://www.linkedin.com/in/arnoldo-felce-rondón)                    | [GitHub Arnoldo](https://github.com/afelce)      |
+| QA Tester | Javier Nicolás Godoy | <img src="https://github.com/user-attachments/assets/4570ead2-d7b2-428b-8ec7-f99a789a689d" alt="Bordes redondeados de la imagen"  style="border-radius: 30px; width: 395px ;"> | [LinkedIn Javier Nicolás](https://www.linkedin.com/in/javier-nicolás-godoy-8427651b1/) | [GitHub Javier Nicolás]([https://github.com/PANCnnss](https://github.com/nicolasgodoy231))      |
+| Frontend  | Jesus Medina  | <img src="https://github.com/user-attachments/assets/fca3b2bc-3226-4cd0-8daa-c0d6f776133f" alt="Bordes redondeados de la imagen"  style="border-radius: 30px; width: 395px ;"> | [LinkedIn Jesus](https://www.linkedin.com/in/jesusmedina-dev/)            | [GitHub Jesus]([https://github.com/afelce](https://github.com/JesusMedina21)  |
+| Frontend  | Martín Laguna  |   |      |      |
+| Backend   | Jeremías Rivelli | <img src="https://github.com/user-attachments/assets/3973545a-7988-40bc-afd4-2aaf5cec581c" alt="Bordes redondeados de la imagen"  style="border-radius: 30px; width: 395px ;"> | [LinkedIn Jeremías](https://www.linkedin.com/in/jesusmedina-dev/)         | [GitHub Jeremías](https://github.com/JerePrograma)|
+| Backend   | Manuel Aranguri| <img src="https://github.com/user-attachments/assets/31c5588c-de98-428d-b85d-bdfd758e8b2a" alt="Bordes redondeados de la imagen"  style="border-radius: 30px; width: 395px ;"> | [LinkedIn Manuel](https://www.linkedin.com/in/manuel-aranguri-vargas/)         | [GitHub Manuel](https://github.com/Nwyr-34)|
 
-Frontend	             Jesus Medina     https://www.linkedin.com/in/jesusmedina-dev/ https://github.com/JesusMedina21
-Frontend                         Martín Laguna     
 
-Backend	             Jeremías Rivelli      https://www.linkedin.com/in/rivelli-jeremias/  https://github.com/JerePrograma
-Backend                          Manuel Aranguri     https://www.linkedin.com/in/manuel-aranguri-vargas/     https://github.com/Nwyr-34
 	
 🐞 Instalación y ejecución del proyecto:
 
