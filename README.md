@@ -97,8 +97,11 @@ https://github.com/No-Country-simulation/s21-12-n-webapp/tree/main/frontend
 Requerimientos y Objetivos del proyecto:
 
 https://docs.google.com/document/d/1pJVeTVUiXpxjKsRp3UOk7LAQIUo7mMhbZGB2EoaExDA/edit?usp=drive_link
+
 https://docs.google.com/document/d/1eIqH5WsCBAY4I7VztPz14ptddEAnroPq/edit?usp=drive_link&ouid=114968252458563670851&rtpof=true&sd=true
+
 https://miro.com/app/board/uXjVIez-t0A=/
+
 https://trello.com/b/qp3E4Hrh/s21-14-barbelink
 
 🐞 Evidencia Tester QA
@@ -112,6 +115,7 @@ https://docs.google.com/document/d/1SG39JyWrnQEyAbsw8VeK8NBWuix3SZrK/edit?usp=dr
 Casos de Prueba:
 
 https://docs.google.com/spreadsheets/d/1w2wycux0cfAwbk4o8svx7D2agmLyPXvK/edit?usp=drive_link&ouid=114968252458563670851&rtpof=true&sd=true
+
 https://docs.google.com/spreadsheets/d/12DGFCGusWAdSuXdF1MNDpw-DflwPqzbx/edit?usp=drive_link&ouid=114968252458563670851&rtpof=true&sd=true
 
 🎨 Evidencia UX/UI
