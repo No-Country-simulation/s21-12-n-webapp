@@ -50,23 +50,33 @@ Administradores:
 - Herramientas de Gestión y Diseño:
 
   . Trello: Herramienta de gestión de proyectos basada en tableros.
+  
   . Miro: Herramienta que facilita la elaboración de un tablero, donde se establecen y organizan las tareas y sub-tareas a realizar durante la elaboración del proyecto según su orden de prioridades.
 
 - Frontend:
 
   . Tailwind: Framework de CSS que permite crear interfaces de usuario personalizadas para sitios web. Se basa en clases predefinidas que se pueden aplicar al código HTML.
+  
   . Angular: Framework de JavaScript que se utiliza para crear aplicaciones web de una sola página. Herramienta de código abierto que permite construir aplicaciones escalables, dinámicas y de alta calidad.
+  
   . Node.js: Entorno de ejecución de JavaScript que permite crear aplicaciones web, servidores, scripts y herramientas de línea de comando. Es una herramienta muy solicitada en entornos empresariales.
+  
   . Visual Studio: Entorno de desarrollo integrado (IDE) que permite a los desarrolladores crear aplicaciones, juegos y extensiones. Se puede usar para editar, depurar, compilar y publicar código.
+  
   . Nginx: Software de servidor web de código abierto que se utiliza para balancear carga, proxy inverso, almacenamiento en caché y más. Es conocido por su rendimiento, estabilidad y bajo consumo de recursos.
 
 - Backend:
 
   . Intellij Idea: Entorno de desarrollo integrado (IDE) que se utiliza para desarrollar programas informáticos. Es una herramienta que ayuda a escribir código de alta calidad.
+  
   . Java con Spring: Herramientas para crear aplicaciones web, microservicios y aplicaciones empresariales. Spring es un framework de Java que ayuda a los desarrolladores a crear aplicaciones de alto rendimiento.
+  
   . MySQL: Sistema de gestión de bases de datos relacionales que se utiliza para almacenar y administrar datos. Es una de las bases de datos más populares del mundo y se usa en sitios web, redes sociales, y aplicaciones.
+  
   . Server: Sistema que proporciona recursos, datos, servicios o programas a otros ordenadores, conocidos como clientes, a través de una red.
+  
   . Swagger: Conjunto de herramientas para diseñar, construir, documentar y utilizar API RESTful. Es una especificación independiente del lenguaje que se ha usado como sinónimo de OpenAPI.
+  
   . Nginx: Software de servidor web de código abierto que se utiliza para balancear carga, proxy inverso, almacenamiento en caché y más. Es conocido por su rendimiento, estabilidad y bajo consumo de recursos.
 
 - UX/UI:
