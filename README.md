@@ -96,7 +96,9 @@ https://trello.com/b/qp3E4Hrh/s21-14-barbelink
 🐞 Evidencia Tester QA
 
 https://drive.google.com/drive/folders/1f3mluMXEf0c3J4JHwHkoqwcaSwevuBFz
+
 Historias de Usuario y Criterios de Aceptación:
+
 https://docs.google.com/document/d/1SG39JyWrnQEyAbsw8VeK8NBWuix3SZrK/edit?usp=drive_link&ouid=114968252458563670851&rtpof=true&sd=true
 
 Casos de Prueba:
