@@ -10,7 +10,11 @@
         <tbody>
             <tr *ngFor="let horario of barberProfile.horarios" class="bg-amber-400 border-b">
                 <th scope="row" class="px-6 py-4 font-medium text-black">
-                    {{ horario.fecha | date:'dd/MM/yy EEEE' }}
+                   <!--
+                    horario con dia y fecha
+                     {{ horario.fecha | date:'dd/MM/yy EEEE' }}
+                   -->
+                   {{ horario.fecha | date:'EEEE' }} 
                 </th>
                 <td class="px-6 py-4 text-black">
                     {{ horario.horaInicio | date:'shortTime' }} <!-- Formatear la hora de inicio -->

@@ -17,8 +17,8 @@
         <div class="mb-4">
             <label class="block text-gray-400 mb-2">Seleccione una fecha</label>
             <select [(ngModel)]="selectedDate" class="bg-neutral-800 text-white p-2 rounded w-full">
-                <option *ngFor="let date of fechasDisponibles" [value]="date.split(' ')[1]">
-                    {{ date }}
+                <option *ngFor="let fecha of fechasDisponibles" [ngValue]="fecha">
+                    {{ fecha.nombreDia }}
                 </option>
             </select>
         </div>
@@ -68,7 +68,12 @@
                 </th>
           -->
 
-                <td class="px-6 py-4 text-black">{{ turno.fechaTurno | date:'dd/MM/yy EEEE' }}</td>
+                <td class="px-6 py-4 text-black">
+                    <!---- Horario con fecha
+                    {{ turno.fechaTurno | date:'dd/MM/yy EEEE' }}
+                -->
+                {{ turno.fechaTurno | date:'EEEE' }} 
+                </td>
                 <td class="px-6 py-4 text-black">{{ turno.horaInicio | date:'shortTime' }}</td>
                 <!-- Formatear la hora de inicio --
                 <td class="px-6 py-4 text-black">{{ turno.horaFin | date:'shortTime' }}</td>
