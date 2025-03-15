@@ -41,10 +41,11 @@ export class TurnoClienteComponent implements OnInit {
       cargarTurnos() {
         this.authService.getTurnosClientes(this.id).subscribe(turnos => {
             this.turnos = turnos.sort((a, b) => {
-                return new Date(b.fechaTurno).getTime() - new Date(a.fechaTurno).getTime(); // Orden descendente
+                return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(); // Orden descendente
             });
         });
     }
+    
     
 
     confirmarTurno(id: number) {
