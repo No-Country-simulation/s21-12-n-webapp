@@ -181,7 +181,7 @@ export class AuthService {
         const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
         return this.http.get<Barberia>(`${this.baseUrl}barberias/${userId}`, { headers }).pipe(
             catchError(error => {
-                console.error('Error fetching user info:', error);
+             //   console.error('Error fetching user info:', error);
                 return of(null); // Retorna null en caso de error
             })
         );

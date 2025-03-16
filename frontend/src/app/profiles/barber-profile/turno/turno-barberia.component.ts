@@ -88,14 +88,14 @@ export class TurnoBarberiaComponent implements OnInit {
 
     cargarTurnos() {
         this.authService.getTurnos().subscribe(turnos => {
-            console.log('Todos los turnos:', turnos);
-            console.log('Barber ID:', this.barberId);
+          //  console.log('Todos los turnos:', turnos);
+          //  console.log('Barber ID:', this.barberId);
 
             this.turnos = turnos.filter(turno =>
                 turno.barberia_id === Number(this.barberId)
             );
 
-            console.log('Turnos filtrados:', this.turnos);
+            // console.log('Turnos filtrados:', this.turnos);
         });
     }
 
@@ -113,20 +113,32 @@ export class TurnoBarberiaComponent implements OnInit {
     }
 
     crearTurno() {
-        if (!this.selectedDate || !this.selectedTime) {
-            this.notificacionService.showMessage('Seleccione un día y una hora', 'error');
+        if (!this.selectedDate) {
+            this.notificacionService.showMessage('Seleccione un día', 'error');
             return;
         }
-
         const fechaISO = this.selectedDate.fechaISO;
         const formattedTime = this.selectedTime;
-
-        const fechaTurnoISO = `${fechaISO}T${formattedTime}:00`;
-
-        const horaInicio = new Date(fechaTurnoISO);
-        horaInicio.setHours(horaInicio.getHours() - 4);
-        const horaFin = new Date(horaInicio.getTime() + 30 * 60000);
-
+        // Verifica si formattedTime está en el formato correcto
+        const timeParts = formattedTime.split(':');
+        let horaInicio: Date;
+        // Si la hora es válida, la usamos; si no, asignamos una hora por defecto
+        if (timeParts.length === 2 && !isNaN(Number(timeParts[0])) && !isNaN(Number(timeParts[1]))) {
+            const fechaTurnoISO = `${fechaISO}T${formattedTime}:00`;
+            horaInicio = new Date(fechaTurnoISO);
+            
+            // Verifica si horaInicio es un valor válido
+            if (isNaN(horaInicio.getTime())) {
+                // Asignar a medianoche si la hora es inválida
+                horaInicio = new Date(`${fechaISO}T00:00:00`);
+               // this.notificacionService.showMessage('Hora seleccionada no es válida, se registrará con hora por defecto.', 'warning');
+            }
+        } else {
+            // Asignar a medianoche si el formato no es correcto
+            horaInicio = new Date(`${fechaISO}T00:00:00`);
+            //this.notificacionService.showMessage('Hora seleccionada no es válida, se registrará con hora por defecto.', 'warning');
+        }
+        const horaFin = new Date(horaInicio.getTime() + 30 * 60000); // 30 minutos después
         const nuevoTurno = {
             barberia_id: Number(this.barberId),
             cliente_id: Number(this.userId),
@@ -136,7 +148,6 @@ export class TurnoBarberiaComponent implements OnInit {
             estado: 'RESERVADO',
             metodoPago: 'EFECTIVO'
         };
-
         this.authService.crearTurno(nuevoTurno).subscribe({
             next: () => {
                 this.notificacionService.showMessage('Turno creado con éxito', 'success');
@@ -149,7 +160,6 @@ export class TurnoBarberiaComponent implements OnInit {
             }
         });
     }
-
     esPropietario(): boolean {
         return this.userId === this.barberId;
     }
