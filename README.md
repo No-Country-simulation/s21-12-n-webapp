@@ -136,6 +136,18 @@ Diseño en Figma
 
 https://www.figma.com/design/XF87oCxn4kK3tB4rIGWNLU/Barber?node-id=0-1&p=f&t=Z8AQLzm5hW21SUyo-0
 
-🐞 Enlaces relevantes:
+🐞 Evidencia Frontend:
+
+Sitio web desplegado del proyecto 
 
 https://barbelink.vercel.app/
+
+Aplicacion Movil Android:
+
+https://drive.google.com/file/d/1XK50lWEFN2mx_Y3q_RnjbjdVb-xuaUWN/view?usp=drive_link
+
+🐞 Evidencia Backend:
+
+Api desplegada
+
+https://jereprograma.com/api/
