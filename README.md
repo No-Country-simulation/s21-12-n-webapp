@@ -150,4 +150,4 @@ https://drive.google.com/file/d/1XK50lWEFN2mx_Y3q_RnjbjdVb-xuaUWN/view?usp=drive
 
 Api desplegada
 
-https://jereprograma.com/api/
+https://barbelink-production.up.railway.app/api/
