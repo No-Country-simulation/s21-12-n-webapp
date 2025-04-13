@@ -88,8 +88,8 @@ export class TurnoBarberiaComponent implements OnInit {
 
     cargarTurnos() {
         this.authService.getTurnos().subscribe(turnos => {
-          //  console.log('Todos los turnos:', turnos);
-          //  console.log('Barber ID:', this.barberId);
+            //  console.log('Todos los turnos:', turnos);
+            //  console.log('Barber ID:', this.barberId);
 
             this.turnos = turnos.filter(turno =>
                 turno.barberia_id === Number(this.barberId)
@@ -105,49 +105,53 @@ export class TurnoBarberiaComponent implements OnInit {
         if (horario) {
             const horaInicio = new Date(horario.horaInicio);
             const horaFin = new Date(horario.horaFin);
-
-            for (let hour = horaInicio.getHours(); hour <= horaFin.getHours(); hour++) {
-                this.availableTimes.push(hour.toString());
+            for (let hour = horaInicio.getHours(); hour < horaFin.getHours(); hour++) {
+                const horaFormateada = `${hour.toString().padStart(2, '0')}:00`;
+                this.availableTimes.push(horaFormateada);
             }
         }
     }
+
+    toLocalISOString(date: Date): string {
+        const pad = (n: number) => n.toString().padStart(2, '0');
+        const yyyy = date.getFullYear();
+        const mm = pad(date.getMonth() + 1);
+        const dd = pad(date.getDate());
+        const hh = pad(date.getHours());
+        const min = pad(date.getMinutes());
+        const ss = pad(date.getSeconds());
+        return `${yyyy}-${mm}-${dd}T${hh}:${min}:${ss}`;
+    }
+
 
     crearTurno() {
         if (!this.selectedDate) {
             this.notificacionService.showMessage('Seleccione un día', 'error');
             return;
         }
+
         const fechaISO = this.selectedDate.fechaISO;
         const formattedTime = this.selectedTime;
-        // Verifica si formattedTime está en el formato correcto
-        const timeParts = formattedTime.split(':');
-        let horaInicio: Date;
-        // Si la hora es válida, la usamos; si no, asignamos una hora por defecto
-        if (timeParts.length === 2 && !isNaN(Number(timeParts[0])) && !isNaN(Number(timeParts[1]))) {
-            const fechaTurnoISO = `${fechaISO}T${formattedTime}:00`;
-            horaInicio = new Date(fechaTurnoISO);
-            
-            // Verifica si horaInicio es un valor válido
-            if (isNaN(horaInicio.getTime())) {
-                // Asignar a medianoche si la hora es inválida
-                horaInicio = new Date(`${fechaISO}T00:00:00`);
-               // this.notificacionService.showMessage('Hora seleccionada no es válida, se registrará con hora por defecto.', 'warning');
-            }
-        } else {
-            // Asignar a medianoche si el formato no es correcto
-            horaInicio = new Date(`${fechaISO}T00:00:00`);
-            //this.notificacionService.showMessage('Hora seleccionada no es válida, se registrará con hora por defecto.', 'warning');
+
+        if (!formattedTime || !formattedTime.includes(':')) {
+            this.notificacionService.showMessage('Seleccione una hora válida', 'error');
+            return;
         }
+
+        const fechaTurnoISO = `${fechaISO}T${formattedTime}:00`;
+        const horaInicio = new Date(fechaTurnoISO);
         const horaFin = new Date(horaInicio.getTime() + 30 * 60000); // 30 minutos después
+
         const nuevoTurno = {
             barberia_id: Number(this.barberId),
             cliente_id: Number(this.userId),
-            fechaTurno: horaInicio.toISOString(),
-            horaInicio: horaInicio.toISOString(),
-            horaFin: horaFin.toISOString(),
+            fechaTurno: this.toLocalISOString(horaInicio),
+            horaInicio: this.toLocalISOString(horaInicio),
+            horaFin: this.toLocalISOString(horaFin),
             estado: 'RESERVADO',
             metodoPago: 'EFECTIVO'
         };
+
         this.authService.crearTurno(nuevoTurno).subscribe({
             next: () => {
                 this.notificacionService.showMessage('Turno creado con éxito', 'success');
@@ -160,6 +164,8 @@ export class TurnoBarberiaComponent implements OnInit {
             }
         });
     }
+
+
     esPropietario(): boolean {
         return this.userId === this.barberId;
     }
