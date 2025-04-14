@@ -263,7 +263,7 @@ export class RegisterComponent {
         });
     }
     obtenerFechaParaDia(fechaActual: Date, dia: string): Date {
-        const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+        const diasSemana = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
         const diaActual = fechaActual.getDay();
         const diaSeleccionado = diasSemana.indexOf(dia);
         

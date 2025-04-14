@@ -69,9 +69,12 @@ export class TurnoBarberiaComponent implements OnInit {
             this.horarios = horarios;
 
             this.fechasDisponibles = horarios.map(horario => {
-                const fecha = new Date(horario.fecha);
-                const nombreDia = fecha.toLocaleDateString('es-ES', { weekday: 'long' });
-                const fechaISO = fecha.toISOString().split('T')[0]; // Formato 'YYYY-MM-DD'
+                // Elimina desfase de zona horaria
+                const fechaUTC = new Date(horario.fecha);
+                const fechaLocal = new Date(fechaUTC.getTime() + fechaUTC.getTimezoneOffset() * 60000);
+
+                const nombreDia = fechaLocal.toLocaleDateString('es-ES', { weekday: 'long' });
+                const fechaISO = fechaLocal.toISOString().split('T')[0];
                 return { nombreDia, fechaISO };
             });
         });
@@ -123,6 +126,19 @@ export class TurnoBarberiaComponent implements OnInit {
         return `${yyyy}-${mm}-${dd}T${hh}:${min}:${ss}`;
     }
 
+    private formatearFechaLocal(date: Date): string {
+        // Devuelve la fecha y hora en formato: 'yyyy-MM-ddTHH:mm:ss'
+        const year = date.getFullYear();
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const day = date.getDate().toString().padStart(2, '0');
+        const hours = date.getHours().toString().padStart(2, '0');
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+        const seconds = date.getSeconds().toString().padStart(2, '0');
+
+        return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
+    }
+
+
 
     crearTurno() {
         if (!this.selectedDate) {
@@ -138,16 +154,22 @@ export class TurnoBarberiaComponent implements OnInit {
             return;
         }
 
-        const fechaTurnoISO = `${fechaISO}T${formattedTime}:00`;
-        const horaInicio = new Date(fechaTurnoISO);
-        const horaFin = new Date(horaInicio.getTime() + 30 * 60000); // 30 minutos después
+        const [year, month, day] = fechaISO.split('-').map(Number);
+        const [hour, minute] = formattedTime.split(':').map(Number);
+
+        const horaInicio = new Date(year, month - 1, day, hour, minute);
+        const horaFin = new Date(horaInicio.getTime() + 30 * 60000);
+        console.log('Fecha local:', this.formatearFechaLocal(horaInicio));
+        console.log('Objeto Date:', horaInicio.toString());
+        console.log('ISO original:', horaInicio.toISOString());
 
         const nuevoTurno = {
             barberia_id: Number(this.barberId),
             cliente_id: Number(this.userId),
-            fechaTurno: this.toLocalISOString(horaInicio),
-            horaInicio: this.toLocalISOString(horaInicio),
-            horaFin: this.toLocalISOString(horaFin),
+            fechaTurno: this.formatearFechaLocal(horaInicio),
+            horaInicio: this.formatearFechaLocal(horaInicio),
+            horaFin: this.formatearFechaLocal(horaFin),
+
             estado: 'RESERVADO',
             metodoPago: 'EFECTIVO'
         };
