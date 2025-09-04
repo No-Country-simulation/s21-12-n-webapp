@@ -150,8 +150,8 @@ https://drive.google.com/file/d/1XK50lWEFN2mx_Y3q_RnjbjdVb-xuaUWN/view?usp=drive
 
 Api desplegada
 
-https://barbelink-production.up.railway.app/api/
+https://apibarberlink-render.onrender.com/
 
 Documentacion de la api
 
-https://barbelink-production.up.railway.app/swagger-ui/index.html#/
+https://apibarberlink-render.onrender.com/swagger-ui/index.html#/
