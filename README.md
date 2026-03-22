@@ -150,8 +150,8 @@ https://drive.google.com/file/d/1XK50lWEFN2mx_Y3q_RnjbjdVb-xuaUWN/view?usp=drive
 
 Api desplegada
 
-https://apibarberlink-render.onrender.com/
+https://apibarberlink-render-plk7.onrender.com
 
 Documentacion de la api
 
-https://apibarberlink-render.onrender.com/swagger-ui/index.html#/
+https://apibarberlink-render-plk7.onrender.com/swagger-ui/index.html#/
